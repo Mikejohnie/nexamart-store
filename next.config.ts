@@ -16,7 +16,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: "https",
-        hostname: "utfs.io", // for UploadThing
+        hostname: "utfs.io",
+        pathname: "/**",
+        port: "", // for UploadThing
+      },
+      {
+        protocol: "https",
+        hostname: "ijucjait38.ufs.sh",
       },
     ],
   },
