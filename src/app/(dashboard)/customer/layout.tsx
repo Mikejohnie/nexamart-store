@@ -1,5 +1,3 @@
-"use client";
-
 import { useCurrentUser } from "@/hooks/getCurrentUser";
 import Dashboard from "./_component/Dashboard";
 import { redirect } from "next/navigation";
