@@ -12,8 +12,8 @@ import {
   updateQuantityAction,
   removeFromCartAction,
 } from "@/actions/auth/cart";
-import { useCartStore } from "@/stores/CartStore";
 import { FullCart } from "@/lib/types";
+import { useCartStore } from "@/stores/useCartstore";
 
 interface Props {
   cart: FullCart;
@@ -45,7 +45,7 @@ const CartPage = ({ cart }: Props) => {
   const symbol = currencySymbol(currency);
 
   const increase = (productId: string, variantId: string | null) => {
-    change(productId, +1);
+    change(productId, variantId, +1);
     startTransition(async () => {
       await updateQuantityAction(productId, variantId, +1);
     });
@@ -57,20 +57,20 @@ const CartPage = ({ cart }: Props) => {
     qty: number
   ) => {
     if (qty <= 1) {
-      remove(productId);
+      remove(productId, variantId);
       startTransition(async () => {
         await removeFromCartAction(productId);
       });
       return;
     }
-    change(productId, -1);
+    change(productId, variantId, -1);
     startTransition(async () => {
       await updateQuantityAction(productId, variantId, -1);
     });
   };
 
   const removeItem = (productId: string, variantId: string | null) => {
-    remove(productId);
+    remove(productId, variantId);
     startTransition(async () => {
       await removeFromCartAction(productId, variantId);
     });
