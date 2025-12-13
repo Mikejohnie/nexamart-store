@@ -42,11 +42,6 @@ import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
 
 const menuItems = [
-  {
-    href: "/customer/account",
-    icon: User,
-    label: "My Account",
-  },
   { href: "/help", icon: HelpCircle, label: "Help Center" },
   {
     href: "/customer/order/history",
@@ -54,7 +49,7 @@ const menuItems = [
     label: "Orders",
   },
   {
-    href: "/orders/track",
+    href: "/customer/order/track",
     icon: Package,
     label: "Track Order",
   },
@@ -168,7 +163,10 @@ export default function SiteNavbar({
               <DropdownMenuTrigger asChild>
                 <button className="flex flex-col text-left leading-tight hover:text-[#3c9ee0]">
                   <span className="text-xs">
-                    Hello, {user ? user.name?.split(" ")[0] : "Sign in"}
+                    Hello,{" "}
+                    {user
+                      ? user.name?.split(" ")[0] || user.username.split("")[0]
+                      : "Sign in"}
                   </span>
                   <span className="font-semibold flex items-center gap-1">
                     Account & More
@@ -358,7 +356,10 @@ export default function SiteNavbar({
                   <span>
                     <div className="font-medium text-base">
                       {user
-                        ? `Hi, ${user.name?.split(" ")[0]}`
+                        ? `Hi, ${
+                            user.name?.split(" ")[0] ||
+                            user.username.split(" ")[0]
+                          }`
                         : "Welcome to NexaMart"}
                     </div>
                     <p className="text-sm text-gray-500">{user?.email}</p>
@@ -371,6 +372,23 @@ export default function SiteNavbar({
                   <p className="font-semibold text-gray-800 uppercase text-[13px] tracking-wide px-4 pb-2">
                     My NexaMart Account
                   </p>
+
+                  {user && (
+                    <Link
+                      href="/customer/account"
+                      className={`
+                flex items-center gap-3 py-3 px-4 rounded-md text-sm font-medium transition
+                ${
+                  pathname === "/customer/account"
+                    ? "bg-[#3c9ee0]/15 text-[#3c9ee0] border-l-4 border-[#3c9ee0] font-semibold"
+                    : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                }
+              `}
+                    >
+                      <User className="w-4 h-4" /> My Account
+                    </Link>
+                  )}
+
                   {menuItems.map(({ href, icon: Icon, label }) => {
                     const active = pathname === href;
                     return (
@@ -407,7 +425,7 @@ export default function SiteNavbar({
                     </Button>
                   ) : (
                     <Button asChild className="w-full">
-                      <Link href="/login">Sign In / Create Account</Link>
+                      <Link href="/auth/login">Sign In / Create Account</Link>
                     </Button>
                   )}
                 </div>
