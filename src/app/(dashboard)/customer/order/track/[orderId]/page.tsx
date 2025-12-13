@@ -26,12 +26,12 @@ const currencySymbol = (code: string | null) => {
   return map[code] ?? code;
 };
 
-type Props = {
+export default async function TrackOrderPage({
+  params,
+}: {
   params: Promise<{ orderId: string }>;
-};
-
-export default async function TrackOrderPage(props: Props) {
-  const { orderId } = await props.params;
+}) {
+  const { orderId } = await params;
   const userId = await CurrentUserId();
 
   if (!userId) {

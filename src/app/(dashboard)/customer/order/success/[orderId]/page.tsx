@@ -16,10 +16,12 @@ const currencySymbol = (currency: string | null | undefined) => {
   return currency && map[currency] ? map[currency] : "";
 };
 
-export default async function OrderSuccessPage(props: {
-  params: { orderId?: string };
+export default async function OrderSuccessPage({
+  params,
+}: {
+  params: Promise<{ orderId: string }>;
 }) {
-  const { orderId } = await props.params;
+  const { orderId } = await params;
   const userId = await CurrentUserId();
 
   const order = await prisma.order.findUnique({
