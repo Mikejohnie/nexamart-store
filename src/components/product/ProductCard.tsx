@@ -6,10 +6,10 @@ import Image from "next/image";
 import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
-import { useCurrentUserQuery } from "@/stores/getCurrentUser";
+import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 import { formatCurrency } from "@/utils/formatCurrency";
-import { useCurrency } from "@/hooks/useCurrency";
-import { convertPrice } from "@/utils/convertPrice";
+// import { useCurrency } from "@/hooks/useCurrency";
+// import { convertPrice } from "@/utils/convertPrice";
 
 type ProductCardProps = {
   productData: FullProduct;
