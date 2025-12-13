@@ -1,6 +1,6 @@
 "use client";
 
-//import { pusherClient } from "@/lib/pusher"; fix any here
+import { pusherClient } from "@/lib/pusher";
 import { useEffect } from "react";
 import { toast } from "sonner";
 
