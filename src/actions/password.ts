@@ -1,3 +1,4 @@
+"use server";
 import crypto from "crypto";
 import { prisma } from "@/lib/prisma";
 import { sendEmail } from "@/lib/mail";
