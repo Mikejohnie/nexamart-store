@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils";
 import { DashboardMenu } from "@/constants/dashboard-menu";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 import { UserDTO } from "@/lib/types";
+import { useLogout } from "@/hooks/useLogout";
 
 /* --------------------- SHARED SIDEBAR COMPONENT --------------------- */
 
@@ -28,6 +29,8 @@ function SidebarContent({
   const role = user?.role as "SELLER" | "RIDER" | "ADMIN";
   const menu = DashboardMenu[role] || [];
 
+  const [open, setOpen] = useState(false);
+
   const toggle = (title: string) =>
     setOpenSections((prev) => ({ ...prev, [title]: !prev[title] }));
 
@@ -36,6 +39,8 @@ function SidebarContent({
     const h = href.replace(/\/$/, "");
     return p === h;
   };
+
+  const logout = useLogout();
 
   return (
     <div
@@ -79,6 +84,9 @@ function SidebarContent({
                         ? "bg-[var(--brand-blue-light)] text-[var(--brand-blue)] border-l-4 border-[var(--brand-blue)] font-semibold"
                         : "text-gray-600 hover:bg-gray-100 hover:text-black"
                     )}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <Icon className="w-5 h-5" />
                     {link.name}
@@ -125,7 +133,10 @@ function SidebarContent({
           <Button
             variant="outline"
             className="w-full flex gap-2 text-red-500 hover:text-red-600"
-            onClick={() => signOut({ callbackUrl: "/" })}
+            onClick={() => {
+              logout();
+              setOpen(false);
+            }}
           >
             <LogOut className="w-4 h-4" /> Logout
           </Button>

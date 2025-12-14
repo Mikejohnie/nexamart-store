@@ -174,9 +174,6 @@ export default function MarketPlaceNavbar({
                   ? "text-[var(--brand-blue)]"
                   : "text-gray-600 hover:text-[var(--brand-blue)]"
               }`}
-              onClick={() => {
-                setOpen(false);
-              }}
             >
               <item.icon className="w-5 h-5" />
               <span className="text-[11px] hidden lg:block mt-[2px]">

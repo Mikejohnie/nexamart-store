@@ -24,7 +24,7 @@ const page = async () => {
           className="flex text-blue-700 font-semibold p-4 gap-1"
         >
           <Plus />
-          <p className="md:hidden block">New Product</p>
+          <p className="hidden md:block">New Product</p>
         </Link>
       </div>
       <ProductGrid products={products} />
