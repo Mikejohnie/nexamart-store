@@ -8,27 +8,29 @@ export async function normalizeUser(
 
   const db = await prisma.user.findUnique({
     where: { email: sessionUser.email },
-    select: {
-      id: true,
-      email: true,
-      role: true,
-      name: true,
-      username: true,
-      image: true,
-      isBanned: true,
+    include: {
+      store: { select: { isVerified: true } },
+      riderProfile: { select: { isVerified: true } },
     },
   });
 
   if (!db) return null;
 
+  const isVerified =
+    db.role === "SELLER"
+      ? Boolean(db.store?.isVerified)
+      : db.role === "RIDER"
+      ? Boolean(db.riderProfile?.isVerified)
+      : false;
+
   return {
     id: db.id,
     email: db.email,
     role: db.role,
-
     name: db.name ?? "",
     username: db.username ?? "",
     image: db.image ?? null,
-    isBanned: db.isBanned ?? false,
+    isBanned: db.isBanned,
+    isVerified,
   };
 }
