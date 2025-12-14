@@ -11,6 +11,8 @@ export const authRoutes = [
   "/auth/rider/register",
   "/auth/admin/register",
   "/auth/admin/forgot-password",
+  "/auth/forgot-password",
+  "/auth/reset-password",
 ];
 
 export const apiAuthPrefix = "/api/auth";
