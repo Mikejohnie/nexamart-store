@@ -76,7 +76,7 @@ const page = async ({ params }: StoreFrontProps) => {
                 href="/market-place/dashboard"
                 className="underline font-medium ml-1 text-blue-500"
               >
-                Go to dashboard
+                Dashboard
               </Link>
             </div>
           )}
@@ -131,8 +131,8 @@ const page = async ({ params }: StoreFrontProps) => {
           <h2 className="text-2xl font-semibold">Products</h2>
 
           {store.products.length === 0 ? (
-            <span className="text-gray-500 py-8 flex gap-2 items-center justify-center">
-              <p>No products yet — </p>
+            <span className="text-gray-500 py-8 flex flex-col gap-2 items-center justify-center">
+              <p>No products yet </p>
               <Link
                 href={"/market-place/dashboard/seller/products/new"}
                 className="underline text-blue-500"
