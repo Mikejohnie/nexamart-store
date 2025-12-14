@@ -1,17 +1,16 @@
-"use client";
-
-import { useCurrentUser } from "@/hooks/getCurrentUser";
+import { CurrentUser } from "@/lib/currentUser";
 import Dashboard from "./_component/Dashboard";
 import { redirect } from "next/navigation";
 
-export default function CustomerLayout({
+export default async function CustomerLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const user = useCurrentUser();
+  const user = await CurrentUser();
 
-  if (user?.role !== "USER") redirect("/market-place/dashboard");
+  if (!user) redirect("/auth/login");
+  if (user.role !== "USER") redirect("/market-place/dashboard");
 
   return (
     <div className="h-screen flex bg-background">

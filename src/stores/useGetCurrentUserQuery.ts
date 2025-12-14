@@ -7,13 +7,16 @@ export function useCurrentUserQuery(initialUser?: UserDTO | null) {
   return useQuery<UserDTO | null>({
     queryKey: ["currentUser"],
     queryFn: async () => {
-      const res = await fetch("/api/current-user", { cache: "no-store" });
+      const res = await fetch("/api/current-user", { credentials: "include" });
+
       if (!res.ok) return null;
-      return (await res.json()) as UserDTO | null;
+      const data = await res.json();
+      return (data as UserDTO) ?? null;
     },
-    initialData: initialUser,
+    initialData: initialUser ?? null,
     staleTime: 1000 * 60 * 5,
     refetchOnMount: false,
     refetchOnWindowFocus: false,
+    refetchOnReconnect: true,
   });
 }

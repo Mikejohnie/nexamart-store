@@ -20,7 +20,7 @@ import { useState, useTransition } from "react";
 import { loggedInUser } from "@/actions/auth/user";
 import Link from "next/link";
 import { Alert, AlertTitle } from "@/components/ui/alert";
-import { AlertCircle, Eye, EyeOff } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, Loader2 } from "lucide-react";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { useRouter } from "next/navigation";
 
@@ -156,7 +156,14 @@ export default function LoginForm() {
               disabled={isPending}
               className="w-full h-11 rounded-lg font-semibold text-white shadow-md transition bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] disabled:opacity-70"
             >
-              {isPending ? "Signing in..." : "Sign in"}
+              {isPending ? (
+                <span className="inline-flex gap-2 items-center">
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                  <p>Signing in...</p>
+                </span>
+              ) : (
+                "Sign in"
+              )}
             </Button>
           </form>
         </Form>
