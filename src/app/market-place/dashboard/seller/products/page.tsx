@@ -20,11 +20,11 @@ const page = async () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold p-4">My Products</h1>
         <Link
-          href={"/market-place/dashboard/seller/products/add-product"}
+          href={"/market-place/dashboard/seller/products/new"}
           className="flex text-blue-700 font-semibold p-4 gap-1"
         >
           <Plus />
-          New Product
+          <p className="md:hidden block">New Product</p>
         </Link>
       </div>
       <ProductGrid products={products} />
