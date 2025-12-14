@@ -18,7 +18,7 @@ import Link from "next/link";
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { createRoleUserAction } from "@/actions/auth/auth";
 
-export default function RiderRegform() {
+const RiderRgisterForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
 
@@ -250,4 +250,5 @@ export default function RiderRegform() {
       </div>
     </main>
   );
-}
+};
+export default RiderRgisterForm;

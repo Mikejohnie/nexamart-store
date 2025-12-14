@@ -1,9 +1,9 @@
-import RiderRegform from "@/app/(site)/_components/RiderRegform";
+import RiderRgisterForm from "@/app/(site)/_components/RiderRgisterForm";
 
 const page = () => {
   return (
     <div>
-      <RiderRegform />
+      <RiderRgisterForm />
     </div>
   );
 };
