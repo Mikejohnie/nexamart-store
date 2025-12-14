@@ -16,16 +16,20 @@ import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { createRoleUserAction } from "@/actions/auth/auth";
-import { Store, Loader2 } from "lucide-react";
+import { Store, Loader2, Eye, EyeOff } from "lucide-react";
 
 const SellerRegisterForm = () => {
   const [error, setError] = useState<string | undefined>();
   const [success, setSuccess] = useState<string | undefined>();
   const [isPending, startTransition] = useTransition();
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
+
   const form = useForm<registerSchemaType>({
     resolver: zodResolver(registerSchema),
     defaultValues: {
+      name: "",
       username: "",
       email: "",
       password: "",
@@ -87,6 +91,26 @@ const SellerRegisterForm = () => {
             onSubmit={form.handleSubmit(handleSubmit)}
             className="space-y-5"
           >
+            {/*name */}
+            <FormField
+              control={form.control}
+              disabled={isPending}
+              name="name"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="font-medium">Full Name</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="John Doe"
+                      {...field}
+                      className="h-11 rounded-lg focus:ring-2 focus:ring-[var(--brand-blue)]"
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+
             {/* Username */}
             <FormField
               control={form.control}
@@ -137,12 +161,26 @@ const SellerRegisterForm = () => {
                 <FormItem>
                   <FormLabel className="font-medium">Password</FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="At least 6 characters"
-                      {...field}
-                      className="h-11 rounded-lg focus:ring-2 focus:ring-[var(--brand-blue)]"
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showPassword ? "text" : "password"}
+                        placeholder="At least 6 characters"
+                        {...field}
+                        className="h-11 rounded-lg pr-12 focus:ring-2 focus:ring-[var(--brand-blue)]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((p) => !p)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2
+              text-gray-500 hover:text-[var(--brand-blue)] transition"
+                      >
+                        {showPassword ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -160,12 +198,26 @@ const SellerRegisterForm = () => {
                     Confirm Password
                   </FormLabel>
                   <FormControl>
-                    <Input
-                      type="password"
-                      placeholder="Re-enter password"
-                      {...field}
-                      className="h-11 rounded-lg focus:ring-2 focus:ring-[var(--brand-blue)]"
-                    />
+                    <div className="relative">
+                      <Input
+                        type={showConfirm ? "text" : "password"}
+                        placeholder="Re-enter password"
+                        {...field}
+                        className="h-11 rounded-lg pr-12 focus:ring-2 focus:ring-[var(--brand-blue)]"
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowConfirm((p) => !p)}
+                        className="absolute right-3 top-1/2 -translate-y-1/2
+              text-gray-500 hover:text-[var(--brand-blue)] transition"
+                      >
+                        {showConfirm ? (
+                          <EyeOff className="w-5 h-5" />
+                        ) : (
+                          <Eye className="w-5 h-5" />
+                        )}
+                      </button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

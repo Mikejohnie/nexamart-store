@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Bike, Eye, EyeOff, Loader2 } from "lucide-react";
 import { createRoleUserAction } from "@/actions/auth/auth";
 
 const RiderRgisterForm = () => {
@@ -62,14 +62,19 @@ const RiderRgisterForm = () => {
   return (
     <main className="min-h-screen flex items-center justify-center bg-orange-100  dark:bg-neutral-950 px-4 py-10">
       <div className="w-full max-w-md bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-2xl shadow-lg p-8 space-y-6">
-        {/* Title */}
-        <div className="text-center space-y-1">
+        {/* Header */}
+        <div className="text-center space-y-2">
+          <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[var(--brand-blue-light)] text-[var(--brand-blue)]">
+            <Bike className="w-6 h-6" />
+          </div>
+
           <h1
             className="text-3xl font-bold tracking-tight"
             style={{ color: "var(--brand-blue)" }}
           >
             Become a Rider
           </h1>
+
           <p className="text-sm text-gray-500 dark:text-gray-400">
             Register to start delivering with NexaMart
           </p>
