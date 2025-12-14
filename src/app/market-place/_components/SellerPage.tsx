@@ -10,9 +10,9 @@ import {
 
 export default function SellerPage() {
   const stats = [
-    { title: "Active Products", value: 42, icon: Package },
-    { title: "Total Orders", value: 128, icon: ShoppingBag },
-    { title: "Total Revenue", value: "$8,540", icon: DollarSign },
+    { title: "Active Products", value: 0, icon: Package },
+    { title: "Total Orders", value: 0, icon: ShoppingBag },
+    { title: "Total Revenue", value: "$0", icon: DollarSign },
     { title: "Performance", value: "View Report", icon: BarChart3 },
   ];
 
