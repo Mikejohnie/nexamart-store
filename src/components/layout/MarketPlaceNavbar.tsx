@@ -280,34 +280,44 @@ export default function MarketPlaceNavbar({
               </DialogHeader>
 
               {/* HEADER */}
-              <div className="flex items-center justify-between border-b p-5">
-                <div className="flex items-center gap-4">
+              <div className="border-b p-5">
+                <div className="flex items-start gap-4">
                   {user?.image ? (
                     <Image
                       src={user.image}
-                      width={50}
-                      height={50}
+                      width={48}
+                      height={48}
                       alt="avatar"
-                      className="rounded-full object-cover border shadow-sm"
+                      className="rounded-full object-cover border shadow-sm shrink-0"
                     />
                   ) : (
-                    <div className="w-[50px] h-[50px] rounded-full bg-gray-200 flex items-center justify-center border shadow-sm">
+                    <div className="w-12 h-12 rounded-full bg-gray-200 flex items-center justify-center border shadow-sm shrink-0">
                       <User className="w-6 h-6 text-gray-600" />
                     </div>
                   )}
-                  <div>
-                    <p className="font-semibold text-[16px]">
-                      {user ? `Hi, ${user.name?.split(" ")[0]}` : "Welcome"}
+
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <p className="font-semibold text-[15px] truncate">
+                        {user
+                          ? `Hi, ${user.name?.split(" ")[0] || user.username}`
+                          : "Welcome"}
+                      </p>
+
+                      <VerifiedBadge />
+                    </div>
+
+                    <p className="text-sm text-gray-500 truncate">
+                      {user?.email}
                     </p>
-                    <p className="text-sm text-gray-500">{user?.email}</p>
+
                     {user?.role && (
-                      <span className="text-[10px] bg-[var(--brand-blue-light)] text-[var(--brand-blue)] mt-1 px-2 py-[2px] rounded uppercase font-semibold inline-block">
+                      <span className="inline-block mt-1 text-[10px] bg-[var(--brand-blue-light)] text-[var(--brand-blue)] px-2 py-[2px] rounded uppercase font-semibold">
                         {user.role}
                       </span>
                     )}
                   </div>
                 </div>
-                <VerifiedBadge />
               </div>
 
               {/* Drawer Side Nav */}

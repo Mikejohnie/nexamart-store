@@ -11,6 +11,7 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { DashboardMenu } from "@/constants/dashboard-menu";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { UserDTO } from "@/lib/types";
 
 /* --------------------- SHARED SIDEBAR COMPONENT --------------------- */
 
@@ -19,7 +20,7 @@ function SidebarContent({
   pathname,
   isMobile,
 }: {
-  user: any;
+  user: UserDTO | null | undefined;
   pathname: string;
   isMobile?: boolean;
 }) {
@@ -109,7 +110,9 @@ function SidebarContent({
             )}
 
             <div className="text-sm">
-              <p className="font-semibold">{user?.name || "My Account"}</p>
+              <p className="font-semibold">
+                {user?.name || user?.username || "My Account"}
+              </p>
               <p className="text-xs text-gray-500 truncate max-w-[140px]">
                 {user?.email}
               </p>
@@ -134,7 +137,11 @@ function SidebarContent({
 
 /* ----------------------- DESKTOP SIDEBAR ----------------------- */
 
-export const DashboardSidebar = ({ initialUser }: { initialUser: any }) => {
+export const DashboardSidebar = ({
+  initialUser,
+}: {
+  initialUser: UserDTO | null;
+}) => {
   const { data: user } = useCurrentUserQuery(initialUser);
   const pathname = usePathname();
 
@@ -147,7 +154,11 @@ export const DashboardSidebar = ({ initialUser }: { initialUser: any }) => {
 
 /* ----------------------- MOBILE SIDEBAR ----------------------- */
 
-export const MobileSideNav = ({ initialUser }: { initialUser: any }) => {
+export const MobileSideNav = ({
+  initialUser,
+}: {
+  initialUser: UserDTO | null;
+}) => {
   const { data: user } = useCurrentUserQuery(initialUser);
   const pathname = usePathname();
 
