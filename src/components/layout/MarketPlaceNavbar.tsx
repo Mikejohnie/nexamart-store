@@ -218,7 +218,9 @@ export default function MarketPlaceNavbar({
                   </div>
                 )}
                 <span className="hidden lg:block font-semibold">
-                  {user ? `Hi, ${user?.name?.split(" ")[0]}` : "Account"}
+                  {user
+                    ? `Hi, ${user?.name?.split(" ")[0] || user.username}`
+                    : "Account"}
                 </span>
               </button>
             </DropdownMenuTrigger>

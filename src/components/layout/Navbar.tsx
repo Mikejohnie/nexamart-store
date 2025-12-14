@@ -186,7 +186,9 @@ export default function SiteNavbar({
                       <Button
                         size="lg"
                         className="w-full mb-4"
-                        onClick={() => router.push("/auth/login")}
+                        onClick={() => {
+                          router.push("/auth/login"), setOpen(false);
+                        }}
                       >
                         Sign in / Create Account
                       </Button>
@@ -206,6 +208,9 @@ export default function SiteNavbar({
             : "hover:bg-muted hover:text-foreground"
         }
       `}
+                      onClick={() => {
+                        setOpen(false);
+                      }}
                     >
                       <User className="w-4 h-4" /> My Account
                     </Link>
@@ -222,6 +227,9 @@ export default function SiteNavbar({
           : "hover:bg-muted hover:text-foreground"
       }
     `}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <Package className="w-4 h-4" /> Track Orders
                   </Link>
@@ -237,6 +245,9 @@ export default function SiteNavbar({
           : "hover:bg-muted hover:text-foreground"
       }
     `}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <Mail className="w-4 h-4" /> Inbox
                   </Link>
@@ -252,6 +263,9 @@ export default function SiteNavbar({
           : "hover:bg-muted hover:text-foreground"
       }
     `}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <Heart className="w-4 h-4" /> Wishlist
                   </Link>
@@ -267,6 +281,9 @@ export default function SiteNavbar({
           : "hover:bg-muted hover:text-foreground"
       }
     `}
+                    onClick={() => {
+                      setOpen(false);
+                    }}
                   >
                     <Ticket className="w-4 h-4" /> Voucher
                   </Link>
@@ -279,7 +296,10 @@ export default function SiteNavbar({
                       <Button
                         variant="ghost"
                         className="flex gap-2 bg-red-50/50 w-full"
-                        onClick={() => signOut({ callbackUrl: "/" })}
+                        onClick={() => {
+                          logout();
+                          setOpen(false);
+                        }}
                       >
                         <LogOut className="w-4 h-4" /> Logout
                       </Button>
