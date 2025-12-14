@@ -10,6 +10,7 @@ export const authRoutes = [
   "/auth/seller/register",
   "/auth/rider/register",
   "/auth/admin/register",
+  "/auth/admin/forgot-password",
 ];
 
 export const apiAuthPrefix = "/api/auth";
