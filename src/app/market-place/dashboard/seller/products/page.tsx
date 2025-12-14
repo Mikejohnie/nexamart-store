@@ -18,7 +18,7 @@ const page = async () => {
   return (
     <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-900">
       <div className="flex justify-between items-center">
-        <h1 className="text-2xl font-semibold p-4">My Products</h1>
+        <h1 className="lg:text-2xl text-xl font-semibold p-4">My Products</h1>
         <Link
           href={"/market-place/dashboard/seller/products/new"}
           className="flex text-blue-700 font-semibold p-4 gap-1"
