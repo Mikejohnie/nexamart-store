@@ -12,7 +12,7 @@ const handleAuth = async () => {
 };
 
 export const ourFileRouter = {
-  avatarImage: f({
+  profileImage: f({
     image: {
       maxFileSize: "4MB",
       maxFileCount: 1,
@@ -32,6 +32,102 @@ export const ourFileRouter = {
     image: {
       maxFileSize: "4MB",
       maxFileCount: 10,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  storeLogo: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  storeBanner: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  heroBanner: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  categoryIcon: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  categoryBanner: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
+    },
+  })
+    .middleware(() => handleAuth())
+
+    .onUploadComplete(async ({ metadata, file }) => {
+      console.log("Upload complete for userId:", metadata.user.id);
+
+      console.log("file url", file.ufsUrl);
+
+      return { uploadedBy: metadata.user.id };
+    }),
+
+  siteLogo: f({
+    image: {
+      maxFileSize: "4MB",
+      maxFileCount: 1,
     },
   })
     .middleware(() => handleAuth())

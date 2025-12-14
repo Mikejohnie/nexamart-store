@@ -35,6 +35,7 @@ import { useDashboardEvents } from "@/hooks/useDashboardEvents";
 import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
 import { MobileSideNav } from "@/app/(dashboard)/market-place/_components/SideNavbar";
+import DashboardPageSkeleton from "../skeletons/DashboardPageSkeleton";
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -50,11 +51,16 @@ export default function MarketPlaceNavbar({
   initialUser: UserDTO | null;
 }) {
   const pathname = usePathname();
-  const { data: user } = useCurrentUserQuery(initialUser);
+  const { data: user, isLoading, isError } = useCurrentUserQuery(initialUser);
   const [searchQuery, setSearchQuery] = useState("");
   const [hasNewAlert, setHasNewAlert] = useState(false);
 
-  const role = user?.role ?? "SELLER";
+  if (isLoading) return <DashboardPageSkeleton />;
+  if (isError) return null;
+
+  if (!user) return null;
+
+  const role = user.role;
   const dashboardTitle =
     role === "SELLER"
       ? "Seller Center"
@@ -70,7 +76,7 @@ export default function MarketPlaceNavbar({
     return null;
   }
 
-  useDashboardEvents(user?.id, user?.role, setHasNewAlert);
+  useDashboardEvents(user.id, user.role, setHasNewAlert);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();

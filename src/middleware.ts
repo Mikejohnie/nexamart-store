@@ -65,7 +65,7 @@ export default Middleware((req) => {
   // ✅ If user is not logged in and visits a protected page → redirect to /login
   if (!isLoggedIn && !isPublicRoute && !isAuthRoute) {
     console.log("🚫 Not logged in → redirecting to /login\n");
-    return Response.redirect(new URL("/login", nextUrl));
+    return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
   // 🚫 Role-based route protection

@@ -78,6 +78,8 @@ export default function SiteNavbar({
 }: {
   initialUser?: UserDTO | null;
 }) {
+  const [open, setOpen] = useState(false);
+
   const [isVisible, setIsVisible] = useState(true);
   const lastScroll = useRef(0);
 
@@ -194,7 +196,7 @@ export default function SiteNavbar({
                 )}
 
                 {user && (
-                  <DropdownMenuItem asChild>
+                  <DropdownMenuItem asChild onSelect={() => {}}>
                     <Link
                       href="/customer/account"
                       className={`border-b flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -210,7 +212,7 @@ export default function SiteNavbar({
                   </DropdownMenuItem>
                 )}
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild onSelect={() => {}}>
                   <Link
                     href="/customer/order/track"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -225,7 +227,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild onSelect={() => {}}>
                   <Link
                     href="/customer/inbox"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -240,7 +242,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild onSelect={() => {}}>
                   <Link
                     href="/customer/wishlist"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -255,7 +257,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild>
+                <DropdownMenuItem asChild onSelect={() => {}}>
                   <Link
                     href="/customer/voucher"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -321,12 +323,13 @@ export default function SiteNavbar({
             <ModeToggle />
 
             {/* Mobile Drawer */}
-            <Sheet>
+            <Sheet open={open} onOpenChange={setOpen}>
               <SheetTrigger asChild>
                 <Button
                   variant="ghost"
                   size="icon"
                   className="rounded-full hover:bg-muted transition"
+                  onClick={() => setOpen(true)}
                 >
                   <Menu className="w-5 h-5" />
                 </Button>
@@ -385,6 +388,7 @@ export default function SiteNavbar({
                     : "hover:bg-muted text-muted-foreground hover:text-foreground"
                 }
               `}
+                      onClick={() => setOpen(true)}
                     >
                       <User className="w-4 h-4" /> My Account
                     </Link>
@@ -404,6 +408,7 @@ export default function SiteNavbar({
                     : "hover:bg-muted text-muted-foreground hover:text-foreground"
                 }
               `}
+                        onClick={() => setOpen(true)}
                       >
                         <Icon className="w-5 h-5" />
                         {label}

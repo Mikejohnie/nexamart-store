@@ -6,6 +6,11 @@ import RiderPage from "./RiderPage";
 import SellerPage from "./SellerPage";
 import { UserDTO } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import AdminSettingsPage, {
+  BuyerSettingsPage,
+  SellerSettingsPage,
+  RiderSettingsPage,
+} from "./SettingsPage";
 
 type Props = {
   initialUser: UserDTO | null;
@@ -29,4 +34,17 @@ const RoleBasedPageContent = ({ initialUser }: Props) => {
   );
 };
 
-export default RoleBasedPageContent;
+const RoleBasedSettingsPage = ({ initialUser }: { initialUser: any }) => {
+  const { data: user } = useCurrentUserQuery(initialUser);
+
+  return (
+    <div>
+      {user?.role === "USER" && <BuyerSettingsPage />}
+      {user?.role === "SELLER" && <SellerSettingsPage />}
+      {user?.role === "RIDER" && <RiderSettingsPage />}
+      {user?.role === "ADMIN" && <AdminSettingsPage />}
+    </div>
+  );
+};
+
+export { RoleBasedPageContent, RoleBasedSettingsPage };
