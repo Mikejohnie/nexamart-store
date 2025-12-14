@@ -60,7 +60,7 @@ const WishListPage = ({ initialData }: Props) => {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold tracking-tight">
-            Wishlist <span className="text-[#3c9ee0]">({data.length})</span>
+            Wishlist {data.length > 0 && `(${data.length})`}
           </h1>
           <p className="text-sm text-gray-500">
             Save items you love — we’ll notify you when deals drop.

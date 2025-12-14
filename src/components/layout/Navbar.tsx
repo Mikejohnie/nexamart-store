@@ -196,7 +196,7 @@ export default function SiteNavbar({
                 )}
 
                 {user && (
-                  <DropdownMenuItem asChild onSelect={() => {}}>
+                  <DropdownMenuItem asChild>
                     <Link
                       href="/customer/account"
                       className={`border-b flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -212,7 +212,7 @@ export default function SiteNavbar({
                   </DropdownMenuItem>
                 )}
 
-                <DropdownMenuItem asChild onSelect={() => {}}>
+                <DropdownMenuItem asChild>
                   <Link
                     href="/customer/order/track"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -227,7 +227,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild onSelect={() => {}}>
+                <DropdownMenuItem asChild>
                   <Link
                     href="/customer/inbox"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -242,7 +242,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild onSelect={() => {}}>
+                <DropdownMenuItem asChild>
                   <Link
                     href="/customer/wishlist"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -257,7 +257,7 @@ export default function SiteNavbar({
                   </Link>
                 </DropdownMenuItem>
 
-                <DropdownMenuItem asChild onSelect={() => {}}>
+                <DropdownMenuItem asChild>
                   <Link
                     href="/customer/voucher"
                     className={`flex gap-2 w-full px-2 py-1.5 rounded-md transition
@@ -329,7 +329,7 @@ export default function SiteNavbar({
                   variant="ghost"
                   size="icon"
                   className="rounded-full hover:bg-muted transition"
-                  onClick={() => setOpen(true)}
+                  onClick={() => setOpen(false)}
                 >
                   <Menu className="w-5 h-5" />
                 </Button>
@@ -388,7 +388,7 @@ export default function SiteNavbar({
                     : "hover:bg-muted text-muted-foreground hover:text-foreground"
                 }
               `}
-                      onClick={() => setOpen(true)}
+                      onClick={() => setOpen(false)}
                     >
                       <User className="w-4 h-4" /> My Account
                     </Link>
@@ -408,7 +408,7 @@ export default function SiteNavbar({
                     : "hover:bg-muted text-muted-foreground hover:text-foreground"
                 }
               `}
-                        onClick={() => setOpen(true)}
+                        onClick={() => setOpen(false)}
                       >
                         <Icon className="w-5 h-5" />
                         {label}
@@ -425,7 +425,10 @@ export default function SiteNavbar({
                     <Button
                       variant={"secondary"}
                       className="w-full flex gap-2 text-red-500 "
-                      onClick={logout}
+                      onClick={() => {
+                        logout();
+                        setOpen(false);
+                      }}
                     >
                       <LogOut className="w-4 h-4" /> Logout
                     </Button>
