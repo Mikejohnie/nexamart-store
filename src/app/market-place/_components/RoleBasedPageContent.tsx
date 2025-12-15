@@ -34,7 +34,7 @@ const RoleBasedPageContent = ({ initialUser }: Props) => {
   );
 };
 
-const RoleBasedSettingsPage = ({ initialUser }: { initialUser: any }) => {
+const RoleBasedSettingsPage = ({ initialUser }: Props) => {
   const { data: user } = useCurrentUserQuery(initialUser);
 
   return (

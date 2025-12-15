@@ -77,7 +77,6 @@ const SellerSettingsPage = () => {
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
 
-  // FETCH SELLER STORE
   useEffect(() => {
     if (!user?.id) return;
 
@@ -98,7 +97,6 @@ const SellerSettingsPage = () => {
     fetchStore();
   }, [user]);
 
-  // SAVE CHANGES
   const refreshStore = async () => {
     if (!user?.id) return;
     const res = await fetch(`/api/user/${user.id}/store`);
