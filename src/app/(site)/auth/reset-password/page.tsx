@@ -14,7 +14,11 @@ export default function ResetPasswordPage() {
   const [error, setError] = useState<string | null>(null);
 
   if (!token) {
-    return <p className="text-center mt-24">Invalid reset link</p>;
+    return (
+      <p className="text-center mt-24 text-red-500 min-h-screen py-62">
+        Invalid reset link
+      </p>
+    );
   }
 
   const onSubmit = (e: React.FormEvent) => {
@@ -23,7 +27,7 @@ export default function ResetPasswordPage() {
     startTransition(async () => {
       try {
         await resetPassword(token, password);
-        router.push("/login");
+        router.push("/auth/login");
       } catch {
         setError("Reset link is invalid or expired");
       }
