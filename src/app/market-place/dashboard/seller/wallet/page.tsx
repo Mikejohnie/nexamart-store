@@ -1,14 +1,14 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/hooks/getCurrentUser";
 import { useSellerWallet } from "@/hooks/useWallet";
 import Link from "next/link";
 import { WalletSkeleton } from "@/components/skeletons/WalletSkeleton";
+import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 
 export default function SellerWalletPage() {
   const { data: wallet, isLoading, isError } = useSellerWallet();
-  const user = useCurrentUser();
+  const { data: user } = useCurrentUserQuery();
 
   if (isLoading) {
     return <WalletSkeleton />;
@@ -45,7 +45,7 @@ export default function SellerWalletPage() {
         <div>
           <h1 className="text-2xl font-semibold">My Wallet</h1>
           <p className="text-sm text-gray-500">
-            Welcome back, {user?.name?.split(" ")[0]}
+            Hi, {user?.name?.split(" ")[0] || user?.username}
           </p>
         </div>
 
