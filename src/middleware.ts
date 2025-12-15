@@ -53,6 +53,17 @@ export default Middleware((req) => {
     return;
   }
 
+  // ✅ ALWAYS allow public routes
+  if (isPublicRoute) {
+    console.log("🌍 Public route → access allowed\n");
+    return;
+  }
+
+  //shared routes
+  if (isLoggedIn && sharedRoutes.some((route) => pathname.startsWith(route))) {
+    return;
+  }
+
   // ✅ If user is logged in and visits /login or /register → redirect to dashboard
   if (isAuthRoute && isLoggedIn) {
     if (req.auth?.user.role == "ADMIN")
@@ -113,11 +124,6 @@ export default Middleware((req) => {
         }
       }
     }
-  }
-
-  //shared routes
-  if (isLoggedIn && sharedRoutes.some((route) => pathname.startsWith(route))) {
-    return;
   }
 
   // 🔁 Redirect logged-in users away from "/" based on role
