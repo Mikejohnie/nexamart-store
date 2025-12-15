@@ -26,6 +26,11 @@ export async function forgotPassword(email: string) {
       <p>
         <a href="${resetLink}">Reset Password</a>
       </p>
+      
+      <p>
+        Or copy and paste the following link into your browser:<br/>
+        <small>${resetLink}</small>
+      </p>
       <p>This link expires in 30 minutes.</p>
     `,
   });
