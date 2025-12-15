@@ -10,6 +10,8 @@ import {
   ADMIN_LOGIN_REDIRECT,
   RIDER_LOGIN_REDIRECT,
   SELLER_LOGIN_REDIRECT,
+  moderatorRoutePrefix,
+  sharedRoutes,
 } from "@/routes";
 import authConfig from "./auth.config";
 
@@ -21,10 +23,14 @@ export default Middleware((req) => {
   const isLoggedIn = !!req.auth;
   const role = req.auth?.user.role;
 
-  const isPublicRoute = publicRoutes.includes(pathname);
+  // const isPublicRoute = publicRoutes.includes(pathname);
+  const isPublicRoute = publicRoutes.some(
+    (route) => pathname === route || pathname.startsWith(route + "/")
+  );
   const isAuthRoute = authRoutes.includes(pathname);
   const isApiAuthRoute = pathname.startsWith(apiAuthPrefix);
 
+  const isModeratorRoute = pathname.startsWith(moderatorRoutePrefix);
   const isAdminRoute = pathname.startsWith(adminRoutePrefix);
   const isSellerRoute = pathname.startsWith(sellerRoutePrefix);
   const isRiderRoute = pathname.startsWith(riderRoutePrefix);
@@ -68,18 +74,51 @@ export default Middleware((req) => {
     return Response.redirect(new URL("/auth/login", nextUrl));
   }
 
-  // 🚫 Role-based route protection
-  // if (isAdminRoute && role !== "ADMIN") {
-  //   return Response.redirect(new URL(ADMIN_LOGIN_REDIRECT, nextUrl));
-  // }
+  // 🚫 ROLE-BASED AUTHORIZATION (STRICT)
+  if (isLoggedIn) {
+    if (role === "USER") {
+      if (pathname.startsWith("/market-place")) {
+        return Response.redirect(new URL("/403", nextUrl));
+      }
+    }
 
-  // if (isSellerRoute && role !== "SELLER") {
-  //   return Response.redirect(new URL(SELLER_LOGIN_REDIRECT, nextUrl));
-  // }
+    if (role === "ADMIN") {
+      if (!isAdminRoute) {
+        if (!pathname.startsWith("/market-place")) {
+          return Response.redirect(new URL("/403", nextUrl));
+        }
+      }
+    }
 
-  // if (isRiderRoute && role !== "RIDER") {
-  //   return Response.redirect(new URL(RIDER_LOGIN_REDIRECT, nextUrl));
-  // }
+    if (role === "SELLER") {
+      if (!isSellerRoute) {
+        if (!pathname.startsWith("/market-place")) {
+          return Response.redirect(new URL("/403", nextUrl));
+        }
+      }
+    }
+
+    if (role === "RIDER") {
+      if (!isRiderRoute) {
+        if (!pathname.startsWith("/market-place")) {
+          return Response.redirect(new URL("/403", nextUrl));
+        }
+      }
+    }
+
+    if (role === "MODERATOR") {
+      if (!isModeratorRoute) {
+        if (!pathname.startsWith("/market-place")) {
+          return Response.redirect(new URL("/403", nextUrl));
+        }
+      }
+    }
+  }
+
+  //shared routes
+  if (isLoggedIn && sharedRoutes.some((route) => pathname.startsWith(route))) {
+    return;
+  }
 
   // 🔁 Redirect logged-in users away from "/" based on role
   if (pathname === "/" && isLoggedIn) {
