@@ -167,8 +167,10 @@ export default function CategoryPageClient({
   };
 
   return (
-    <main className="space-y-10">
-      <h1 className="text-3xl font-bold">Category Management</h1>
+    <main className="space-y-10 max-w-full overflow-x-hidden">
+      <h1 className="md:text-3xl text-lg sm:text-xl leading-tight font-bold">
+        Category Management
+      </h1>
 
       {/* CREATE CARD */}
       <Card>
@@ -320,9 +322,9 @@ export default function CategoryPageClient({
           </table>
         </CardContent>
         {/* MOBILE LIST */}
-        <CardContent className="md:hidden space-y-4">
+        <CardContent className="md:hidden space-y-4 max-w-full overflow-x-hidden">
           {categories.map((cat) => (
-            <Card key={cat.id} className="p-4">
+            <Card key={cat.id} className="p-4 max-w-full overflow-hidden">
               <div className="flex items-start gap-3">
                 {/* Icon */}
                 {cat.iconUrl ? (
