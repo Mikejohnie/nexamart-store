@@ -92,6 +92,16 @@ export type ProductCardType = Product & {
   }[];
 };
 
+export type ProductImageInput = {
+  url: string;
+  key: string;
+};
+
+export type TechnicalDetail = {
+  key: string;
+  value: string;
+};
+
 export type UserDTO = {
   id: string;
   email: string;
@@ -159,3 +169,26 @@ export type SearchProductCard = Pick<
   SearchProduct,
   "id" | "name" | "price" | "images" | "store"
 >;
+
+export type StoreDTO = {
+  id: string;
+  name: string;
+  description: string;
+  location: string;
+
+  address?: string | null;
+
+  type: "GENERAL" | "FOOD";
+  fulfillmentType: "PHYSICAL" | "DIGITAL" | "HYBRID";
+
+  logo?: string | null;
+  logoKey?: string | null;
+
+  bannerImage?: string | null;
+  bannerKey?: string | null;
+
+  tagline?: string | null;
+
+  isActive: boolean;
+  emailNotificationsEnabled: boolean;
+};

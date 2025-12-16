@@ -1,4 +1,4 @@
-import ProductGrid from "@/components/products/ProductGrid";
+import ProductGrid from "@/components/product/ProductGrid";
 import { CurrentUser } from "@/lib/currentUser";
 import { prisma } from "@/lib/prisma";
 import { Plus } from "lucide-react";
@@ -7,24 +7,32 @@ import Link from "next/link";
 const page = async () => {
   const user = await CurrentUser();
 
+  const store = await prisma.store.findUnique({
+    where: { userId: user?.id },
+  });
+
   const products = await prisma.product.findMany({
     where: {
-      store: {
-        userId: user?.id,
-      },
+      storeId: store?.id,
     },
+    include: {
+      images: true,
+      variants: true,
+      store: true,
+    },
+    orderBy: { createdAt: "desc" },
   });
 
   return (
-    <div className="w-full min-h-screen bg-zinc-50 dark:bg-zinc-900">
+    <div className="bg-zinc-50 dark:bg-zinc-900">
       <div className="flex justify-between items-center">
-        <h1 className="lg:text-2xl text-xl font-semibold p-4">My Products</h1>
+        <h1 className="text-2xl font-semibold p-4">My Products</h1>
         <Link
           href={"/market-place/dashboard/seller/products/new"}
           className="flex text-blue-700 font-semibold p-4 gap-1"
         >
           <Plus />
-          <p className="hidden md:block">New Product</p>
+          New Product
         </Link>
       </div>
       <ProductGrid products={products} />

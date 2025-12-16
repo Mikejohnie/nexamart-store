@@ -98,20 +98,24 @@ export const productVariantSchema = z.object({
   discount: z.number().optional(),
 });
 
+export const technicalDetailSchema = z.object({
+  key: z.string().min(1),
+  value: z.string().min(1),
+});
+
+export const productImageSchema = z.object({
+  url: z.string().url(),
+  key: z.string(),
+});
+
 // Product Schema
 export const productSchema = z.object({
   name: z.string().min(1),
   brand: z.string().optional(),
   description: z.string().min(1),
   specifications: z.string().optional(),
-  technicalDetails: z
-    .array(
-      z.object({
-        key: z.string().min(1),
-        value: z.string().min(1),
-      })
-    )
-    .optional(),
+  technicalDetails: z.array(technicalDetailSchema).optional(),
+
   categoryId: z.string().min(1),
   currency: z.string().min(1),
   shippingFee: z.number().min(0),
@@ -119,14 +123,7 @@ export const productSchema = z.object({
   discount: z.number().optional(),
   nonVariantStock: z.number().optional(),
 
-  images: z
-    .array(
-      z.object({
-        url: z.string().url(),
-        key: z.string(),
-      })
-    )
-    .min(1),
+  images: z.array(productImageSchema).min(1),
 
   variants: z.array(productVariantSchema).optional(),
 });

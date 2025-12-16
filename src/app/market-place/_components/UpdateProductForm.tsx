@@ -1,7 +1,6 @@
 "use client";
 
-import React from "react";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm, useFieldArray } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -37,6 +36,13 @@ type UpdateProductProps = {
   categories: Category[];
 };
 
+type PreviewImage = {
+  id: string;
+  url: string;
+  key: string;
+  deleting?: boolean;
+};
+
 const UpdateProductForm = ({ initialData, categories }: UpdateProductProps) => {
   const router = useRouter();
 
@@ -52,6 +58,14 @@ const UpdateProductForm = ({ initialData, categories }: UpdateProductProps) => {
   const [uploading, setUploading] = useState(false);
   const [previewImages, setPreviewImages] = useState<string[]>(() =>
     initialData.images.map((img) => img.imageUrl)
+  );
+
+  const [images, setImages] = useState<PreviewImage[]>(() =>
+    initialData.images.map((img) => ({
+      id: crypto.randomUUID(),
+      url: img.imageUrl,
+      key: img.imageKey,
+    }))
   );
 
   const initialHasVariants =

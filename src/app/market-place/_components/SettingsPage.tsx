@@ -14,7 +14,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
-import { Camera, Loader2, Save, StoreIcon, Upload } from "lucide-react";
+import { Camera, Loader2, Save } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { useCurrentUser } from "@/hooks/getCurrentUser";
 import Image from "next/image";
@@ -23,6 +23,7 @@ import { UploadButton } from "@/utils/uploadthing";
 import { deleteBannerAction, deleteLogoAction } from "@/actions/actions";
 import { useRouter } from "next/navigation";
 import { UpdateStoreAction } from "@/actions/auth/store";
+import { StoreDTO } from "@/lib/types";
 
 const BuyerSettingsPage = () => {
   return (
@@ -68,11 +69,11 @@ const SellerSettingsPage = () => {
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
 
-  const [store, setStore] = useState<any>();
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [logoKey, setLogoKey] = useState<string | null>(null);
-  const [bannerUrl, setBannerUrl] = useState<string | null>(null);
-  const [bannerKey, setBannerKey] = useState<string | null>(null);
+  const [store, setStore] = useState<StoreDTO | null | undefined>(undefined);
+  const [logoUrl, setLogoUrl] = useState<string | undefined>(undefined);
+  const [logoKey, setLogoKey] = useState<string | undefined>(undefined);
+  const [bannerUrl, setBannerUrl] = useState<string | undefined>(undefined);
+  const [bannerKey, setBannerKey] = useState<string | undefined>(undefined);
 
   const [uploading, setUploading] = useState(false);
   const [deleting, setDeleting] = useState(false);
@@ -85,10 +86,10 @@ const SellerSettingsPage = () => {
         const res = await fetch(`/api/user/${user.id}/store`);
         const data = await res.json();
         setStore(data);
-        setLogoUrl(data?.logo ?? null);
-        setLogoKey(data?.logoKey ?? null);
-        setBannerUrl(data?.bannerImage ?? null);
-        setBannerKey(data?.bannerKey ?? null);
+        setLogoUrl(data?.logo ?? undefined);
+        setLogoKey(data?.logoKey ?? undefined);
+        setBannerUrl(data?.bannerImage ?? undefined);
+        setBannerKey(data?.bannerKey ?? undefined);
       } catch {
         setStore(null);
       }
@@ -102,8 +103,9 @@ const SellerSettingsPage = () => {
     const res = await fetch(`/api/user/${user.id}/store`);
     const data = await res.json();
     setStore(data);
-    setLogoUrl(data?.logo ?? null);
-    setLogoKey(data?.logoKey ?? null);
+
+    setLogoUrl(data?.logo ?? undefined);
+    setLogoKey(data?.logoKey ?? undefined);
   };
 
   // LOADING UI
@@ -159,18 +161,40 @@ const SellerSettingsPage = () => {
     );
   }
 
-  // DELETE LOGO
+  // DELETE LOGO & Banner
   const handleDeleteLogo = async () => {
     if (!logoKey) return;
 
     setDeleting(true);
     try {
       await deleteLogoAction(logoKey);
-      setLogoUrl(null);
-      setLogoKey(null);
+      setLogoUrl(undefined);
+      setLogoKey(undefined);
       toast.success("Logo removed");
     } catch {
       toast.error("Unable to delete logo");
+    }
+    setDeleting(false);
+  };
+  const handleDeleteBanner = async () => {
+    if (!bannerKey) return;
+
+    setDeleting(true);
+    try {
+      await deleteBannerAction(bannerKey);
+      setBannerUrl(undefined);
+      setBannerKey(undefined);
+      setStore((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          bannerImage: null,
+          bannerKey: null,
+        };
+      });
+      toast.success("Banner removed");
+    } catch {
+      toast.error("Failed to delete banner");
     }
     setDeleting(false);
   };
@@ -181,6 +205,7 @@ const SellerSettingsPage = () => {
       router.push("/market-place/dashboard/seller/store/create-store");
     });
   };
+
   if (store === null) {
     return (
       <main className="space-y-8 max-w-2xl mx-auto">
@@ -215,12 +240,18 @@ const SellerSettingsPage = () => {
           name: store.name,
           description: store.description,
           location: store.location,
-          address: store.address,
-          tagline: store.tagline,
+          address: store.address ?? undefined,
+          tagline: store.tagline ?? undefined,
+
+          type: store.type,
+          fulfillmentType: store.fulfillmentType,
+
           logo: logoUrl,
-          logoKey: logoKey,
+          logoKey,
+
           bannerImage: bannerUrl,
-          bannerKey: bannerKey,
+          bannerKey,
+
           isActive: store.isActive,
           emailNotificationsEnabled: store.emailNotificationsEnabled,
         });
@@ -235,22 +266,6 @@ const SellerSettingsPage = () => {
         toast.error("Something went wrong.");
       }
     });
-  };
-
-  const handleDeleteBanner = async () => {
-    if (!bannerKey) return;
-
-    setDeleting(true);
-    try {
-      await deleteBannerAction(bannerKey);
-      setBannerUrl(null);
-      setBannerKey(null);
-      setStore({ ...store, bannerImage: null, bannerKey: null });
-      toast.success("Banner removed");
-    } catch {
-      toast.error("Failed to delete banner");
-    }
-    setDeleting(false);
   };
 
   return (
@@ -283,6 +298,48 @@ const SellerSettingsPage = () => {
               value={store.location || ""}
               onChange={(e) => setStore({ ...store, location: e.target.value })}
             />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <Label>Store Type</Label>
+              <Select
+                value={store.type}
+                onValueChange={(v) =>
+                  setStore({ ...store, type: v as StoreDTO["type"] })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="GENERAL">General Store</SelectItem>
+                  <SelectItem value="FOOD">Food Store</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div>
+              <Label>Delivery Method</Label>
+              <Select
+                value={store.fulfillmentType}
+                onValueChange={(v) =>
+                  setStore({
+                    ...store,
+                    fulfillmentType: v as StoreDTO["fulfillmentType"],
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="PHYSICAL">Physical</SelectItem>
+                  <SelectItem value="DIGITAL">Digital</SelectItem>
+                  <SelectItem value="HYBRID">Hybrid</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div>
