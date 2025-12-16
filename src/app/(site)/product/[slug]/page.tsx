@@ -5,13 +5,13 @@ import { createProductSlug } from "@/lib/productSlug";
 import { redirect } from "next/navigation";
 
 type PageProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export default async function Page({ params }: PageProps) {
   const userId = await CurrentUserId();
 
-  const rawSlug = params.slug;
+  const rawSlug = (await params).slug;
 
   const productId = rawSlug.split("-").at(-1)!;
 
