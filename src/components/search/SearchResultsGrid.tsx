@@ -1,7 +1,7 @@
 "use client";
 
 import { SearchProduct } from "@/lib/types";
-import SearchResultCard from "./SearchResultCard";
+import { SearchResultCard } from "./SearchResultCard";
 
 type Props = {
   products: SearchProduct[];
@@ -13,10 +13,15 @@ export default function SearchResultsGrid({ products }: Props) {
   }
 
   return (
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+    <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
       {products.map((product) => (
-        <SearchResultCard key={product.id} product={product} />
+        <div
+          key={product.id}
+          className="border rounded-xl bg-white shadow-sm hover:shadow-md transition"
+        >
+          <SearchResultCard product={product} />
+        </div>
       ))}
-    </div>
+    </section>
   );
 }

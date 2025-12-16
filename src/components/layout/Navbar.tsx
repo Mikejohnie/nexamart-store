@@ -20,7 +20,6 @@ import {
   Settings,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,7 +38,8 @@ import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 import CurrencySelector from "../currency/CurrencySelector";
 import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
-import { GlobalSearch } from "../search/GlobalSearch";
+import { SiteSearch } from "../search/SiteSearch";
+import { MobileSearchSheet } from "../search/MobileSearchSheet";
 
 const menuItems = [
   { href: "/help", icon: HelpCircle, label: "Help Center" },
@@ -135,7 +135,10 @@ export default function SiteNavbar({
 
           {/* SEARCH BAR */}
           <div className="hidden md:block flex-1 max-w-3xl mx-5">
-            <GlobalSearch variant="site" />
+            <SiteSearch />
+          </div>
+          <div className="flex md:hidden items-center gap-2">
+            <MobileSearchSheet variant="site" />
           </div>
 
           <div className="hidden md:flex items-center gap-8">

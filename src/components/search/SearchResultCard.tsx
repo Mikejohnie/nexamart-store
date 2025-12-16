@@ -1,40 +1,38 @@
-"use client";
-
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { SearchProductCard } from "@/lib/types";
+import { createProductSlug } from "@/lib/productSlug";
 
 type Props = {
   product: SearchProductCard;
+  active?: boolean;
+  onHover?: () => void;
+  onClick?: () => void;
 };
 
-export default function SearchResultCard({ product }: Props) {
-  const image = product.images[0]?.imageUrl ?? "/placeholder.png";
-
+export function SearchResultCard({ product, active, onHover, onClick }: Props) {
   return (
     <Link
-      href={`/product/${product.id}`}
-      className="group border rounded-xl p-3 bg-white hover:shadow-md transition"
+      href={`/product/${createProductSlug(product.name, product.id)}`}
+      onMouseEnter={onHover}
+      onClick={onClick}
+      className={`flex gap-3 p-2 rounded transition ${
+        active ? "bg-[var(--brand-blue-light)]" : "hover:bg-muted"
+      }`}
     >
-      {/* IMAGE */}
-      <div className="relative aspect-square bg-gray-50 rounded-lg overflow-hidden">
+      {product.images[0] && (
         <Image
-          src={image}
+          src={product.images[0].imageUrl}
           alt={product.name}
-          fill
-          className="object-contain group-hover:scale-105 transition"
+          width={40}
+          height={40}
+          className="rounded object-cover"
         />
-      </div>
+      )}
 
-      {/* INFO */}
-      <div className="mt-3 space-y-1">
-        <p className="text-sm font-medium line-clamp-2">{product.name}</p>
-
-        <p className="text-xs text-gray-500">{product.store.name}</p>
-
-        <p className="text-sm font-semibold text-[var(--brand-blue)]">
-          ₦{product.price.toLocaleString()}
-        </p>
+      <div className="min-w-0">
+        <p className="font-medium text-sm truncate">{product.name}</p>
+        <p className="text-xs text-gray-500 truncate">{product.store.name}</p>
       </div>
     </Link>
   );

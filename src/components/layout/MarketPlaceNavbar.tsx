@@ -16,7 +16,6 @@ import {
   FileChartColumn,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +35,8 @@ import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
 import { MobileSideNav } from "@/app/market-place/_components/SideNavbar";
 import DashboardPageSkeleton from "../skeletons/DashboardPageSkeleton";
-import { GlobalSearch } from "../search/GlobalSearch";
+import { MarketplaceSearch } from "../search/MarketplaceSearch";
+import { MobileSearchSheet } from "../search/MobileSearchSheet";
 
 type IconType = React.ComponentType<React.SVGProps<SVGSVGElement>>;
 
@@ -139,7 +139,10 @@ export default function MarketPlaceNavbar({
 
         {/* CENTER — SEARCH BAR */}
         <div className="hidden md:flex flex-1 max-w-2xl mx-6">
-          <GlobalSearch variant="marketplace" />
+          <MarketplaceSearch />
+        </div>
+        <div className="flex md:hidden items-center gap-2">
+          <MobileSearchSheet variant="marketplace" />
         </div>
 
         {/* RIGHT — QUICK ICONS + ACCOUNT */}
