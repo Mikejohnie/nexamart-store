@@ -8,13 +8,13 @@ import SearchEmptyState from "@/components/search/SearchEmptyState";
 import SearchResultsGrid from "@/components/search/SearchResultsGrid";
 
 type SearchPageProps = {
-  searchParams: {
+  searchParams: Promise<{
     q?: string;
-  };
+  }>;
 };
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = searchParams.q?.trim() || "";
+  const query = (await searchParams).q?.trim() || "";
 
   const [trending, recent] = await Promise.all([
     getTrendingSearches(),
