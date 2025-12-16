@@ -192,7 +192,7 @@ const SellerSettingsPage = () => {
         <Button
           onClick={handleCreateStore}
           disabled={isPending}
-          className="disabled:opacity-70 disabled:cursor-not-allowed"
+          className="disabled:opacity-70 disabled:cursor-not-allowed bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] text-white px-5 py-3 rounded-lg text-lg"
         >
           {isPending ? (
             <div className="flex items-center gap-2">
