@@ -48,13 +48,14 @@ model User {
 
   Notification Notification[]
 
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  Account       Account[]
-  Session       Session[]
-  Review        Review[]
-  StoreFollower StoreFollower[]
-  StoreReview   StoreReview[]
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  Account         Account[]
+  Session         Session[]
+  Review          Review[]
+  StoreFollower   StoreFollower[]
+  StoreReview     StoreReview[]
+  searchHistories SearchHistory[]
 }
 
 enum UserRole {
@@ -228,7 +229,7 @@ model Category {
 
 /**
  * ===========================
- * REVIEWS
+ * REVIEWS & SEARCH
  * ===========================
  */
 
@@ -246,6 +247,25 @@ model Review {
   updatedAt DateTime @updatedAt
 
   @@unique([productId, userId])
+}
+
+model SearchHistory {
+  id        String   @id @default(cuid())
+  query     String
+  userId    String?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([query])
+  @@index([userId])
+}
+
+model SearchKeyword {
+  id        String   @id @default(cuid())
+  keyword   String   @unique
+  count     Int      @default(1)
+  updatedAt DateTime @updatedAt
 }
 
 /**

@@ -1,6 +1,8 @@
 "use server";
 
+import { CurrentUserId } from "@/lib/currentUser";
 import { prisma } from "@/lib/prisma";
+import { GlobalSearchResult } from "@/lib/types";
 
 export type SearchParams = {
   query: string;
@@ -12,7 +14,7 @@ export async function globalSearchAction({
   query,
   limit = 12,
   cursor,
-}: SearchParams) {
+}: SearchParams): Promise<GlobalSearchResult> {
   if (!query || query.trim().length < 2) {
     return {
       products: [],
@@ -41,7 +43,7 @@ export async function globalSearchAction({
       ],
     },
 
-    take: limit + 1, // fetch one extra to detect next page
+    take: limit + 1,
     cursor: cursor ? { id: cursor } : undefined,
     skip: cursor ? 1 : 0,
 
@@ -68,7 +70,71 @@ export async function globalSearchAction({
   }
 
   return {
-    products,
+    products: products.map((p) => ({
+      id: p.id,
+      name: p.name,
+
+      price: p.basePrice,
+
+      images: p.images.map((img) => ({
+        imageUrl: img.imageUrl,
+      })),
+
+      store: {
+        id: p.store.id,
+        name: p.store.name,
+        slug: p.store.slug ?? undefined,
+      },
+
+      category: p.category
+        ? {
+            id: p.category.id,
+            name: p.category.name,
+            slug: p.category.slug,
+          }
+        : null,
+    })),
     nextCursor,
   };
+}
+
+export async function recordSearchAction(query: string) {
+  if (!query || query.trim().length < 2) return;
+
+  const normalized = query.toLowerCase().trim();
+  const userId = await CurrentUserId();
+
+  await prisma.$transaction([
+    prisma.searchHistory.create({
+      data: {
+        query: normalized,
+        userId: userId ?? null,
+      },
+    }),
+
+    prisma.searchKeyword.upsert({
+      where: { keyword: normalized },
+      update: { count: { increment: 1 } },
+      create: { keyword: normalized, count: 1 },
+    }),
+  ]);
+}
+
+export async function getUserRecentSearches(limit = 6) {
+  const userId = await CurrentUserId();
+  if (!userId) return [];
+
+  return prisma.searchHistory.findMany({
+    where: { userId },
+    orderBy: { createdAt: "desc" },
+    take: limit,
+    distinct: ["query"],
+  });
+}
+
+export async function getTrendingSearches(limit = 8) {
+  return prisma.searchKeyword.findMany({
+    orderBy: { count: "desc" },
+    take: limit,
+  });
 }

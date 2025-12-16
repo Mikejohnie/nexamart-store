@@ -105,12 +105,6 @@ export default function SiteNavbar({
   const pathname = usePathname();
   const { data: user } = useCurrentUserQuery(initialUser);
 
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
-
   const logout = useLogout();
 
   return (

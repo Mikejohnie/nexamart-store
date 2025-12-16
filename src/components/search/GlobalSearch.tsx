@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import Image from "next/image";
-import { Search } from "lucide-react";
-import { globalSearchAction } from "@/actions/search";
+import { globalSearchAction, recordSearchAction } from "@/actions/search";
 import { GlobalSearchResult } from "@/lib/types";
 import SearchSkeleton from "../skeletons/SearchSkeleton";
 import { useRouter } from "next/navigation";
 import { SearchInput } from "./SearchInput";
+import { saveLocalSearch } from "@/lib/searchHistory";
+import { createProductSlug } from "@/lib/productSlug";
 
 type GlobalSearchProps = {
   variant?: "site" | "marketplace";
@@ -78,7 +78,8 @@ export function GlobalSearch({ variant = "site" }: GlobalSearchProps) {
 
     if (e.key === "Enter") {
       e.preventDefault();
-
+      saveLocalSearch(query);
+      recordSearchAction(query);
       if (activeIndex >= 0) {
         router.push(`/product/${items[activeIndex].id}`);
       } else {
@@ -122,7 +123,7 @@ export function GlobalSearch({ variant = "site" }: GlobalSearchProps) {
                 {results.products.map((p, i) => (
                   <Link
                     key={p.id}
-                    href={`/product/${p.id}`}
+                    href={`/product/${createProductSlug(p.name, p.id)}`}
                     className={`flex gap-3 p-2 rounded transition ${
                       i === activeIndex
                         ? "bg-[var(--brand-blue-light)]"

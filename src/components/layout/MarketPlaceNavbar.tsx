@@ -53,7 +53,6 @@ export default function MarketPlaceNavbar({
 }) {
   const pathname = usePathname();
   const { data: user, isLoading, isError } = useCurrentUserQuery(initialUser);
-  const [searchQuery, setSearchQuery] = useState("");
   const [hasNewAlert, setHasNewAlert] = useState(false);
 
   const [open, setOpen] = useState(false);
@@ -79,10 +78,6 @@ export default function MarketPlaceNavbar({
   if (!role || role === "USER") {
     return null;
   }
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-  };
 
   const sellerNav: QuickNavItem[] = [
     {

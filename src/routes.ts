@@ -5,6 +5,9 @@ export const publicRoutes = [
   "/auth/reset-password",
   "/api/uploadthing",
   "/category",
+  "/product/:slug",
+  "/search",
+  "/product",
 ];
 
 export const authRoutes = [

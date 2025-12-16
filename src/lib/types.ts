@@ -132,17 +132,28 @@ export type SearchCategory = {
   slug: string;
 };
 
-export type SearchProduct = {
-  id: string;
-  name: string;
-  images: SearchImage[];
-  store: SearchStore;
-  category: SearchCategory;
-};
-
 export type GlobalSearchResult = {
   products: SearchProduct[];
   nextCursor: string | null;
   stores?: SearchStore[];
   categories?: SearchCategory[];
 };
+
+export type SearchProduct = {
+  id: string;
+  name: string;
+
+  price: number;
+  images: {
+    imageUrl: string;
+  }[];
+  store: {
+    id: string;
+    name: string;
+  };
+};
+
+export type SearchProductCard = Pick<
+  SearchProduct,
+  "id" | "name" | "price" | "images" | "store"
+>;
