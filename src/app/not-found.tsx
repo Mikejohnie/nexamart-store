@@ -17,7 +17,7 @@ const NotFoundError: React.FC = () => {
       router.push("/market-place/dashboard/seller");
     else if (user?.role === "RIDER")
       router.push("/market-place/dashboard/rider");
-    else router.push("/customer");
+    else router.push("/");
   };
 
   return (
