@@ -1,13 +1,7 @@
-import dynamic from "next/dynamic";
 import MarketPlaceNavbar from "@/components/layout/MarketPlaceNavbar";
 import SiteNavbar from "@/components/layout/Navbar";
 import { CurrentUser } from "@/lib/currentUser";
-
-// ✅ Lazy-load footer
-const Footer = dynamic(() => import("@/components/layout/Footer"), {
-  ssr: false,
-  loading: () => <div className="h-24 bg-[#232F3E] animate-pulse" />,
-});
+import LazyFooter from "./LazyFooter";
 
 export default async function SiteLayout({
   children,
@@ -29,7 +23,7 @@ export default async function SiteLayout({
       <main className="flex-1">{children}</main>
 
       {/* LAZY FOOTER */}
-      <Footer />
+      <LazyFooter />
     </div>
   );
 }
