@@ -8,11 +8,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useCurrencyStore } from "@/stores/useCurrencyStore";
 import { Globe } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const currencies = ["USD", "NGN", "GBP", "EUR", "KES", "ZAR", "CAD"];
 
 export default function CurrencySelector() {
   const { currency, setCurrency } = useCurrencyStore();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => setMounted(true), []);
+
+  if (!mounted) return null;
 
   return (
     <DropdownMenu>

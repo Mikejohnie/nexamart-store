@@ -21,6 +21,10 @@ export const useCurrencyStore = create<CurrencyStore>()(
     }),
     {
       name: "currency-store",
+      version: 1,
+      migrate(persistedState, version) {
+        return persistedState;
+      },
     }
   )
 );
