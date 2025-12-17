@@ -7,9 +7,7 @@ import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { formatCurrency } from "@/utils/formatCurrency";
-// import { useCurrency } from "@/hooks/useCurrency";
-// import { convertPrice } from "@/utils/convertPrice";
+import { usePrice } from "@/lib/formatPrice";
 
 type ProductCardProps = {
   productData: FullProduct;
@@ -17,9 +15,6 @@ type ProductCardProps = {
 
 const ProductCard = ({ productData }: ProductCardProps) => {
   const { data: user } = useCurrentUserQuery();
-
-  //   const { currency, rates } = useCurrency();
-  // const converted = convertPrice(productData.basePrice, productData.currency ?? "USD", currency, rates);
 
   if (!productData) {
     return (
@@ -46,19 +41,19 @@ const ProductCard = ({ productData }: ProductCardProps) => {
 
   const cheapestVariant = useMemo(() => {
     if (!productData.variants?.length) return null;
-    return [...productData.variants].sort((a, b) => a.price - b.price)[0];
+    return [...productData.variants].sort((a, b) => a.priceUSD - b.priceUSD)[0];
   }, [productData.variants]);
 
   const displayPrice = useMemo(() => {
-    if (!cheapestVariant) return productData.basePrice;
-    return cheapestVariant.price;
-  }, [cheapestVariant, productData.basePrice]);
+    if (!cheapestVariant) return productData.basePriceUSD;
+    return cheapestVariant.priceUSD;
+  }, [cheapestVariant, productData.basePriceUSD]);
 
   const displayOldPrice = useMemo(() => {
     if (!cheapestVariant) return null;
-    if (!cheapestVariant.discount || !(cheapestVariant.oldPrice ?? 0))
+    if (!cheapestVariant.discount || !(cheapestVariant.oldPriceUSD ?? 0))
       return null;
-    return cheapestVariant.oldPrice;
+    return cheapestVariant.oldPriceUSD;
   }, [cheapestVariant]);
 
   const displayDiscount = useMemo(() => {
@@ -118,22 +113,19 @@ const ProductCard = ({ productData }: ProductCardProps) => {
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
             <p className="text-xl font-bold text-[var(--brand-black)] dark:text-white">
-              {formatCurrency(displayPrice, productData.currency ?? "USD")}
+              {usePrice(displayPrice)}
             </p>
 
             {displayOldPrice && (
               <span className="line-through text-sm text-gray-400">
-                {formatCurrency(displayOldPrice, productData.currency ?? "USD")}
+                {usePrice(displayOldPrice)}
               </span>
             )}
           </div>
 
           <small className="text-[11px] text-gray-500">
-            {productData.shippingFee && productData.shippingFee > 0
-              ? `+ ${formatCurrency(
-                  productData.shippingFee,
-                  productData.currency ?? "USD"
-                )} shipping`
+            {productData.shippingFeeUSD && productData.shippingFeeUSD > 0
+              ? `+ ${usePrice(productData.shippingFeeUSD)} shipping`
               : "FREE Shipping"}
           </small>
 

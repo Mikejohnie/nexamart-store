@@ -13,20 +13,11 @@ import WishlistCardSkeleton from "../skeletons/WishlistCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Separator } from "../ui/separator";
 import AddToCartControl from "./AddtoCartButton";
+import { usePrice } from "@/lib/formatPrice";
 
 interface Props {
   initialData: FullProduct[];
 }
-
-const currencySymbol = (currency: string | null | undefined) => {
-  const map: Record<string, string> = {
-    NGN: "₦",
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-  };
-  return map[currency ?? "USD"] ?? currency ?? "";
-};
 
 const WishListPage = ({ initialData }: Props) => {
   const router = useRouter();
@@ -106,10 +97,8 @@ const WishListPage = ({ initialData }: Props) => {
                 const discount = product.discount ?? 0;
                 const oldPrice =
                   discount > 0
-                    ? product.basePrice / (1 - discount / 100)
+                    ? product.basePriceUSD / (1 - discount / 100)
                     : null;
-
-                const symbol = currencySymbol(product.currency);
 
                 return (
                   <Card
@@ -147,15 +136,12 @@ const WishListPage = ({ initialData }: Props) => {
 
                       <div className="flex items-center gap-2">
                         <p className="font-bold text-[17px] text-black">
-                          {symbol}
-                          {product.basePrice.toLocaleString()}
+                          {usePrice(product.basePriceUSD)}
                         </p>
+
                         {oldPrice && (
                           <p className="line-through text-[12px] text-gray-400">
-                            {symbol}
-                            {oldPrice.toLocaleString(undefined, {
-                              maximumFractionDigits: 0,
-                            })}
+                            {usePrice(oldPrice)}
                           </p>
                         )}
                       </div>

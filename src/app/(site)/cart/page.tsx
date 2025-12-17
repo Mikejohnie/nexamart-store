@@ -22,15 +22,14 @@ export default async function page() {
             select: {
               id: true,
               name: true,
-              basePrice: true,
-              currency: true,
+              basePriceUSD: true,
               images: true,
             },
           },
           variant: {
             select: {
               id: true,
-              price: true,
+              priceUSD: true,
               color: true,
               size: true,
             },

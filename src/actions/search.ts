@@ -80,7 +80,7 @@ export async function globalSearchAction({
     products: products.map((p) => ({
       id: p.id,
       name: p.name,
-      price: p.basePrice,
+      price: p.basePriceUSD,
       images: p.images.map((img) => ({
         imageUrl: img.imageUrl,
       })),

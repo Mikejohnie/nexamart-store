@@ -2,10 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useState, useMemo } from "react";
 import WishlistButton from "./WishlistButton";
 import AddToCartControl from "./AddtoCartButton";
 import { ProductCardType } from "@/lib/types";
+import { usePrice } from "@/lib/formatPrice";
 
 export default function PublicProductCard({
   product,
@@ -16,49 +16,13 @@ export default function PublicProductCard({
   userId?: string | null;
   isWishlisted?: boolean;
 }) {
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
-  const [selectedSize, setSelectedSize] = useState<string | null>(null);
-
-  const variants = product.variants ?? [];
-
-  const colors = [...new Set(variants.map((v) => v.color).filter(Boolean))];
-  const sizes = [...new Set(variants.map((v) => v.size).filter(Boolean))];
-
-  //   const { currency, rates } = useCurrency();
-  // const converted = convertPrice(product.basePrice, product.currency, currency, rates);
-
-  const selectedVariant = useMemo(() => {
-    if (!variants.length) return null;
-    return (
-      variants.find(
-        (v) =>
-          (!selectedColor || v.color === selectedColor) &&
-          (!selectedSize || v.size === selectedSize)
-      ) ?? null
-    );
-  }, [selectedColor, selectedSize, variants]);
-
-  const price = selectedVariant?.price ?? product.basePrice;
-  const oldPrice = selectedVariant?.oldPrice ?? product.oldPrice ?? null;
+  const price = product.basePriceUSD;
+  const oldPrice = product.oldPriceUSD ?? null;
 
   const discount =
     oldPrice && oldPrice > price
       ? Math.round(((oldPrice - price) / oldPrice) * 100)
       : null;
-
-  const currency = product.currency || "USD";
-  const safeFormat = (n: number) => {
-    try {
-      return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency,
-      }).format(n);
-    } catch {
-      return `$${n.toLocaleString()}`;
-    }
-  };
-
-  const format = safeFormat;
 
   return (
     <div className="relative border rounded-xl light:bg-white shadow-sm hover:shadow-lg transition duration-300 group overflow-hidden">
@@ -69,7 +33,6 @@ export default function PublicProductCard({
                 font-semibold px-2 py-1 rounded-md shadow-sm z-10
               "
         >
-          {" "}
           -{discount}%
         </span>
       )}
@@ -101,10 +64,13 @@ export default function PublicProductCard({
         </Link>
 
         <div className="mt-2 flex items-baseline gap-2">
-          <p className="font-semibold text-gray-900 text-sm">{format(price)}</p>
+          <p className="font-semibold text-gray-900 text-sm">
+            {usePrice(price)}
+          </p>
+
           {discount && oldPrice && (
             <p className="line-through text-gray-400 text-xs">
-              {format(oldPrice)}
+              {usePrice(oldPrice)}
             </p>
           )}
         </div>

@@ -25,6 +25,7 @@ import {
 import { Separator } from "../ui/separator";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
+import { usePrice } from "@/lib/formatPrice";
 
 type Props = {
   data: FullProduct;
@@ -46,7 +47,6 @@ export default function ProductPublicDetail({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  /* Sync cart & wishlist stores */
   useEffect(() => {
     if (cartItems?.length) useCartStore.getState().sync(cartItems);
   }, [cartItems]);
@@ -75,30 +75,19 @@ export default function ProductPublicDetail({
     );
   }, [selectedColor, selectedSize, data.variants]);
 
-  const currencySymbol = (currency: string) => {
-    const map: Record<string, string> = {
-      NGN: "₦",
-      USD: "$",
-      EUR: "€",
-      GBP: "£",
-    };
-    return map[currency] || currency;
-  };
-
-  const symbol = currencySymbol(data.currency ?? "USD");
-
   /* Pricing logic */
-  const price = selectedVariant?.price ?? data.basePrice;
-  const oldPrice = selectedVariant?.oldPrice ?? data.oldPrice ?? null;
+  const price = selectedVariant?.priceUSD ?? data.basePriceUSD;
+  const oldPrice = selectedVariant?.oldPriceUSD ?? data.oldPriceUSD ?? 0;
   const discount =
     oldPrice && oldPrice > price
       ? Math.round(((oldPrice - price) / oldPrice) * 100)
       : null;
 
-  const totalStock = useMemo(
-    () => data.variants.reduce((sum, v) => sum + v.stock, 0),
-    [data.variants]
-  );
+  const totalStock = useMemo(() => {
+    if (selectedVariant) return selectedVariant.stock;
+    return data.variants.reduce((sum, v) => sum + v.stock, 0);
+  }, [data.variants, selectedVariant]);
+
   const inStock = totalStock > 0;
 
   return (
@@ -197,8 +186,7 @@ export default function ProductPublicDetail({
           {/* Pricing Box */}
           <div className="p-6 rounded-xl border bg-white dark:bg-neutral-900 shadow space-y-2">
             <div className="text-4xl font-semibold text-gray-900 dark:text-gray-100">
-              {symbol}
-              {price.toLocaleString()}
+              {usePrice(price)}
             </div>
 
             {discount && (
@@ -207,8 +195,7 @@ export default function ProductPublicDetail({
                   {discount}% OFF
                 </span>
                 <span className="line-through text-gray-500">
-                  {symbol}
-                  {oldPrice?.toLocaleString()}
+                  {usePrice(oldPrice)}
                 </span>
               </p>
             )}
@@ -264,6 +251,7 @@ export default function ProductPublicDetail({
           <AddToCartControl
             productId={data.id}
             variantId={selectedVariant?.id ?? null}
+            // disabled={!inStock}
           />
 
           {/* Badges */}

@@ -14,35 +14,22 @@ import {
 } from "@/actions/auth/cart";
 import { FullCart } from "@/lib/types";
 import { useCartStore } from "@/stores/useCartstore";
+import { usePrice } from "@/lib/formatPrice";
 
 interface Props {
   cart: FullCart;
 }
-
-/* Currency symbol resolver */
-const currencySymbol = (currency: string | null | undefined) => {
-  const map: Record<string, string> = {
-    NGN: "₦",
-    USD: "$",
-    EUR: "€",
-    GBP: "£",
-  };
-  return currency && map[currency] ? map[currency] : "";
-};
 
 const CartPage = ({ cart }: Props) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const { change, remove } = useCartStore();
 
-  // subtotal based on item currency
-  const subtotal = cart.items.reduce((sum, item) => {
-    const price = item.variant?.price ?? item.product.basePrice;
-    return sum + price * item.quantity;
-  }, 0);
+  const subtotalUSD = cart.items.reduce((sum, item) => {
+    const priceUSD = item.variant?.priceUSD ?? item.product.basePriceUSD;
 
-  const currency = cart.items[0]?.product.currency ?? "USD";
-  const symbol = currencySymbol(currency);
+    return sum + priceUSD * item.quantity;
+  }, 0);
 
   const increase = (productId: string, variantId: string | null) => {
     change(productId, variantId, +1);
@@ -106,8 +93,12 @@ const CartPage = ({ cart }: Props) => {
           {/* CART LIST */}
           <div className="lg:col-span-2 space-y-4">
             {cart.items.map((item) => {
-              const price = item.variant?.price ?? item.product.basePrice;
-              const totalPrice = item.quantity * price;
+              const priceUSD =
+                item.variant?.priceUSD ?? item.product.basePriceUSD;
+
+              const totalPriceUSD = priceUSD * item.quantity;
+
+              const displayPrice = usePrice(totalPriceUSD);
 
               return (
                 <Card
@@ -153,8 +144,7 @@ const CartPage = ({ cart }: Props) => {
 
                         {/* Mobile Price */}
                         <p className="font-semibold text-[var(--brand-blue)] text-base sm:hidden mt-1">
-                          {symbol}
-                          {totalPrice.toLocaleString()}
+                          {displayPrice}
                         </p>
                       </div>
                     </div>
@@ -163,8 +153,7 @@ const CartPage = ({ cart }: Props) => {
                     <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 w-full sm:w-auto">
                       {/* Desktop Price */}
                       <p className="hidden sm:block text-lg font-semibold text-[var(--brand-blue)]">
-                        {symbol}
-                        {totalPrice.toLocaleString()}
+                        {displayPrice}
                       </p>
 
                       {/* Quantity Controls */}
@@ -211,10 +200,7 @@ const CartPage = ({ cart }: Props) => {
             <div className="space-y-3 text-[15px]">
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
-                <span className="font-medium">
-                  {symbol}
-                  {subtotal.toLocaleString()}
-                </span>
+                <span className="font-medium">{usePrice(subtotalUSD)}</span>
               </div>
 
               <div className="flex justify-between">
@@ -228,10 +214,7 @@ const CartPage = ({ cart }: Props) => {
 
               <div className="flex justify-between text-lg font-bold text-black">
                 <span>Total</span>
-                <span>
-                  {symbol}
-                  {subtotal.toLocaleString()}
-                </span>
+                <span>{usePrice(subtotalUSD)}</span>
               </div>
             </div>
 

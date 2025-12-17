@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { ChevronLeft, ChevronRight, Trash, Edit, X } from "lucide-react";
+import { Trash, Edit, X } from "lucide-react";
 import {
   Dialog,
   DialogClose,
@@ -12,8 +12,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { FullProduct } from "@/lib/types";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import Link from "next/link";
 import { deleteProductAction } from "@/actions/auth/product";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
@@ -27,18 +25,9 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "../ui/carousel";
+import { usePrice } from "@/lib/formatPrice";
 
 type ProductDetailProps = { data: FullProduct };
-
-const currencySymbol = (currency: string) => {
-  const map: Record<string, string> = {
-    USD: "$",
-    NGN: "₦",
-    EUR: "€",
-    GBP: "£",
-  };
-  return map[currency] || currency;
-};
 
 export default function SellerProductDetail({ data }: ProductDetailProps) {
   const router = useRouter();
@@ -61,19 +50,6 @@ export default function SellerProductDetail({ data }: ProductDetailProps) {
 
   const inStock = totalStock > 0;
 
-  const priceDisplay = useMemo(() => {
-    const symbol = currencySymbol(data.currency ?? "USD");
-    if (!data.variants || data.variants.length === 0)
-      return `${symbol}${data.basePrice.toLocaleString()}`;
-
-    const values = data.variants.map((v) => v.price);
-    const min = Math.min(...values);
-    const max = Math.max(...values);
-    return min === max
-      ? `${symbol}${min.toLocaleString()}`
-      : `${symbol}${min.toLocaleString()} — ${symbol}${max.toLocaleString()}`;
-  }, [data.variants, data.basePrice, data.currency]);
-
   const savingsPercent = useMemo(() => {
     const discounts = data.variants?.map((v) => v.discount ?? 0) ?? [];
     const maxDiscount = discounts.length ? Math.max(...discounts) : 0;
@@ -92,6 +68,13 @@ export default function SellerProductDetail({ data }: ProductDetailProps) {
       setIsDeleting(false);
     });
   };
+
+  const basePriceUSD =
+    data.variants.length > 0
+      ? Math.min(...data.variants.map((v) => v.priceUSD))
+      : data.basePriceUSD;
+
+  const priceDisplay = usePrice(basePriceUSD);
 
   return (
     <main className="max-w-7xl mx-auto space-y-10 py-8 px-3 sm:px-6">
@@ -191,8 +174,7 @@ export default function SellerProductDetail({ data }: ProductDetailProps) {
                       <span className="font-medium pl-4">{v.size}</span>
                     </span>
                     <span className="text-gray-500">
-                      {currencySymbol(data.currency ?? "USD")}
-                      {v.price.toLocaleString()}
+                      {usePrice(v.priceUSD)}
                     </span>
                     <span className="text-gray-500">Stock: {v.stock}</span>
                     <span className="text-gray-400 text-xs">SKU: {v.sku}</span>

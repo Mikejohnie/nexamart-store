@@ -47,13 +47,12 @@ export type FullCart = {
     product: {
       id: string;
       name: string;
-      currency: string | null;
-      basePrice: number;
+      basePriceUSD: number;
       images: ProductImage[];
     };
     variant?: {
       id: string;
-      price: number;
+      priceUSD: number;
       color: string | null;
       size: string | null;
     } | null;
