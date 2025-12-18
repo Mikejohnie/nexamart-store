@@ -25,7 +25,7 @@ import {
   CarouselPrevious,
   CarouselNext,
 } from "../ui/carousel";
-import { usePrice } from "@/lib/formatPrice";
+import { formatUSD } from "@/lib/formatUSD";
 
 type ProductDetailProps = { data: FullProduct };
 
@@ -74,7 +74,7 @@ export default function SellerProductDetail({ data }: ProductDetailProps) {
       ? Math.min(...data.variants.map((v) => v.priceUSD))
       : data.basePriceUSD;
 
-  const priceDisplay = usePrice(basePriceUSD);
+  const priceDisplay = formatUSD(basePriceUSD);
 
   return (
     <main className="max-w-7xl mx-auto space-y-10 py-8 px-3 sm:px-6">
@@ -174,7 +174,7 @@ export default function SellerProductDetail({ data }: ProductDetailProps) {
                       <span className="font-medium pl-4">{v.size}</span>
                     </span>
                     <span className="text-gray-500">
-                      {usePrice(v.priceUSD)}
+                      {formatUSD(v.priceUSD)}
                     </span>
                     <span className="text-gray-500">Stock: {v.stock}</span>
                     <span className="text-gray-400 text-xs">SKU: {v.sku}</span>

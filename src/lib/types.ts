@@ -216,3 +216,28 @@ export type BuyerWallet = {
   currency: string;
   transactions: WalletTransaction[];
 };
+
+export type OrderStatus =
+  | "PENDING"
+  | "PROCESSING"
+  | "SHIPPED"
+  | "IN_TRANSIT"
+  | "DELIVERED"
+  | "CANCELLED"
+  | "RETURNED";
+
+export type DeliveryType =
+  | "HOME_DELIVERY"
+  | "STORE_PICKUP"
+  | "STATION_PICKUP"
+  | "EXPRESS";
+
+export type SellerOrder = {
+  id: string;
+  status: OrderStatus;
+  deliveryType: DeliveryType;
+  totalAmount: number;
+  customer?: {
+    name?: string | null;
+  } | null;
+};

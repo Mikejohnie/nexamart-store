@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CurrentUserId } from "@/lib/currentUser";
 import { ClearCartOnSuccess } from "./ClearCartOnSuccess";
-import { formatUSD } from "@/lib/formatPriceServer";
+import { formatUSD } from "@/lib/formatUSD";
 
 export default async function OrderSuccessPage({
   params,

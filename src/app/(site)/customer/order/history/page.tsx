@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatUSD } from "@/lib/formatPriceServer";
+import { formatUSD } from "@/lib/formatUSD";
 
 export default async function OrdersPage() {
   const userId = await CurrentUserId();

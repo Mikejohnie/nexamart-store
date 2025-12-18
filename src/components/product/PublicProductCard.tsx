@@ -5,7 +5,8 @@ import Link from "next/link";
 import WishlistButton from "./WishlistButton";
 import AddToCartControl from "./AddtoCartButton";
 import { ProductCardType } from "@/lib/types";
-import { usePrice } from "@/lib/formatPrice";
+import { formatPrice } from "@/lib/formatPrice";
+import { useCurrency } from "@/lib/useCurrency";
 
 export default function PublicProductCard({
   product,
@@ -16,12 +17,14 @@ export default function PublicProductCard({
   userId?: string | null;
   isWishlisted?: boolean;
 }) {
-  const price = product.basePriceUSD;
-  const oldPrice = product.oldPriceUSD ?? null;
+  const { currency, rates } = useCurrency();
+
+  const priceUSD = product.basePriceUSD;
+  const oldPriceUSD = product.oldPriceUSD ?? null;
 
   const discount =
-    oldPrice && oldPrice > price
-      ? Math.round(((oldPrice - price) / oldPrice) * 100)
+    oldPriceUSD && oldPriceUSD > priceUSD
+      ? Math.round(((oldPriceUSD - priceUSD) / oldPriceUSD) * 100)
       : null;
 
   return (
@@ -63,14 +66,14 @@ export default function PublicProductCard({
           </p>
         </Link>
 
-        <div className="mt-2 flex items-baseline gap-2">
+        <div className="flex items-baseline gap-2">
           <p className="font-semibold text-gray-900 text-sm">
-            {usePrice(price)}
+            {formatPrice(priceUSD, currency, rates)}
           </p>
 
-          {discount && oldPrice && (
+          {discount && oldPriceUSD && (
             <p className="line-through text-gray-400 text-xs">
-              {usePrice(oldPrice)}
+              {formatPrice(oldPriceUSD, currency, rates)}
             </p>
           )}
         </div>

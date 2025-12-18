@@ -7,14 +7,14 @@ import { Separator } from "@/components/ui/separator";
 import { Minus, Plus, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-
 import {
   updateQuantityAction,
   removeFromCartAction,
 } from "@/actions/auth/cart";
 import { FullCart } from "@/lib/types";
 import { useCartStore } from "@/stores/useCartstore";
-import { usePrice } from "@/lib/formatPrice";
+import { formatPrice } from "@/lib/formatPrice";
+import { useCurrency } from "@/lib/useCurrency";
 
 interface Props {
   cart: FullCart;
@@ -23,6 +23,8 @@ interface Props {
 const CartPage = ({ cart }: Props) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+
+  const { currency, rates } = useCurrency();
   const { change, remove } = useCartStore();
 
   const subtotalUSD = cart.items.reduce((sum, item) => {
@@ -98,7 +100,7 @@ const CartPage = ({ cart }: Props) => {
 
               const totalPriceUSD = priceUSD * item.quantity;
 
-              const displayPrice = usePrice(totalPriceUSD);
+              const displayPrice = formatPrice(totalPriceUSD, currency, rates);
 
               return (
                 <Card
@@ -200,7 +202,9 @@ const CartPage = ({ cart }: Props) => {
             <div className="space-y-3 text-[15px]">
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
-                <span className="font-medium">{usePrice(subtotalUSD)}</span>
+                <span className="font-medium">
+                  {formatPrice(subtotalUSD, currency, rates)}
+                </span>
               </div>
 
               <div className="flex justify-between">
@@ -214,7 +218,7 @@ const CartPage = ({ cart }: Props) => {
 
               <div className="flex justify-between text-lg font-bold text-black">
                 <span>Total</span>
-                <span>{usePrice(subtotalUSD)}</span>
+                <span>{formatPrice(subtotalUSD, currency, rates)}</span>
               </div>
             </div>
 

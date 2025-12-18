@@ -10,7 +10,7 @@ import {
 import { toast } from "sonner";
 import { CheckCircle2, XCircle, Truck, LucideIcon } from "lucide-react";
 import { CurrentUser } from "@/lib/currentUser";
-import { usePrice } from "@/lib/formatPrice";
+import { formatUSD } from "@/lib/formatUSD";
 
 type ActionResult =
   | { success: string; error?: never }
@@ -147,7 +147,7 @@ export default async function SellerOrderDetails({
               )}
 
               <p className="font-semibold text-gray-900 mt-1">
-                {usePrice(item.price)} × {item.quantity}
+                {formatUSD(item.price)} × {item.quantity}
               </p>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default async function SellerOrderDetails({
 
         <div className="pt-4 flex justify-between font-bold text-lg">
           <span>Subtotal</span>
-          <span>{usePrice(group.subtotal)}</span>
+          <span>{formatUSD(group.subtotal)}</span>
         </div>
       </div>
 

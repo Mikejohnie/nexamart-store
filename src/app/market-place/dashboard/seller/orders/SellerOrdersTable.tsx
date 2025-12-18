@@ -17,18 +17,33 @@ import {
   Eye,
 } from "lucide-react";
 import Link from "next/link";
+import { formatPrice } from "@/lib/formatPrice";
+import { useCurrency } from "@/lib/useCurrency";
+import { OrderStatus, SellerOrder } from "@/lib/types";
 
-export default function SellerOrdersTable({ orders }: any) {
+type SellerOrderAction = (
+  sellerGroupId: string
+) => Promise<{ success?: string; error?: string }>;
+
+export default function SellerOrdersTable({
+  orders,
+}: {
+  orders: SellerOrder[];
+}) {
   const [isPending, startTransition] = useTransition();
 
-  const handleAction = (actionFn: any, id: string) => {
+  const { currency, rates } = useCurrency();
+
+  const handleAction = (actionFn: SellerOrderAction, id: string) => {
+    if (isPending) return;
+
     startTransition(async () => {
       const res = await actionFn(id);
       res?.error ? toast.error(res.error) : toast.success(res.success);
     });
   };
 
-  const statusColor = {
+  const statusColor: Record<OrderStatus, string> = {
     PENDING: "bg-yellow-200 text-yellow-800",
     PROCESSING: "bg-[#e0efff] text-[#3c9ee0]",
     SHIPPED: "bg-purple-100 text-purple-700",
@@ -36,7 +51,7 @@ export default function SellerOrdersTable({ orders }: any) {
     DELIVERED: "bg-green-100 text-green-700",
     CANCELLED: "bg-red-100 text-red-700",
     RETURNED: "bg-red-200 text-red-800",
-  } as any;
+  };
 
   return (
     <div className="space-y-6">
@@ -66,7 +81,7 @@ export default function SellerOrdersTable({ orders }: any) {
               </tr>
             )}
 
-            {orders.map((o: any) => (
+            {orders.map((o) => (
               <tr
                 key={o.id}
                 className="border-t hover:bg-gray-50 transition-colors"
@@ -80,10 +95,10 @@ export default function SellerOrdersTable({ orders }: any) {
                   </Link>
                 </td>
 
-                <td className="p-4 font-medium">{o.customer?.name}</td>
+                <td className="p-4 font-medium">{o.customer?.name ?? "—"}</td>
 
                 <td className="p-4 font-semibold text-gray-900">
-                  ₦{o.totalAmount.toLocaleString()}
+                  {formatPrice(o.totalAmount, currency, rates)}
                 </td>
 
                 <td className="p-4">
@@ -92,14 +107,14 @@ export default function SellerOrdersTable({ orders }: any) {
                       statusColor[o.status]
                     }`}
                   >
-                    {o.status.replace("_", " ")}
+                    {o.status.replaceAll("_", " ")}
                   </span>
                 </td>
 
                 {/* DELIVERY TYPE */}
                 <td className="p-4">
                   <span className="px-2 py-[3px] text-[11px] rounded-full bg-[#3c9ee0]/10 text-[#3c9ee0] font-medium">
-                    {o.deliveryType.replace("_", " ")}
+                    {o.deliveryType.replaceAll("_", " ")}
                   </span>
                 </td>
 
@@ -171,7 +186,7 @@ export default function SellerOrdersTable({ orders }: any) {
           </div>
         )}
 
-        {orders.map((o: any) => (
+        {orders.map((o) => (
           <div
             key={o.id}
             className="border rounded-xl bg-white p-4 shadow-sm flex flex-col gap-3"
@@ -183,23 +198,24 @@ export default function SellerOrdersTable({ orders }: any) {
                   statusColor[o.status]
                 }`}
               >
-                {o.status.replace("_", " ")}
+                {o.status.replaceAll("_", " ")}
               </span>
             </div>
 
             <p className="text-sm text-gray-600">
-              Customer: <span className="font-medium">{o.customer?.name}</span>
+              Customer:{" "}
+              <span className="font-medium">{o.customer?.name ?? "—"}</span>
             </p>
 
             <p className="text-sm text-gray-600">
               Delivery:{" "}
               <span className="font-semibold text-[#3c9ee0]">
-                {o.deliveryType.replace("_", " ")}
+                {o.deliveryType.replaceAll("_", " ")}
               </span>
             </p>
 
             <p className="text-lg font-bold text-gray-900">
-              ₦{o.totalAmount.toLocaleString()}
+              {formatPrice(o.totalAmount, currency, rates)}
             </p>
 
             <div className="flex flex-wrap gap-2 justify-between pt-2">

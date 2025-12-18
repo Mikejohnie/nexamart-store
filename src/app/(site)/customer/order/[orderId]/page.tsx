@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Truck, Store, ChevronRight } from "lucide-react";
-import { formatUSD } from "@/lib/formatPriceServer";
+import { formatUSD } from "@/lib/formatUSD";
 
 export default async function OrderDetailsPage({
   params,

@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { usePrice } from "@/lib/formatPrice";
+import { formatUSD } from "@/lib/formatUSD";
 
 type ProductCardProps = {
   productData: FullProduct;
@@ -112,20 +112,18 @@ const ProductCard = ({ productData }: ProductCardProps) => {
         {/* Price */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
-            <p className="text-xl font-bold text-[var(--brand-black)] dark:text-white">
-              {usePrice(displayPrice)}
-            </p>
+            <p className="text-xl font-bold">{formatUSD(displayPrice)}</p>
 
             {displayOldPrice && (
               <span className="line-through text-sm text-gray-400">
-                {usePrice(displayOldPrice)}
+                {formatUSD(displayOldPrice)}
               </span>
             )}
           </div>
 
           <small className="text-[11px] text-gray-500">
             {productData.shippingFeeUSD && productData.shippingFeeUSD > 0
-              ? `+ ${usePrice(productData.shippingFeeUSD)} shipping`
+              ? `+ ${formatUSD(productData.shippingFeeUSD)} shipping`
               : "FREE Shipping"}
           </small>
 

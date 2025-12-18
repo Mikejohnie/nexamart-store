@@ -13,7 +13,7 @@ import {
   XCircle,
   Package,
 } from "lucide-react";
-import { formatUSD } from "@/lib/formatPriceServer";
+import { formatUSD } from "@/lib/formatUSD";
 
 export default async function TrackOrderPage({
   params,

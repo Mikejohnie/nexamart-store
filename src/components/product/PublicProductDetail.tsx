@@ -25,7 +25,8 @@ import {
 import { Separator } from "../ui/separator";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
-import { usePrice } from "@/lib/formatPrice";
+import { formatPrice } from "@/lib/formatPrice";
+import { useCurrency } from "@/lib/useCurrency";
 
 type ProductVariant = FullProduct["variants"][number];
 
@@ -51,6 +52,8 @@ export default function ProductPublicDetail({
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const { currency, rates } = useCurrency();
+
   useEffect(() => {
     if (cartItems?.length) useCartStore.getState().sync(cartItems);
   }, [cartItems]);
@@ -72,12 +75,12 @@ export default function ProductPublicDetail({
   const [selectedVariant, setSelectedVariant] = useState(defaultVariant);
 
   /* Pricing logic */
-  const price = selectedVariant.priceUSD;
-  const oldPrice = selectedVariant.oldPriceUSD ?? null;
+  const priceUSD = selectedVariant.priceUSD;
+  const oldPriceUSD = selectedVariant.oldPriceUSD ?? null;
 
   const discount =
-    oldPrice && oldPrice > price
-      ? Math.round(((oldPrice - price) / oldPrice) * 100)
+    oldPriceUSD && oldPriceUSD > priceUSD
+      ? Math.round(((oldPriceUSD - priceUSD) / oldPriceUSD) * 100)
       : null;
 
   const totalStock = selectedVariant.stock;
@@ -196,16 +199,16 @@ export default function ProductPublicDetail({
           {/* Pricing Box */}
           <div className="p-6 rounded-xl border bg-white dark:bg-neutral-900 shadow space-y-2">
             <div className="text-4xl font-semibold text-gray-900 dark:text-gray-100">
-              {usePrice(price)}
+              {formatPrice(priceUSD, currency, rates)}
             </div>
 
-            {discount && oldPrice !== null && (
+            {discount && oldPriceUSD !== null && (
               <p className="flex items-center gap-2 text-red-600 text-sm">
                 <span className="font-bold bg-red-100 px-2 py-0.5 rounded">
                   {discount}% OFF
                 </span>
                 <span className="line-through text-gray-500">
-                  {usePrice(oldPrice)}
+                  {formatPrice(oldPriceUSD, currency, rates)}
                 </span>
               </p>
             )}
