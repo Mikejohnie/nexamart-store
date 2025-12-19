@@ -18,6 +18,7 @@ import {
   StoreIcon,
   HistoryIcon,
   Settings,
+  ShoppingCartIcon,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -57,6 +58,11 @@ const menuItems = [
     href: "/customer/wishlist",
     icon: Heart,
     label: "Wishlist",
+  },
+  {
+    href: "/customer/cart",
+    icon: ShoppingCartIcon,
+    label: "Cart",
   },
   {
     href: "/customer/voucher",
