@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Truck, Store, ChevronRight } from "lucide-react";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatBaseUSD } from "@/lib/formatBaseUSD";
 
 export default async function OrderDetailsPage({
   params,
@@ -95,7 +95,7 @@ export default async function OrderDetailsPage({
             </p>
             <p>
               <span className="font-semibold">Shipping Fee:</span>
-              {formatUSD(order.shippingFee)}
+              {formatBaseUSD(order.shippingFee)}
             </p>
             <p>
               <span className="font-semibold">Order Date:</span>
@@ -185,7 +185,7 @@ export default async function OrderDetailsPage({
                     )}
 
                     <p className="text-[#3c9ee0] font-semibold">
-                      {formatUSD(item.price)}
+                      {formatBaseUSD(item.price)}
                       <span className="text-gray-500">× {item.quantity}</span>
                     </p>
                   </div>
@@ -195,7 +195,7 @@ export default async function OrderDetailsPage({
 
             {/* SUBTOTAL */}
             <p className="text-right font-bold text-lg">
-              Subtotal:{formatUSD(group.subtotal)}
+              Subtotal:{formatBaseUSD(group.subtotal)}
             </p>
           </div>
         ))}
@@ -203,7 +203,7 @@ export default async function OrderDetailsPage({
 
       {/* TOTAL */}
       <div className="text-right text-2xl font-bold">
-        Total: {formatUSD(order.totalAmount)}
+        Total: {formatBaseUSD(order.totalAmount)}
       </div>
 
       {/* ACTIONS */}

@@ -13,8 +13,7 @@ import WishlistCardSkeleton from "../skeletons/WishlistCardSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import { Separator } from "../ui/separator";
 import AddToCartControl from "./AddtoCartButton";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 interface Props {
   initialData: FullProduct[];
@@ -23,8 +22,6 @@ interface Props {
 const WishListPage = ({ initialData }: Props) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
-
-  const { currency, rates } = useCurrency();
 
   const { data, isPending, refetch } = useQuery({
     queryKey: ["wishlist"],
@@ -139,12 +136,12 @@ const WishListPage = ({ initialData }: Props) => {
 
                       <div className="flex items-center gap-2">
                         <p className="font-bold text-[17px] text-black">
-                          {formatPrice(product.basePriceUSD, currency, rates)}
+                          {formatMoneyFromUSD(product.basePriceUSD)}
                         </p>
 
                         {oldPrice && (
                           <p className="line-through text-[12px] text-gray-400">
-                            {formatPrice(oldPrice, currency, rates)}
+                            {formatMoneyFromUSD(oldPrice)}
                           </p>
                         )}
                       </div>

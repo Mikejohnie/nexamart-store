@@ -13,8 +13,7 @@ import {
 } from "@/actions/auth/cart";
 import { FullCart } from "@/lib/types";
 import { useCartStore } from "@/stores/useCartstore";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 interface Props {
   cart: FullCart;
@@ -24,7 +23,6 @@ const CartPage = ({ cart }: Props) => {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const { currency, rates } = useCurrency();
   const { change, remove } = useCartStore();
 
   const subtotalUSD = cart.items.reduce((sum, item) => {
@@ -100,7 +98,7 @@ const CartPage = ({ cart }: Props) => {
 
               const totalPriceUSD = priceUSD * item.quantity;
 
-              const displayPrice = formatPrice(totalPriceUSD, currency, rates);
+              const displayPrice = formatMoneyFromUSD(totalPriceUSD);
 
               return (
                 <Card
@@ -203,7 +201,7 @@ const CartPage = ({ cart }: Props) => {
               <div className="flex justify-between">
                 <span>Items Subtotal</span>
                 <span className="font-medium">
-                  {formatPrice(subtotalUSD, currency, rates)}
+                  {formatMoneyFromUSD(subtotalUSD)}
                 </span>
               </div>
 
@@ -218,7 +216,7 @@ const CartPage = ({ cart }: Props) => {
 
               <div className="flex justify-between text-lg font-bold text-black">
                 <span>Total</span>
-                <span>{formatPrice(subtotalUSD, currency, rates)}</span>
+                <span>{formatMoneyFromUSD(subtotalUSD)}</span>
               </div>
             </div>
 

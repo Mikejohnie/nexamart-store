@@ -18,8 +18,7 @@ import { Loader2 } from "lucide-react";
 import ky from "ky";
 import { useCartStore } from "@/stores/useCartstore";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 const deliveryMethod = [
   {
@@ -83,8 +82,6 @@ export default function CheckoutSummary({ cart, address }: Props) {
   const router = useRouter();
   const { data: user } = useCurrentUserQuery();
   const [pending, startTransition] = useTransition();
-
-  const { currency, rates } = useCurrency();
 
   const [isLoading, setIsLoading] = useState(false);
   const [openAddress, setOpenAddress] = useState(false);
@@ -223,10 +220,9 @@ export default function CheckoutSummary({ cart, address }: Props) {
                     </p>
                   )}
                   <p className="font-semibold text-lg text-black mt-1">
-                    {formatPrice(priceUSD * item.quantity, currency, rates)}
+                    {formatMoneyFromUSD(priceUSD * item.quantity)}
                     <span className="text-sm text-gray-500 ml-1">
-                      ({formatPrice(priceUSD, currency, rates)} ×{" "}
-                      {item.quantity})
+                      ({formatMoneyFromUSD(priceUSD)} × {item.quantity})
                     </span>
                   </p>
                 </div>
@@ -296,21 +292,21 @@ export default function CheckoutSummary({ cart, address }: Props) {
             <div className="text-sm space-y-1">
               <div className="flex justify-between">
                 <span>Items subtotal</span>
-                <span>{formatPrice(subtotalUSD, currency, rates)}</span>
+                <span>{formatMoneyFromUSD(subtotalUSD)}</span>
               </div>
 
               <div className="flex justify-between">
                 <span>Shipping</span>
                 <span>
                   {shippingUSD !== null
-                    ? formatPrice(shippingUSD, currency, rates)
+                    ? formatMoneyFromUSD(shippingUSD)
                     : "Add address to calculate"}
                 </span>
               </div>
 
               <div className="flex justify-between text-lg font-bold text-black">
                 <span>Total</span>
-                <span>{formatPrice(totalUSD, currency, rates)}</span>
+                <span>{formatMoneyFromUSD(totalUSD)}</span>
               </div>
             </div>
 

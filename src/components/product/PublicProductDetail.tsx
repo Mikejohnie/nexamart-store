@@ -25,8 +25,7 @@ import {
 import { Separator } from "../ui/separator";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 type ProductVariant = FullProduct["variants"][number];
 
@@ -51,8 +50,6 @@ export default function ProductPublicDetail({
 }: Props) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const { currency, rates } = useCurrency();
 
   useEffect(() => {
     if (cartItems?.length) useCartStore.getState().sync(cartItems);
@@ -199,7 +196,7 @@ export default function ProductPublicDetail({
           {/* Pricing Box */}
           <div className="p-6 rounded-xl border bg-white dark:bg-neutral-900 shadow space-y-2">
             <div className="text-4xl font-semibold text-gray-900 dark:text-gray-100">
-              {formatPrice(priceUSD, currency, rates)}
+              {formatMoneyFromUSD(priceUSD)}
             </div>
 
             {discount && oldPriceUSD !== null && (
@@ -208,7 +205,7 @@ export default function ProductPublicDetail({
                   {discount}% OFF
                 </span>
                 <span className="line-through text-gray-500">
-                  {formatPrice(oldPriceUSD, currency, rates)}
+                  {formatMoneyFromUSD(oldPriceUSD)}
                 </span>
               </p>
             )}

@@ -6,9 +6,9 @@ import { useBuyerWallet } from "@/hooks/useWallet";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { WalletTransactionType } from "@/lib/types";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { WalletBalanceConverter } from "@/components/currency/WalletBalanceConverter";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 const CREDIT_TYPES: WalletTransactionType[] = ["DEPOSIT", "REFUND", "EARNING"];
 
@@ -21,8 +21,6 @@ const DEBIT_TYPES: WalletTransactionType[] = [
 export default function CustomerWalletPage() {
   const { data: wallet, isPending, error } = useBuyerWallet();
   const { data: user } = useCurrentUserQuery();
-
-  const { currency, rates } = useCurrency();
 
   if (isPending) return <CustomerWalletSkeleton />;
 
@@ -45,7 +43,7 @@ export default function CustomerWalletPage() {
   ).length;
 
   return (
-    <main className="max-w-4xl mx-auto px-4 py-4 space-y-8">
+    <main className="max-w-4xl mx-auto  px-4 py-4 space-y-8">
       {/* HEADER */}
       <header className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div>
@@ -66,14 +64,8 @@ export default function CustomerWalletPage() {
       </header>
 
       {/* BALANCE SUMMARY */}
-      <section className="bg-white border shadow-sm rounded-xl p-6 space-y-4">
-        <p className="text-sm font-medium text-gray-600 uppercase">
-          Available Balance
-        </p>
-
-        <p className="text-4xl font-bold text-[var(--brand-blue)]">
-          {formatPrice(wallet.balance, currency, rates)}
-        </p>
+      <section className="bg-white dark:bg-neutral-950 border shadow-sm rounded-xl p-6 space-y-4">
+        <WalletBalanceConverter usdBalance={wallet.balance} />
 
         <p className="text-xs text-gray-500">
           Use your wallet for faster refunds and seamless checkout.
@@ -93,7 +85,7 @@ export default function CustomerWalletPage() {
       </section>
 
       {/* TRANSACTION HISTORY */}
-      <section className="bg-white border shadow-sm rounded-xl overflow-hidden">
+      <section className="bg-white dark:bg-neutral-950 border shadow-sm rounded-xl overflow-hidden">
         <div className="px-4 py-3 border-b flex items-center justify-between">
           <p className="font-semibold text-sm">Transaction History</p>
           <p className="text-xs text-gray-500">
@@ -151,7 +143,7 @@ export default function CustomerWalletPage() {
                         )}
                       >
                         {isCredit ? "+" : "-"}
-                        {formatPrice(tx.amount, currency, rates)}
+                        {formatMoneyFromUSD(tx.amount)}
                       </td>
 
                       <td className="px-4 py-2 text-right">

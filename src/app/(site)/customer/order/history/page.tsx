@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatBaseUSD } from "@/lib/formatBaseUSD";
 
 export default async function OrdersPage() {
   const userId = await CurrentUserId();
@@ -70,7 +70,7 @@ export default async function OrdersPage() {
                   <p className="text-sm text-gray-500">
                     TOTAL:
                     <span className="font-medium text-gray-900 dark:text-gray-100">
-                      {formatUSD(order.totalAmount)}
+                      {formatBaseUSD(order.totalAmount)}
                     </span>
                   </p>
                   <p className="text-sm text-gray-500">

@@ -13,7 +13,7 @@ import {
   XCircle,
   Package,
 } from "lucide-react";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatBaseUSD } from "@/lib/formatBaseUSD";
 
 export default async function TrackOrderPage({
   params,
@@ -186,7 +186,7 @@ export default async function TrackOrderPage({
             </p>
             <p className="text-sm text-gray-500">
               {order.items.length} item{order.items.length > 1 && "s"} •{" "}
-              {formatUSD(order.totalAmount)}
+              {formatBaseUSD(order.totalAmount)}
             </p>
             <p className="text-xs text-gray-500">
               Placed on
@@ -224,7 +224,7 @@ export default async function TrackOrderPage({
             <p>
               Shipping Fee:{" "}
               <span className="font-semibold text-[#3c9ee0]">
-                {formatUSD(order.shippingFee)}
+                {formatBaseUSD(order.shippingFee)}
               </span>
             </p>
           </div>

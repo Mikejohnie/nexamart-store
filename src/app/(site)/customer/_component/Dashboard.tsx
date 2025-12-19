@@ -107,7 +107,7 @@ export default function Dashboard() {
   return (
     <>
       {/* DESKTOP SIDEBAR */}
-      <aside className="hidden md:flex flex-col w-64 light:bg-white border-r py-6">
+      <aside className="hidden md:flex flex-col w-64 border-r py-6">
         {SidebarContent}
       </aside>
     </>

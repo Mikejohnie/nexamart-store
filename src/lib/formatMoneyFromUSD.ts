@@ -1,4 +1,5 @@
-//my lib/formatPrice.ts
+import { useCurrencyStore } from "@/stores/useCurrencyStore";
+
 const symbols: Record<string, string> = {
   USD: "$",
   NGN: "₦",
@@ -9,13 +10,10 @@ const symbols: Record<string, string> = {
   CAD: "$",
 };
 
-export function formatPrice(
-  amountUSD: number,
-  currency: string,
-  rates?: Record<string, number>
-) {
-  const rate = rates?.[currency] ?? 1;
-  const converted = amountUSD * rate;
+export function formatMoneyFromUSD(amountUSD: number) {
+  const { currency, convertFromUSD } = useCurrencyStore.getState();
+
+  const converted = convertFromUSD(amountUSD);
 
   return `${symbols[currency] ?? ""}${converted.toLocaleString(undefined, {
     maximumFractionDigits: 2,

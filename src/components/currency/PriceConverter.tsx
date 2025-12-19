@@ -70,6 +70,3 @@ export function PriceConverter({ onUSDChange }: Props) {
     </div>
   );
 }
-
-//convert customer/seller wallet balance
-export function WalletBalanceConverter() {}

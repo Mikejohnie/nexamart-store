@@ -5,7 +5,7 @@ import { CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { CurrentUserId } from "@/lib/currentUser";
 import { ClearCartOnSuccess } from "./ClearCartOnSuccess";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatBaseUSD } from "@/lib/formatBaseUSD";
 
 export default async function OrderSuccessPage({
   params,
@@ -119,7 +119,7 @@ export default async function OrderSuccessPage({
                 )}
 
                 <p className="font-semibold mt-1 text-lg text-[#3c9ee0]">
-                  {formatUSD(item.price)}
+                  {formatBaseUSD(item.price)}
                   <span className="text-gray-600 font-normal">
                     × {item.quantity}
                   </span>
@@ -131,7 +131,7 @@ export default async function OrderSuccessPage({
 
         {/* TOTAL */}
         <div className="text-right text-xl font-bold text-[#3c9ee0]">
-          Total Paid:{formatUSD(order.totalAmount)}
+          Total Paid:{formatBaseUSD(order.totalAmount)}
         </div>
 
         {/* ACTION BUTTONS */}

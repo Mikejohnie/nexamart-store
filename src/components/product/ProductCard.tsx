@@ -7,7 +7,7 @@ import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 type ProductCardProps = {
   productData: FullProduct;
@@ -112,11 +112,13 @@ const ProductCard = ({ productData }: ProductCardProps) => {
         {/* Price */}
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-3">
-            <p className="text-xl font-bold">{formatUSD(displayPrice)}</p>
+            <p className="text-xl font-bold">
+              {formatMoneyFromUSD(displayPrice)}
+            </p>
 
             {displayOldPrice && (
               <span className="line-through text-sm text-gray-400">
-                {formatUSD(displayOldPrice)}
+                {formatMoneyFromUSD(displayOldPrice)}
               </span>
             )}
           </div>

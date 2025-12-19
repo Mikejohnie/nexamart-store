@@ -14,7 +14,7 @@ export default async function CustomerLayout({
 
   return (
     <div className="h-screen flex bg-background">
-      <aside className="hidden md:block w-64 shrink-0 overflow-hidden bg-white border-r">
+      <aside className="hidden md:block w-64 shrink-0 overflow-hidden bg-white dark:bg-neutral-950 border-r">
         <Dashboard />
       </aside>
 

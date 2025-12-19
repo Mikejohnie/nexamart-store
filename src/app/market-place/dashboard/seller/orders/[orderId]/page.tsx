@@ -10,7 +10,7 @@ import {
 import { toast } from "sonner";
 import { CheckCircle2, XCircle, Truck, LucideIcon } from "lucide-react";
 import { CurrentUser } from "@/lib/currentUser";
-import { formatUSD } from "@/lib/formatUSD";
+import { formatUSD } from "@/lib/formatBaseUSD";
 
 type ActionResult =
   | { success: string; error?: never }

@@ -5,8 +5,7 @@ import Link from "next/link";
 import WishlistButton from "./WishlistButton";
 import AddToCartControl from "./AddtoCartButton";
 import { ProductCardType } from "@/lib/types";
-import { formatPrice } from "@/lib/formatPrice";
-import { useCurrency } from "@/lib/useCurrency";
+import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 
 export default function PublicProductCard({
   product,
@@ -17,8 +16,6 @@ export default function PublicProductCard({
   userId?: string | null;
   isWishlisted?: boolean;
 }) {
-  const { currency, rates } = useCurrency();
-
   const priceUSD = product.basePriceUSD;
   const oldPriceUSD = product.oldPriceUSD ?? null;
 
@@ -28,7 +25,7 @@ export default function PublicProductCard({
       : null;
 
   return (
-    <div className="relative border rounded-xl light:bg-white shadow-sm hover:shadow-lg transition duration-300 group overflow-hidden">
+    <div className="relative border rounded-xl bg-white dark:bg-neutral-950 shadow-sm hover:shadow-lg transition duration-300 group overflow-hidden">
       {discount && (
         <span
           className="
@@ -61,19 +58,19 @@ export default function PublicProductCard({
 
       <div className="px-3 py-3 space-y-2">
         <Link href={`/product/${product.id}`}>
-          <p className="text-sm font-medium text-gray-800 line-clamp-1 leading-tight hover:text-blue-600 transition">
+          <p className="text-sm font-medium text-gray-800 dark:text-gray-500 line-clamp-1 leading-tight hover:text-blue-600 transition">
             {product.name}
           </p>
         </Link>
 
         <div className="flex items-baseline gap-2">
-          <p className="font-semibold text-gray-900 text-sm">
-            {formatPrice(priceUSD, currency, rates)}
+          <p className="font-semibold text-gray-900 dark:text-gray-500 text-sm">
+            {formatMoneyFromUSD(priceUSD)}
           </p>
 
           {discount && oldPriceUSD && (
-            <p className="line-through text-gray-400 text-xs">
-              {formatPrice(oldPriceUSD, currency, rates)}
+            <p className="line-through text-gray-400 dark:text-gray-500 text-xs">
+              {formatMoneyFromUSD(oldPriceUSD)}
             </p>
           )}
         </div>
