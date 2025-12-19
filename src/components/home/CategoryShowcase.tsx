@@ -12,76 +12,107 @@ import {
 type Props = { categories: Category[] };
 
 export default function CategoryShowcase({ categories }: Props) {
-  if (!categories || categories.length === 0) {
+  if (!categories?.length) {
     return (
-      <section className="relative bg-white dark:bg-neutral-900 border rounded-xl shadow-sm p-5">
-        <h2 className="text-xl font-bold mb-4">Shop by Category</h2>
-        <p>No categories at the moment</p>
+      <section className="bg-card border rounded-xl p-6">
+        <h2 className="text-xl font-semibold mb-2">Shop by Category</h2>
+        <p className="text-muted-foreground">No categories available</p>
       </section>
     );
   }
 
   return (
-    <section className="relative bg-white dark:bg-neutral-900 border rounded-xl shadow-sm p-5">
-      <h2 className="text-xl font-bold mb-4">Shop by Category</h2>
+    <section className="bg-card border rounded-xl p-6 space-y-4">
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Shop by Category</h2>
+        <Link
+          href="/categories"
+          className="text-sm text-[var(--brand-blue)] hover:underline"
+        >
+          View all
+        </Link>
+      </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+      {/* CATEGORY GRID */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {categories.map((cat) => (
-          <HoverCard key={cat.id} openDelay={80} closeDelay={120}>
+          <HoverCard key={cat.id} openDelay={100}>
             <HoverCardTrigger asChild>
               <Link
                 href={`/category/${cat.slug}`}
-                className="flex flex-col items-center gap-2 p-4 border rounded-lg shadow-sm text-center font-medium
-                transition duration-200 hover:bg-[var(--brand-blue)] hover:text-white"
+                className="
+                  group relative flex flex-col items-center gap-3
+                  rounded-xl border bg-background p-4
+                  transition-all duration-200
+                  hover:shadow-lg hover:-translate-y-0.5
+                "
               >
-                {cat.iconImage && (
-                  <Image
-                    src={cat.iconImage}
-                    alt={cat.name}
-                    width={40}
-                    height={40}
-                  />
-                )}
-                {cat.name}
+                {/* Icon */}
+                <div
+                  className="
+                  flex items-center justify-center
+                  w-14 h-14 rounded-full
+                  bg-[var(--brand-blue-light)]
+                  group-hover:bg-[var(--brand-blue)]
+                  transition
+                "
+                >
+                  {cat.iconImage && (
+                    <Image
+                      src={cat.iconImage}
+                      alt={cat.name}
+                      width={28}
+                      height={28}
+                      className="group-hover:invert"
+                    />
+                  )}
+                </div>
+
+                {/* Name */}
+                <span className="text-sm font-medium text-center">
+                  {cat.name}
+                </span>
               </Link>
             </HoverCardTrigger>
 
-            {(cat.children?.length ?? 0) > 0 && (
+            {/* MEGA PANEL */}
+            {cat.children?.length ? (
               <HoverCardContent
                 side="bottom"
                 align="start"
-                className="bg-white dark:bg-neutral-800 border rounded-xl shadow-xl  
-               w-full grid grid-cols-2 sm:grid-cols-3 gap-6 z-50"
+                className="
+                  w-[min(800px,90vw)]
+                  rounded-2xl border bg-background p-6
+                  shadow-xl grid grid-cols-2 sm:grid-cols-3 gap-6
+                "
               >
-                {cat.children?.map((sub) => (
-                  <div key={sub.id} className="space-y-1">
-                    {/* Level 2 */}
+                {cat.children.map((sub) => (
+                  <div key={sub.id} className="space-y-2">
                     <Link
                       href={`/category/${sub.slug}`}
-                      className="font-semibold text-[var(--brand-blue)] hover:underline"
+                      className="font-semibold text-sm hover:text-[var(--brand-blue)]"
                     >
                       {sub.name}
                     </Link>
 
-                    {/* Level 3 (only if present) */}
-                    {sub.children && sub.children.length > 0 && (
-                      <ul className="mt-2 space-y-1">
+                    {sub.children?.length ? (
+                      <ul className="space-y-1">
                         {sub.children.map((child) => (
                           <li key={child.id}>
                             <Link
                               href={`/category/${child.slug}`}
-                              className="text-sm text-gray-600 dark:text-gray-300 hover:text-[var(--brand-blue)]"
+                              className="text-sm text-muted-foreground hover:text-[var(--brand-blue)]"
                             >
                               {child.name}
                             </Link>
                           </li>
                         ))}
                       </ul>
-                    )}
+                    ) : null}
                   </div>
                 ))}
               </HoverCardContent>
-            )}
+            ) : null}
           </HoverCard>
         ))}
       </div>

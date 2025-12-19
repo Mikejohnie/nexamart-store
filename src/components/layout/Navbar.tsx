@@ -91,7 +91,7 @@ export default function SiteNavbar({
     <nav>
       <header
         className="
-    sticky top-0 z-50 w-full
+    fixed top-0 left-0 right-0 z-50 w-full
     bg-black/90 backdrop-blur-lg text-white
     border-b shadow-lg
   "

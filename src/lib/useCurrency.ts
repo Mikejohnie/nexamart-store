@@ -1,3 +1,4 @@
+//my lib/useCurrency.ts
 "use client";
 
 import { useCurrencyStore } from "@/stores/useCurrencyStore";

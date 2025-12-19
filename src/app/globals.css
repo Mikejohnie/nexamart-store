@@ -1,3 +1,14 @@
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 @source "../node_modules/@uploadthing/react/dist"
 
 

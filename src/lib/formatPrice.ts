@@ -1,3 +1,4 @@
+//my lib/formatPrice.ts
 const symbols: Record<string, string> = {
   USD: "$",
   NGN: "₦",

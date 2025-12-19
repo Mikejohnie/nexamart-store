@@ -35,8 +35,11 @@ export async function GET() {
       rates: data.rates,
     });
   } catch (error) {
-    clearTimeout(timeout);
-    console.error("Currency API fetch failed:", error);
+    if (error instanceof DOMException && error.name === "AbortError") {
+      console.warn("Currency API timed out, using fallback rates");
+    } else {
+      console.error("Currency API fetch failed:", error);
+    }
 
     return NextResponse.json({
       base: "USD",

@@ -33,7 +33,10 @@ export default async function OrdersPage() {
       <div className="text-center py-40">
         <p className="text-gray-500 text-lg mb-4">You have no orders yet</p>
         <Link href="/">
-          <Button className="bg-yellow-500 hover:bg-yellow-600 text-black font-medium">
+          <Button
+            className="
+                bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] text-white font-medium"
+          >
             Start Shopping
           </Button>
         </Link>

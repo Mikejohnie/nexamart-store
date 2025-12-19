@@ -2,13 +2,13 @@
 
 import { CustomerWalletSkeleton } from "@/components/skeletons/WalletSkeleton";
 import { Button } from "@/components/ui/button";
-import { useCurrentUser } from "@/hooks/getCurrentUser";
 import { useBuyerWallet } from "@/hooks/useWallet";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { WalletTransactionType } from "@/lib/types";
 import { formatPrice } from "@/lib/formatPrice";
 import { useCurrency } from "@/lib/useCurrency";
+import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 
 const CREDIT_TYPES: WalletTransactionType[] = ["DEPOSIT", "REFUND", "EARNING"];
 
@@ -20,7 +20,7 @@ const DEBIT_TYPES: WalletTransactionType[] = [
 
 export default function CustomerWalletPage() {
   const { data: wallet, isPending, error } = useBuyerWallet();
-  const user = useCurrentUser();
+  const { data: user } = useCurrentUserQuery();
 
   const { currency, rates } = useCurrency();
 
@@ -51,7 +51,7 @@ export default function CustomerWalletPage() {
         <div>
           <h1 className="text-2xl font-semibold">My Wallet</h1>
           <p className="text-sm text-gray-500">
-            Hello, {user?.name?.split(" ")[0]}
+            Hello, {user?.name?.split(" ")[0] || user?.username}
           </p>
         </div>
 
