@@ -1,11 +1,47 @@
 import { NextResponse } from "next/server";
 
-export async function GET() {
-  const res = await fetch(`https://api.exchangerate.host/latest?base=USD`);
-  const data = await res.json();
+const FALLBACK_RATES = {
+  USD: 1,
+  NGN: 1500,
+  GBP: 0.78,
+  EUR: 0.92,
+  KES: 145,
+  ZAR: 18.5,
+  CAD: 1.36,
+};
 
-  return NextResponse.json({
-    base: data.base,
-    rates: data.rates,
-  });
+export async function GET() {
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 5000);
+  try {
+    const res = await fetch("https://api.frankfurter.app/latest?from=USD", {
+      signal: controller.signal,
+      next: { revalidate: 60 * 60 * 12 },
+    });
+
+    clearTimeout(timeout);
+
+    if (!res.ok) {
+      return NextResponse.json(
+        { error: "Failed to fetch currency rates" },
+        { status: 500 }
+      );
+    }
+
+    const data = await res.json();
+
+    return NextResponse.json({
+      base: data.base,
+      rates: data.rates,
+    });
+  } catch (error) {
+    clearTimeout(timeout);
+    console.error("Currency API fetch failed:", error);
+
+    return NextResponse.json({
+      base: "USD",
+      rates: FALLBACK_RATES,
+      fallback: true,
+    });
+  }
 }

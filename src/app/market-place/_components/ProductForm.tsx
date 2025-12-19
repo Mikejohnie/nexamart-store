@@ -28,6 +28,7 @@ import { toast } from "sonner";
 
 import type { Category } from "@/lib/types";
 import { deleteFileAction } from "@/actions/actions";
+import { PriceConverter } from "@/components/currency/PriceConverter";
 
 type ProductFormProps = {
   categories: Category[];
@@ -453,6 +454,7 @@ Dual SIM`}
                             <Input
                               {...field}
                               placeholder="Black"
+                              className="focus-visible:ring-[var(--brand-blue)]"
                               onChange={(e) => {
                                 field.onChange(e);
                                 setValue(
@@ -478,6 +480,7 @@ Dual SIM`}
                           <FormControl>
                             <Input
                               {...field}
+                              className="focus-visible:ring-[var(--brand-blue)]"
                               placeholder="M / L / XL"
                               onChange={(e) => {
                                 field.onChange(e);
@@ -497,6 +500,12 @@ Dual SIM`}
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-5">
+                    <PriceConverter
+                      onUSDChange={(usd) =>
+                        setValue(`variants.${index}.priceUSD`, usd)
+                      }
+                    />
+
                     <FormField
                       control={control}
                       name={`variants.${index}.priceUSD`}
@@ -548,6 +557,7 @@ Dual SIM`}
                           <FormLabel>Old Price (Optional)</FormLabel>
                           <FormControl>
                             <Input
+                              className="focus-visible:ring-[var(--brand-blue)]"
                               type="number"
                               step={1}
                               {...field}
@@ -609,6 +619,7 @@ Dual SIM`}
                           <FormLabel>Discount % (Optional)</FormLabel>
                           <FormControl>
                             <Input
+                              className="focus-visible:ring-[var(--brand-blue)]"
                               type="number"
                               step={1}
                               {...field}
