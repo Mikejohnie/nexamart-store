@@ -33,23 +33,23 @@ export const useCurrencyStore = create<CurrencyStore>()(
       convertFromUSD: (amount) => {
         const { currency, rates, ratesLoaded } = get();
 
-        if (!ratesLoaded || currency === "USD") return amount;
+        if (!ratesLoaded || currency === "USD") return Math.round(amount);
 
         const rate = rates[currency];
-        if (!rate) return amount;
+        if (!rate) return Math.round(amount);
 
-        return Number((amount * rate).toFixed(2));
+        return Math.round(amount * rate);
       },
 
       convertToUSD: (amount) => {
         const { currency, rates, ratesLoaded } = get();
 
-        if (!ratesLoaded || currency === "USD") return amount;
+        if (!ratesLoaded || currency === "USD") return Math.round(amount);
 
         const rate = rates[currency];
-        if (!rate || rate === 0) return amount;
+        if (!rate || rate === 0) return Math.round(amount);
 
-        return Number((amount / rate).toFixed(2));
+        return Math.round(amount / rate);
       },
     }),
     {
