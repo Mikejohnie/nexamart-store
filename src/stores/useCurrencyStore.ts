@@ -25,7 +25,10 @@ export const useCurrencyStore = create<CurrencyStore>()(
       setCurrency: (currency) => set({ currency }),
 
       setRates: (rates) =>
-        set({ rates: { USD: 1, ...rates }, ratesLoaded: true }),
+        set({
+          rates: { USD: 1, ...rates },
+          ratesLoaded: true,
+        }),
 
       convertFromUSD: (amount) => {
         const { currency, rates, ratesLoaded } = get();
@@ -34,7 +37,8 @@ export const useCurrencyStore = create<CurrencyStore>()(
 
         const rate = rates[currency];
         if (!rate) return amount;
-        return amount * rate;
+
+        return Number((amount * rate).toFixed(2));
       },
 
       convertToUSD: (amount) => {
@@ -45,19 +49,17 @@ export const useCurrencyStore = create<CurrencyStore>()(
         const rate = rates[currency];
         if (!rate || rate === 0) return amount;
 
-        return amount * rate;
+        return Number((amount / rate).toFixed(2));
       },
     }),
-
     {
       name: "currency-store",
       version: 3,
-      migrate: (persistedState, version) => {
-        return {
-          currency: "USD",
-          rates: { USD: 1 },
-        };
-      },
+      migrate: () => ({
+        currency: "USD",
+        rates: { USD: 1 },
+        ratesLoaded: false,
+      }),
     }
   )
 );
