@@ -8,11 +8,14 @@ export default function ForbiddenPage() {
   const user = useCurrentUser();
 
   const goHome = () => {
-    if (user?.role === "ADMIN") router.push("/market-place/dashboard/admin");
+    if (user?.role === "MODERATOR")
+      router.push("/marketplace/dashboard/moderator");
+    else if (user?.role === "ADMIN")
+      router.push("/marketplace/dashboard/admin");
     else if (user?.role === "SELLER")
-      router.push("/market-place/dashboard/seller");
+      router.push("/marketplace/dashboard/seller");
     else if (user?.role === "RIDER")
-      router.push("/market-place/dashboard/rider");
+      router.push("/marketplace/dashboard/rider");
     else router.push("/");
   };
 

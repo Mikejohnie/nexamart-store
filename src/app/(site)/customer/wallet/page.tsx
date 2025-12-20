@@ -8,7 +8,7 @@ import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { WalletTransactionType } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 import { WalletBalanceConverter } from "@/components/currency/WalletBalanceConverter";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 const CREDIT_TYPES: WalletTransactionType[] = ["DEPOSIT", "REFUND", "EARNING"];
 
@@ -19,6 +19,7 @@ const DEBIT_TYPES: WalletTransactionType[] = [
 ];
 
 export default function CustomerWalletPage() {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
   const { data: wallet, isPending, error } = useBuyerWallet();
   const { data: user } = useCurrentUserQuery();
 

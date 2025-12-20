@@ -7,13 +7,14 @@ import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 type ProductCardProps = {
   productData: FullProduct;
 };
 
 const ProductCard = ({ productData }: ProductCardProps) => {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
   const { data: user } = useCurrentUserQuery();
 
   if (!productData) {
@@ -71,7 +72,7 @@ const ProductCard = ({ productData }: ProductCardProps) => {
         flex flex-col justify-between
       "
     >
-      <Link href={`/market-place/dashboard/seller/products/${productData.id}`}>
+      <Link href={`/marketplace/dashboard/seller/products/${productData.id}`}>
         <div className="relative bg-white aspect-square p-3">
           {displayDiscount && (
             <span
@@ -96,9 +97,7 @@ const ProductCard = ({ productData }: ProductCardProps) => {
       {/* Content */}
       <div className="px-4 pb-4 flex flex-col gap-2">
         {/* Product Name */}
-        <Link
-          href={`/market-place/dashboard/seller/products/${productData.id}`}
-        >
+        <Link href={`/marketplace/dashboard/seller/products/${productData.id}`}>
           <h3 className="font-semibold text-[15px] mt-2 line-clamp-2 transition text-black dark:text-white group-hover:text-[var(--brand-blue)]">
             {productData.name}
           </h3>
@@ -132,7 +131,7 @@ const ProductCard = ({ productData }: ProductCardProps) => {
 
         {user?.role === "SELLER" ? (
           <Link
-            href={`/market-place/dashboard/seller/products/${productData.id}/update`}
+            href={`/marketplace/dashboard/seller/products/${productData.id}/update`}
           >
             <Button
               className="

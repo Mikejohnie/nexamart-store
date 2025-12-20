@@ -5,8 +5,8 @@ import Link from "next/link";
 import WishlistButton from "./WishlistButton";
 import AddToCartControl from "./AddtoCartButton";
 import { ProductCardType } from "@/lib/types";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
 import { useMemo } from "react";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 export default function PublicProductCard({
   product,
@@ -17,6 +17,8 @@ export default function PublicProductCard({
   userId?: string | null;
   isWishlisted?: boolean;
 }) {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
+
   const cheapestVariant = useMemo(() => {
     if (!product.variants?.length) return null;
     return [...product.variants].sort((a, b) => a.priceUSD - b.priceUSD)[0];

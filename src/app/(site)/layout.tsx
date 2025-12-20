@@ -16,7 +16,7 @@ export default async function SiteLayout({
     user?.role === "ADMIN" ||
     user?.role === "MODERATOR"
   ) {
-    return redirect("/market-place/dashboard");
+    return redirect("/marketplace/dashboard");
   }
 
   return (

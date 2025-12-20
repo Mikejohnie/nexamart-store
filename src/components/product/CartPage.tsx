@@ -13,13 +13,15 @@ import {
 } from "@/actions/auth/cart";
 import { FullCart } from "@/lib/types";
 import { useCartStore } from "@/stores/useCartstore";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 interface Props {
   cart: FullCart;
 }
 
 const CartPage = ({ cart }: Props) => {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
+
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 

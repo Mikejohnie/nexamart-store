@@ -18,7 +18,7 @@ import { Loader2 } from "lucide-react";
 import ky from "ky";
 import { useCartStore } from "@/stores/useCartstore";
 import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 const deliveryMethod = [
   {
@@ -79,7 +79,10 @@ type Props = {
 };
 
 export default function CheckoutSummary({ cart, address }: Props) {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
+
   const router = useRouter();
+
   const { data: user } = useCurrentUserQuery();
   const [pending, startTransition] = useTransition();
 

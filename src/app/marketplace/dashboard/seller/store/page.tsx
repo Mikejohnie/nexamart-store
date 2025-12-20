@@ -1,4 +1,4 @@
-import StoreFrontRedirectLoading from "@/app/market-place/_components/StoreFrontRedirectLoading";
+import StoreFrontRedirectLoading from "@/app/marketplace/_components/StoreFrontRedirectLoading";
 import { CurrentUser } from "@/lib/currentUser";
 import { prisma } from "@/lib/prisma";
 
@@ -19,7 +19,7 @@ const Page = async () => {
   if (!store)
     return (
       <StoreFrontRedirectLoading
-        to="/market-place/dashboard/seller/store/create-store"
+        to="/marketplace/dashboard/seller/store/create-store"
         message="Preparing store setup..."
       />
     );

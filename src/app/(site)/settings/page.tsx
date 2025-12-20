@@ -1,7 +1,13 @@
-import React from "react";
+import { RoleBasedSettingsPage } from "@/app/marketplace/_components/RoleBasedPageContent";
+import { CurrentUser } from "@/lib/currentUser";
 
-const page = () => {
-  return <div>page</div>;
+const page = async () => {
+  const user = await CurrentUser();
+  return (
+    <div>
+      <RoleBasedSettingsPage initialUser={user} />
+    </div>
+  );
 };
 
 export default page;

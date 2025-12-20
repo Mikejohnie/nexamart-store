@@ -25,7 +25,7 @@ import {
 import { Separator } from "../ui/separator";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 type ProductVariant = FullProduct["variants"][number];
 
@@ -48,6 +48,8 @@ export default function ProductPublicDetail({
   isWishlisted,
   userId,
 }: Props) {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 

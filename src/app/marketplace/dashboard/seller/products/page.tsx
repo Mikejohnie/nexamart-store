@@ -39,7 +39,7 @@ const page = async () => {
       <div className="flex justify-between items-center">
         <h1 className="text-2xl font-semibold p-4">My Products</h1>
         <Link
-          href={"/market-place/dashboard/seller/products/new"}
+          href={"/marketplace/dashboard/seller/products/new"}
           className="flex text-blue-700 font-semibold p-4 gap-1"
         >
           <Plus />

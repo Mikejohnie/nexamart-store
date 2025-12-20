@@ -1,4 +1,4 @@
-import UpdateProductForm from "@/app/market-place/_components/UpdateProductForm";
+import UpdateProductForm from "@/app/marketplace/_components/UpdateProductForm";
 import { CurrentUser } from "@/lib/currentUser";
 import { prisma } from "@/lib/prisma";
 import { redirect } from "next/navigation";

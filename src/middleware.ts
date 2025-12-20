@@ -94,14 +94,14 @@ export default Middleware((req) => {
   // 🚫 ROLE-BASED AUTHORIZATION (STRICT)
   if (isLoggedIn) {
     if (role === "USER") {
-      if (pathname.startsWith("/market-place")) {
+      if (pathname.startsWith("/marketplace")) {
         return Response.redirect(new URL("/403", nextUrl));
       }
     }
 
     if (role === "ADMIN") {
       if (!isAdminRoute) {
-        if (!pathname.startsWith("/market-place")) {
+        if (!pathname.startsWith("/marketplace")) {
           return Response.redirect(new URL("/403", nextUrl));
         }
       }
@@ -109,7 +109,7 @@ export default Middleware((req) => {
 
     if (role === "SELLER") {
       if (!isSellerRoute) {
-        if (!pathname.startsWith("/market-place")) {
+        if (!pathname.startsWith("/marketplace")) {
           return Response.redirect(new URL("/403", nextUrl));
         }
       }
@@ -117,7 +117,7 @@ export default Middleware((req) => {
 
     if (role === "RIDER") {
       if (!isRiderRoute) {
-        if (!pathname.startsWith("/market-place")) {
+        if (!pathname.startsWith("/marketplace")) {
           return Response.redirect(new URL("/403", nextUrl));
         }
       }
@@ -125,7 +125,7 @@ export default Middleware((req) => {
 
     if (role === "MODERATOR") {
       if (!isModeratorRoute) {
-        if (!pathname.startsWith("/market-place")) {
+        if (!pathname.startsWith("/marketplace")) {
           return Response.redirect(new URL("/403", nextUrl));
         }
       }

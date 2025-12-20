@@ -1,4 +1,4 @@
-import CreateStoreForm from "@/app/market-place/_components/CreateStoreForm";
+import CreateStoreForm from "@/app/marketplace/_components/CreateStoreForm";
 
 const page = () => {
   return (

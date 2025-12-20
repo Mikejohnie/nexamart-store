@@ -26,30 +26,30 @@ export const DashboardMenu = {
     {
       title: "Store Management",
       links: [
-        { name: "Dashboard", href: "/market-place/dashboard", icon: Home },
+        { name: "Dashboard", href: "/marketplace/dashboard", icon: Home },
         {
           name: "My Products",
-          href: "/market-place/dashboard/seller/products",
+          href: "/marketplace/dashboard/seller/products",
           icon: Package,
         },
         {
           name: "My Store",
-          href: "/market-place/dashboard/seller/store",
+          href: "/marketplace/dashboard/seller/store",
           icon: Store,
         },
         {
           name: "Orders",
-          href: "/market-place/dashboard/seller/orders",
+          href: "/marketplace/dashboard/seller/orders",
           icon: ShoppingBag,
         },
         {
           icon: Bell,
           name: "Alerts",
-          href: "/market-place/dashboard/seller/notifications",
+          href: "/marketplace/dashboard/seller/notifications",
         },
         {
           name: "Wallet",
-          href: "/market-place/dashboard/seller/wallet",
+          href: "/marketplace/dashboard/seller/wallet",
           icon: Wallet,
         },
       ],
@@ -59,12 +59,12 @@ export const DashboardMenu = {
       links: [
         {
           name: "Analytics",
-          href: "/market-place/dashboard/seller/analytics",
+          href: "/marketplace/dashboard/seller/analytics",
           icon: BarChart2,
         },
         {
           name: "Sales Reports",
-          href: "/market-place/dashboard/seller/reports",
+          href: "/marketplace/dashboard/seller/reports",
           icon: FileChartColumn,
         },
       ],
@@ -74,17 +74,17 @@ export const DashboardMenu = {
       links: [
         {
           name: "Messages",
-          href: "/market-place/dashboard/seller/messages",
+          href: "/marketplace/dashboard/seller/messages",
           icon: MessageSquare,
         },
         {
           name: "Support",
-          href: "/market-place/dashboard/seller/support",
+          href: "/marketplace/dashboard/seller/support",
           icon: HelpCircle,
         },
         {
           name: "Settings",
-          href: "/market-place/dashboard/seller/settings",
+          href: "/settings",
           icon: Settings,
         },
       ],
@@ -95,25 +95,25 @@ export const DashboardMenu = {
     {
       title: "Deliveries",
       links: [
-        { name: "Dashboard", href: "/market-place/dashboard", icon: Home },
+        { name: "Dashboard", href: "/marketplace/dashboard", icon: Home },
         {
           name: "Deliveries",
-          href: "/market-place/dashboard/rider/deliveries",
+          href: "/marketplace/dashboard/rider/deliveries",
           icon: Bike,
         },
         {
           name: "Earnings",
-          href: "/market-place/dashboard/rider/earnings",
+          href: "/marketplace/dashboard/rider/earnings",
           icon: DollarSign,
         },
         {
           name: "Wallet",
-          href: "/market-place/dashboard/rider/wallet",
+          href: "/marketplace/dashboard/rider/wallet",
           icon: Wallet,
         },
         {
           name: "Schedule",
-          href: "/market-place/dashboard/rider/schedule",
+          href: "/marketplace/dashboard/rider/schedule",
           icon: Clock,
         },
       ],
@@ -123,17 +123,17 @@ export const DashboardMenu = {
       links: [
         {
           name: "Messages",
-          href: "/market-place/dashboard/rider/messages",
+          href: "/marketplace/dashboard/rider/messages",
           icon: MessageSquare,
         },
         {
           name: "Support",
-          href: "/market-place/dashboard/rider/support",
+          href: "/marketplace/dashboard/rider/support",
           icon: HelpCircle,
         },
         {
           name: "Settings",
-          href: "/market-place/dashboard/rider/settings",
+          href: "/settings",
           icon: Settings,
         },
       ],
@@ -146,32 +146,32 @@ export const DashboardMenu = {
       links: [
         {
           name: "Dashboard",
-          href: "/market-place/dashboard",
+          href: "/marketplace/dashboard",
           icon: LayoutDashboard,
         },
         {
           name: "Manage Users",
-          href: "/market-place/dashboard/admin/users",
+          href: "/marketplace/dashboard/admin/users",
           icon: Users,
         },
         {
-          name: "Products & Categories",
-          href: "/market-place/dashboard/admin/products",
+          name: "Categories",
+          href: "/marketplace/dashboard/admin/products",
           icon: Package,
         },
         {
           name: "Transactions",
-          href: "/market-place/dashboard/admin/transactions",
+          href: "/marketplace/dashboard/admin/transactions",
           icon: Receipt,
         },
         {
           name: "Reports",
-          href: "/market-place/dashboard/admin/reports",
+          href: "/marketplace/dashboard/admin/reports",
           icon: FileChartColumn,
         },
         {
           name: "Platform Analytics",
-          href: "/market-place/dashboard/admin/analytics",
+          href: "/marketplace/dashboard/admin/analytics",
           icon: BarChart2,
         },
       ],
@@ -181,12 +181,12 @@ export const DashboardMenu = {
       links: [
         {
           name: "Support Tickets",
-          href: "/market-place/dashboard/admin/support",
+          href: "/marketplace/dashboard/admin/support",
           icon: HelpCircle,
         },
         {
-          name: "System Settings",
-          href: "/market-place/dashboard/admin/settings",
+          name: "Settings",
+          href: "/settings",
           icon: Settings,
         },
       ],
@@ -203,32 +203,32 @@ export const DashboardMenu = {
       links: [
         {
           name: "Dashboard",
-          href: "/market-place/dashboard",
+          href: "/marketplace/dashboard",
           icon: LayoutDashboard,
         },
         {
           name: "User Reports",
-          href: "/market-place/dashboard/moderator/reports",
+          href: "/marketplace/dashboard/moderator/reports",
           icon: AlertTriangle,
         },
         {
           name: "Moderate Users",
-          href: "/market-place/dashboard/moderator/users",
+          href: "/marketplace/dashboard/moderator/users",
           icon: Users,
         },
         {
           name: "Content Review",
-          href: "/market-place/dashboard/moderator/content",
+          href: "/marketplace/dashboard/moderator/content",
           icon: Eye,
         },
         {
           name: "AI Moderation Center",
-          href: "/market-place/dashboard/moderator/ai",
+          href: "/marketplace/dashboard/moderator/ai",
           icon: ShieldCheck,
         },
         {
           name: "Warnings Log",
-          href: "/market-place/dashboard/moderator/warnings",
+          href: "/marketplace/dashboard/moderator/warnings",
           icon: FileChartColumn,
         },
       ],
@@ -238,17 +238,17 @@ export const DashboardMenu = {
       links: [
         {
           name: "Messages",
-          href: "/market-place/dashboard/moderator/messages",
+          href: "/marketplace/dashboard/moderator/messages",
           icon: MessageSquare,
         },
         {
           name: "Support",
-          href: "/market-place/dashboard/moderator/support",
+          href: "/marketplace/dashboard/moderator/support",
           icon: HelpCircle,
         },
         {
           name: "Settings",
-          href: "/market-place/dashboard/moderator/settings",
+          href: "/settings",
           icon: Settings,
         },
       ],

@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
 import { getCategoriesAction } from "@/actions/category/categories";
 import { CurrentUser } from "@/lib/currentUser";
-import CategoryPageClient from "../categories/page";
+import CategoryPageClient from "../../../../marketplace/dashboard/admin/categories/page";
 
 const AdminCategoriesPage = async () => {
   const user = await CurrentUser();

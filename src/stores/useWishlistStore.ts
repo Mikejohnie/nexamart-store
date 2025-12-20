@@ -44,7 +44,6 @@ export const useWishlistStore = create<WishlistState>()(
 
       clear: () => {
         set({ items: [] });
-        localStorage.removeItem("wishlist-store");
       },
     }),
     {
