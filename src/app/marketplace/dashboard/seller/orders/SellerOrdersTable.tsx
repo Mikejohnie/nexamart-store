@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { OrderStatus, SellerOrder } from "@/lib/types";
-import { formatMoneyFromUSD } from "@/lib/formatMoneyFromUSD";
+import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 type SellerOrderAction = (
   sellerGroupId: string
@@ -29,6 +29,8 @@ export default function SellerOrdersTable({
 }: {
   orders: SellerOrder[];
 }) {
+  const formatMoneyFromUSD = useFormatMoneyFromUSD();
+
   const [isPending, startTransition] = useTransition();
 
   const handleAction = (actionFn: SellerOrderAction, id: string) => {
