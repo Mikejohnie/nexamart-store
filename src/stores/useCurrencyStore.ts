@@ -6,6 +6,8 @@ import { persist } from "zustand/middleware";
 type CurrencyStore = {
   currency: string;
   rates: Record<string, number>;
+  ratesLoaded: boolean;
+
   setCurrency: (currency: string) => void;
   setRates: (rates: Record<string, number>) => void;
 
@@ -18,36 +20,40 @@ export const useCurrencyStore = create<CurrencyStore>()(
     (set, get) => ({
       currency: "USD",
       rates: { USD: 1 },
+      ratesLoaded: false,
 
       setCurrency: (currency) => set({ currency }),
 
-      setRates: (rates) => set({ rates: { USD: 1, ...rates } }),
+      setRates: (rates) =>
+        set({ rates: { USD: 1, ...rates }, ratesLoaded: true }),
+
+      convertFromUSD: (amount) => {
+        const { currency, rates, ratesLoaded } = get();
+
+        if (!ratesLoaded || currency === "USD") return amount;
+
+        const rate = rates[currency];
+        if (!rate) return amount;
+        return amount * rate;
+        // return Number((amount * rate).toFixed(2));
+      },
 
       convertToUSD: (amount) => {
-        const { currency, rates } = get();
+        const { currency, rates, ratesLoaded } = get();
 
-        if (currency === "USD") return amount;
+        if (!ratesLoaded || currency === "USD") return amount;
 
         const rate = rates[currency];
         if (!rate || rate === 0) return amount;
 
-        return Number((amount / rate).toFixed(2));
-      },
-
-      convertFromUSD: (amount) => {
-        const { currency, rates } = get();
-
-        if (currency === "USD") return amount;
-
-        const rate = rates[currency];
-        if (!rate) return amount;
-        return Number((amount * rate).toFixed(2));
+        return amount * rate;
+        // return Number((amount / rate).toFixed(2));
       },
     }),
 
     {
       name: "currency-store",
-      version: 2,
+      version: 3,
       migrate: (persistedState, version) => {
         return {
           currency: "USD",

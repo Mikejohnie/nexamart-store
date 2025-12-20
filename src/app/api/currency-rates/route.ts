@@ -10,11 +10,13 @@ const FALLBACK_RATES = {
   CAD: 1.36,
 };
 
+//https://api.frankfurter.app/latest?from=USD
+
 export async function GET() {
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 5000);
   try {
-    const res = await fetch("https://api.frankfurter.app/latest?from=USD", {
+    const res = await fetch("https://open.er-api.com/v6/latest/USD", {
       signal: controller.signal,
       next: { revalidate: 60 * 60 * 12 },
     });
@@ -33,7 +35,7 @@ export async function GET() {
     return NextResponse.json({
       base: "USD",
       rates: {
-        USD: 1,
+        ...FALLBACK_RATES,
         ...data.rates,
       },
     });
