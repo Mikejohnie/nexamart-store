@@ -35,7 +35,6 @@ export const useCurrencyStore = create<CurrencyStore>()(
         const rate = rates[currency];
         if (!rate) return amount;
         return amount * rate;
-        // return Number((amount * rate).toFixed(2));
       },
 
       convertToUSD: (amount) => {
@@ -47,7 +46,6 @@ export const useCurrencyStore = create<CurrencyStore>()(
         if (!rate || rate === 0) return amount;
 
         return amount * rate;
-        // return Number((amount / rate).toFixed(2));
       },
     }),
 
