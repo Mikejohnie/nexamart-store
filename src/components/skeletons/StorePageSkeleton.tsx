@@ -5,42 +5,31 @@ export default function StorePageSkeleton() {
     <section className="min-h-screen py-4">
       <main className="max-w-6xl mx-auto space-y-12 shadow-md rounded-md">
         {/* ░░░ Banner / Cover Photo ░░░ */}
-        <div>
+        <div className="min-h-[220px] md:min-h-[300px]">
           <Skeleton className="w-full h-48 md:h-64 rounded-tr-md rounded-tl-md" />
-
-          {/* Owner notice placeholder */}
-          <Skeleton className="h-10 w-full rounded-br-md rounded-bl-md mt-0" />
+          <Skeleton className="h-10 w-full rounded-br-md rounded-bl-md" />
         </div>
 
         {/* HEADER */}
-        <section className="flex flex-col items-center gap-4 text-center -mt-20 pb-2">
-          {/* Logo */}
+        <section className="flex flex-col items-center gap-4 text-center -mt-16 sm:-mt-20 pb-2">
           <Skeleton className="w-32 h-32 rounded-full border shadow" />
-
-          {/* Store Name */}
           <Skeleton className="h-10 w-56" />
-
-          {/* Location */}
           <Skeleton className="h-5 w-40" />
-
-          {/* Rating summary */}
           <Skeleton className="h-6 w-44" />
-
-          {/* Follow button & count */}
           <Skeleton className="h-10 w-36" />
-
-          {/* Description */}
-          <Skeleton className="h-16 w-[65%] max-w-2xl" />
+          <Skeleton className="h-16 w-full sm:w-[65%] max-w-2xl" />
         </section>
 
         {/* ░░░ PRODUCTS ░░░ */}
         <section className="space-y-6 px-6 py-6">
-          <Skeleton className="h-8 w-40" /> {/* Products title */}
+          <Skeleton className="h-8 w-40" />
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
             {Array.from({ length: 8 }).map((_, i) => (
-              <div key={i} className="border rounded-xl p-3 space-y-3">
+              <div
+                key={i}
+                className="border rounded-xl p-3 space-y-3 bg-muted/20"
+              >
                 <Skeleton className="aspect-square w-full rounded-lg" />
-
                 <div className="space-y-2">
                   <Skeleton className="h-4 w-4/5" />
                   <Skeleton className="h-5 w-24" />

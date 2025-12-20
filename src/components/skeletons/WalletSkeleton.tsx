@@ -4,7 +4,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function WalletSkeleton() {
   return (
-    <main className="max-w-4xl mx-auto py-10 px-4 space-y-10">
+    <main className="max-w-4xl mx-auto py-10 px-4 space-y-10 min-h-screen">
       {/* HEADER */}
       <div className="space-y-2">
         <Skeleton className="h-6 w-40" />
@@ -39,7 +39,7 @@ export function WalletSkeleton() {
         <div className="border rounded-md overflow-hidden">
           {Array.from({ length: 3 }).map((_, i) => (
             <div key={i} className="flex gap-4 p-4 border-b">
-              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-4 w-28" />
               <Skeleton className="h-4 w-20" />
               <Skeleton className="h-4 w-16" />
             </div>
@@ -52,7 +52,7 @@ export function WalletSkeleton() {
 
 export function CustomerWalletSkeleton() {
   return (
-    <div className="max-w-4xl mx-auto px-4 py-4 space-y-8">
+    <div className="max-w-4xl mx-auto px-4 py-4 space-y-8 min-h-screen">
       {/* HEADER */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
         <div className="space-y-2">
@@ -83,7 +83,10 @@ export function CustomerWalletSkeleton() {
 
         <div className="space-y-4 py-6 px-4">
           {Array.from({ length: 4 }).map((_, i) => (
-            <div key={i} className="flex justify-between items-center gap-3">
+            <div
+              key={i}
+              className="grid grid-cols-2 sm:grid-cols-5 gap-3 items-center"
+            >
               <Skeleton className="h-4 w-24" />
               <Skeleton className="h-4 w-40" />
               <Skeleton className="h-4 w-20" />

@@ -11,7 +11,7 @@ export default function PublicProductDetailSkeleton() {
           <Skeleton className="aspect-square w-full rounded-xl" />
 
           {/* Thumbnail Row */}
-          <div className="flex gap-2 px-10">
+          <div className="flex gap-2 px-2 sm:px-6 md:px-10 overflow-x-auto">
             {Array.from({ length: 6 }).map((_, i) => (
               <Skeleton key={i} className="aspect-square w-[72px] rounded-lg" />
             ))}
@@ -22,7 +22,7 @@ export default function PublicProductDetailSkeleton() {
         <section className="space-y-7">
           {/* Title + Wishlist */}
           <div className="flex justify-between gap-2">
-            <Skeleton className="h-9 w-3/5" />
+            <Skeleton className="h-9 w-full sm:w-3/5" />
             <Skeleton className="h-9 w-9 rounded-full" />
           </div>
 
@@ -37,7 +37,7 @@ export default function PublicProductDetailSkeleton() {
           <Skeleton className="h-6 w-40 rounded-full" />
 
           {/* Pricing Box */}
-          <div className="p-6 rounded-xl border bg-white dark:bg-neutral-900 shadow space-y-3">
+          <div className="p-6 rounded-xl border bg-white dark:bg-neutral-900 shadow space-y-3 min-h-[96px]">
             <Skeleton className="h-10 w-32" />
             <Skeleton className="h-4 w-48" />
           </div>
@@ -76,7 +76,7 @@ export default function PublicProductDetailSkeleton() {
       {/* --- DESCRIPTION --- */}
       <section className="bg-white dark:bg-neutral-900 border rounded-xl shadow-sm">
         <Skeleton className="h-7 w-40 m-4" />
-        <Skeleton className="h-24 m-4" />
+        <Skeleton className="h-24 sm:h-32 m-4" />
       </section>
 
       {/* --- SPECS + TECH DETAIL BOXES --- */}

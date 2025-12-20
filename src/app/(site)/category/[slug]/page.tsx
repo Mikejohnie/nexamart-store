@@ -69,35 +69,47 @@ export default async function CategorySlugPage({ params }: Props) {
     <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8 space-y-10">
       <Breadcrumb>
         <BreadcrumbList className="flex-wrap text-sm">
+          {/* Root */}
           <BreadcrumbItem>
             <BreadcrumbLink href="/category">All Categories</BreadcrumbLink>
           </BreadcrumbItem>
 
+          {/* Mobile ellipsis */}
           {path.length > 1 && (
-            <BreadcrumbItem className="sm:hidden">
+            <>
               <BreadcrumbSeparator />
-              <span className="px-1">…</span>
-            </BreadcrumbItem>
+              <BreadcrumbItem className="sm:hidden">
+                <span className="px-1">…</span>
+              </BreadcrumbItem>
+            </>
           )}
 
-          {path.map((p, index) => (
-            <BreadcrumbItem
+          {/* Parent path (desktop only if long) */}
+          {path.map((p) => (
+            <span
               key={p.slug}
-              className={path.length > 1 ? "hidden sm:flex" : ""}
+              className={
+                path.length > 1
+                  ? "hidden sm:flex items-center"
+                  : "flex items-center"
+              }
             >
               <BreadcrumbSeparator />
-              <BreadcrumbLink
-                href={`/category/${p.slug}`}
-                className="truncate max-w-[160px]"
-                title={p.name}
-              >
-                {p.name}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  href={`/category/${p.slug}`}
+                  className="truncate max-w-[160px]"
+                  title={p.name}
+                >
+                  {p.name}
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </span>
           ))}
 
+          {/* Current page */}
+          <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbSeparator />
             <BreadcrumbPage
               className="truncate max-w-[180px]"
               title={category.name}
@@ -118,7 +130,7 @@ export default async function CategorySlugPage({ params }: Props) {
           />
         </div>
       )}
-      {/* Category Header */}
+
       <section className="flex flex-col gap-4">
         <div className="flex items-center gap-3">
           {category.iconImage && (
@@ -137,7 +149,6 @@ export default async function CategorySlugPage({ params }: Props) {
         </p>
       </section>
 
-      {/* Subcategories */}
       {category.children.length > 0 && (
         <section className="space-y-3">
           <h2 className="text-sm font-semibold uppercase text-muted-foreground">
@@ -161,7 +172,6 @@ export default async function CategorySlugPage({ params }: Props) {
         </section>
       )}
 
-      {/* Products Grid */}
       <section className="space-y-6">
         {products.length === 0 ? (
           <div className="py-20 text-center text-muted-foreground">

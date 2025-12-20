@@ -2,7 +2,14 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export default function DashboardPageSkeleton() {
   return (
-    <div className="min-h-screen bg-background">
+    <div
+      className="
+        bg-background
+        min-h-[180vh]
+        sm:min-h-[160vh]
+        lg:min-h-[130vh]
+      "
+    >
       {/* ───────────── TOP NAVBAR ───────────── */}
       <header className="sticky top-0 z-50 border-b bg-background backdrop-blur">
         <div className="flex items-center justify-between h-16 px-4 md:px-8">
@@ -47,12 +54,10 @@ export default function DashboardPageSkeleton() {
       {/* ───────────── BODY ───────────── */}
       <div className="flex">
         {/* SIDEBAR (desktop) */}
-        <aside className="hidden md:flex w-64 border-r min-h-[calc(100vh-4rem)] p-4">
+        <aside className="hidden md:flex w-64 border-r p-4">
           <div className="flex flex-col gap-3 w-full">
-            {/* Sidebar header */}
             <Skeleton className="h-6 w-32 mb-4" />
 
-            {/* Sidebar links */}
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="flex items-center gap-3">
                 <Skeleton className="h-5 w-5 rounded-md" />

@@ -8,6 +8,7 @@ import {
   HoverCardTrigger,
   HoverCardContent,
 } from "@/components/ui/hover-card";
+import { ArrowRight } from "lucide-react";
 
 type Props = { categories: Category[] };
 
@@ -26,14 +27,13 @@ export default function CategoryShowcase({ categories }: Props) {
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-semibold">Shop by Category</h2>
         <Link
-          href="/categories"
-          className="text-sm text-[var(--brand-blue)] hover:underline"
+          href="/category"
+          className="text-[var(--brand-blue)] hover:bg-gray-100 rounded-full px-2 py-2"
         >
-          View all
+          <ArrowRight />
         </Link>
       </div>
 
-      {/* CATEGORY GRID */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
         {categories.map((cat) => (
           <HoverCard key={cat.id} openDelay={100}>
@@ -47,7 +47,6 @@ export default function CategoryShowcase({ categories }: Props) {
                   hover:shadow-lg hover:-translate-y-0.5
                 "
               >
-                {/* Icon */}
                 <div
                   className="
                   flex items-center justify-center
@@ -68,14 +67,12 @@ export default function CategoryShowcase({ categories }: Props) {
                   )}
                 </div>
 
-                {/* Name */}
                 <span className="text-sm font-medium text-center">
                   {cat.name}
                 </span>
               </Link>
             </HoverCardTrigger>
 
-            {/* MEGA PANEL */}
             {cat.children?.length ? (
               <HoverCardContent
                 side="bottom"
