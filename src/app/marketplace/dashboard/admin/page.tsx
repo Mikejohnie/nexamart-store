@@ -1,13 +1,10 @@
-import { CurrentUser } from "@/lib/currentUser";
-import { RoleBasedPageContent } from "../../_components/RoleBasedPageContent";
+import { getAdminStats } from "@/actions/dashboardState";
+import AdminPage from "../../_components/AdminPage";
 
 const page = async () => {
-  const user = await CurrentUser();
-  return (
-    <div>
-      <RoleBasedPageContent initialUser={user ?? null} />
-    </div>
-  );
+  const stats = await getAdminStats();
+
+  return <AdminPage stats={stats} />;
 };
 
 export default page;

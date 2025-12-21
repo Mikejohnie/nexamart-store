@@ -1,4 +1,4 @@
-import { getSellerStats } from "@/actions/getSellerState";
+import { getSellerStats } from "@/actions/dashboardState";
 import SellerPage from "../../_components/SellerPage";
 
 const page = async () => {

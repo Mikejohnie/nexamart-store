@@ -90,3 +90,47 @@ export async function getSellerStats() {
     isStoreSuspended: store.isSuspended,
   };
 }
+
+export async function getAdminStats() {
+  const user = await CurrentUser();
+
+  if (!user || user.role !== "ADMIN") {
+    throw new Error("Unauthorized");
+  }
+
+  const [totalUsers, totalProducts, totalRevenue, pendingPayouts] =
+    await Promise.all([
+      //  Total users
+      prisma.user.count(),
+
+      //  Total products
+      prisma.product.count({
+        where: { isPublished: true },
+      }),
+
+      //  Total completed platform revenue
+      prisma.order.aggregate({
+        where: {
+          isPaid: true,
+          status: "DELIVERED",
+        },
+        _sum: {
+          totalAmount: true,
+        },
+      }),
+
+      //  Pending seller payouts
+      prisma.orderSellerGroup.count({
+        where: {
+          payoutStatus: "PENDING",
+        },
+      }),
+    ]);
+
+  return {
+    totalUsers,
+    totalProducts,
+    totalRevenue: totalRevenue._sum.totalAmount ?? 0,
+    pendingReports: pendingPayouts,
+  };
+}
