@@ -216,7 +216,7 @@ const UpdateProductForm = ({ initialData, categories }: UpdateProductProps) => {
         }
 
         toast.success("Product updated successfully");
-        router.push("/market-place/dashboard/seller/products");
+        router.push("/marketplace/dashboard/seller/products");
       } catch {
         toast.error("Something went wrong");
       }
