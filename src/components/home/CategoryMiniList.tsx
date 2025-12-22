@@ -50,7 +50,7 @@ function CategoryMiniList({ categories }: Props) {
   md:flex md:flex-col md:divide-y md:justify-between
 "
       >
-        {categories.slice(0, 4).map((cat) => {
+        {categories.slice(0, 5).map((cat) => {
           const CardContent = (
             <div
               className="
