@@ -25,7 +25,8 @@ export default function HeroBanner() {
   return (
     <div
       className="
-        relative w-full h-full
+        relative w-full 
+    h-[180px] sm:h-[280px] lg:h-full
         rounded-xl overflow-hidden shadow-sm
         dark:bg-neutral-900
       "

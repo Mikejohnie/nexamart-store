@@ -7,7 +7,7 @@ const Hero = async () => {
   return (
     <section
       className="grid grid-cols-1 lg:grid-cols-[260px_1fr] gap-4
-                      min-h-[240px]
+                      lg:min-h-[240px]
   "
     >
       <CategoryMiniList categories={categories} />
