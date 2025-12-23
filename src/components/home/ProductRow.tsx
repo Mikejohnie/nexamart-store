@@ -4,7 +4,7 @@ import ProductRowUI from "./ProductRowUI";
 
 type ProductRowProps = {
   title: string;
-  type: "latest" | "discounts" | "top" | "recommended";
+  type: "latest" | "discounts" | "top";
   autoplay?: boolean;
 };
 
@@ -14,6 +14,7 @@ export default async function ProductRow({
   autoplay,
 }: ProductRowProps) {
   let products: FullProduct[] = [];
+
   if (type === "latest") {
     products = await prisma.product.findMany({
       where: { isPublished: true },
@@ -25,9 +26,14 @@ export default async function ProductRow({
 
   if (type === "discounts") {
     products = await prisma.product.findMany({
-      where: { isPublished: true, discount: { gt: 0 } },
+      where: {
+        isPublished: true,
+        variants: {
+          some: { discount: { gt: 0 } },
+        },
+      },
       include: { images: true, variants: true, store: true },
-      orderBy: { discount: "desc" },
+      orderBy: { createdAt: "desc" },
       take: 12,
     });
   }
@@ -41,22 +47,20 @@ export default async function ProductRow({
     });
   }
 
-  if (type === "recommended") {
-    products = await prisma.product.findMany({
-      where: { isPublished: true },
-      include: { images: true, variants: true, store: true },
-      orderBy: { sold: "desc" },
-      take: 12,
-    });
-  }
-
   if (products.length === 0) return null;
+
+  const sortMap: Record<typeof type, string> = {
+    latest: "new",
+    discounts: "discount",
+    top: "trending",
+  };
+
   return (
     <ProductRowUI
       title={title}
       products={products}
       autoplay={autoplay}
-      seeAllLink={`/products?type=${type}`}
+      seeAllLink={`/products?sort=${sortMap[type]}`}
     />
   );
 }

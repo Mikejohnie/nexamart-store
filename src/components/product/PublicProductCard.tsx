@@ -63,7 +63,7 @@ export default function PublicProductCard({
         />
       </div>
 
-      <Link href={`/product/${product.id}`}>
+      <Link href={`/products/${product.id}`}>
         <div className="relative aspect-[4/5] bg-gray-100 rounded-t-xl overflow-hidden">
           <Image
             src={product.images?.[0]?.imageUrl ?? "/placeholder.png"}
@@ -75,7 +75,7 @@ export default function PublicProductCard({
       </Link>
 
       <div className="px-3 py-3 space-y-2">
-        <Link href={`/product/${product.id}`}>
+        <Link href={`/products/${product.id}`}>
           <p className="text-sm font-medium text-gray-800 dark:text-gray-500 line-clamp-1 leading-tight hover:text-blue-600 transition">
             {product.name}
           </p>

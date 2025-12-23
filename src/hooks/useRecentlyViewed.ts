@@ -23,3 +23,9 @@ export function getRecentlyViewed(): string[] {
     return [];
   }
 }
+
+export function clearRecentlyViewed() {
+  try {
+    localStorage.removeItem("nexamart_recently_viewed");
+  } catch {}
+}

@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
   const canonicalSlug = createProductSlug(product.name, product.id);
 
   if (rawSlug === product.id) {
-    redirect(`/product/${canonicalSlug}`);
+    redirect(`/products/${canonicalSlug}`);
   }
 
   // const wishlistCount = await prisma.wishlistItem.count({

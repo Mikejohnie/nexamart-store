@@ -1,6 +1,7 @@
+// app/[slug]/page.tsx
+
 import PublicProductCard from "@/components/product/PublicProductCard";
 import { prisma } from "@/lib/prisma";
-import { Category } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import {

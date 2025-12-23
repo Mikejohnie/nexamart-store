@@ -26,6 +26,7 @@ import { Separator } from "../ui/separator";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
 import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
+import { addRecentlyViewed } from "@/hooks/useRecentlyViewed";
 
 type ProductVariant = FullProduct["variants"][number];
 
@@ -52,6 +53,10 @@ export default function ProductPublicDetail({
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  useEffect(() => {
+    addRecentlyViewed(data.id);
+  }, [data.id]);
 
   useEffect(() => {
     if (cartItems?.length) useCartStore.getState().sync(cartItems);

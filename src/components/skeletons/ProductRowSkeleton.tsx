@@ -1,41 +1,42 @@
-"use client";
-
 import { Skeleton } from "@/components/ui/skeleton";
 
-export default function ProductRowSkeleton({ title }: { title: string }) {
+type Props = {
+  title: string;
+  showExplore?: boolean;
+};
+
+export default function ProductRowSkeleton({
+  title,
+  showExplore = true,
+}: Props) {
   return (
-    <section className="mb-12 space-y-4">
-      {/* Section title */}
-      <Skeleton className="h-5 w-48 rounded-md" />
+    <section className="space-y-4">
+      {/* Header skeleton */}
+      <div className="flex items-center justify-between px-1">
+        <Skeleton className="h-5 w-40" />
+        {showExplore && <Skeleton className="h-4 w-16" />}
+      </div>
 
-      {/* Product cards */}
-      <div
-        className="
-          flex gap-4
-          overflow-x-auto
-          scrollbar-hide
-          pb-2
-        "
-      >
-        {Array.from({ length: 8 }).map((_, i) => (
-          <Skeleton
+      {/* Cards row (static, no swiper) */}
+      <div className="flex gap-4 overflow-hidden">
+        {Array.from({ length: 6 }).map((_, i) => (
+          <div
             key={i}
-            className="
-              shrink-0
-              w-[160px]
-              sm:w-[180px]
-              md:w-[200px]
-              lg:w-[220px]
+            className="min-w-[140px] sm:min-w-[160px] md:min-w-[180px] lg:min-w-[200px]
+                       rounded-xl border bg-background p-3 space-y-3"
+          >
+            {/* Image */}
+            <Skeleton className="aspect-[4/5] w-full rounded-lg" />
 
-              h-[220px]
-              sm:h-[240px]
-              md:h-[260px]
-              lg:h-[280px]
+            {/* Title */}
+            <Skeleton className="h-4 w-3/4" />
 
-              rounded-xl
-              ring-1 ring-[var(--brand-blue)]/5
-            "
-          />
+            {/* Price */}
+            <Skeleton className="h-4 w-1/2" />
+
+            {/* Button */}
+            <Skeleton className="h-9 w-full rounded-md" />
+          </div>
         ))}
       </div>
     </section>

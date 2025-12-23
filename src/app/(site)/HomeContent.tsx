@@ -7,6 +7,7 @@ import Hero from "@/components/hero/Hero";
 import ShopByBudget from "@/components/home/ShopByBudget";
 import FeaturedCollections from "@/components/home/FeaturedCollections";
 import RecentlyViewedRow from "@/components/home/RecentlyViewedRow";
+import RecommendedPreviewRow from "@/components/home/RecommendedPreviewRow";
 export default async function HomeContent() {
   const user = await CurrentUser();
 
@@ -49,12 +50,15 @@ export default async function HomeContent() {
       </Suspense>
 
       {user && (
-        <Suspense fallback={<ProductRowSkeleton title="Recommended For You" />}>
-          <ProductRow
-            title="Recommended For You"
-            type="recommended"
-            autoplay={false}
-          />
+        <Suspense
+          fallback={
+            <ProductRowSkeleton
+              title="Recommended For You"
+              showExplore={false}
+            />
+          }
+        >
+          <RecommendedPreviewRow />
         </Suspense>
       )}
     </>

@@ -35,7 +35,7 @@ export default function ProductRowUI({
     <section className="space-y-4">
       {/* Header */}
       <div className="flex items-center justify-between px-1">
-        <h2 className="text-2xl font-semibold">{title}</h2>
+        <h2 className="text-lg font-semibold">{title}</h2>
         {seeAllLink && (
           <Link
             href={seeAllLink}
