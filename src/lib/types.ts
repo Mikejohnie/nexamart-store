@@ -114,7 +114,7 @@ export type UserDTO = {
   isVerified: boolean;
 };
 
-//export type AppUser = UserDTO | null;
+export type AppUser = UserDTO | null;
 
 export type SessionUser = {
   id?: string | null;
