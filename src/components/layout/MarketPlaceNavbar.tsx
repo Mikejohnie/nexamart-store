@@ -33,7 +33,7 @@ import { VerifiedBadge } from "../market-place/BadgeCounts";
 import { useDashboardEvents } from "@/hooks/useDashboardEvents";
 import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
-import { MobileSideNav } from "@/app/marketplace/_components/SideNavbar";
+import { MobileSideNav } from "@/components/layout/SideNavbar";
 import DashboardPageSkeleton from "../skeletons/DashboardPageSkeleton";
 import { MarketplaceSearch } from "../search/MarketplaceSearch";
 import { MobileSearchSheet } from "../search/MobileSearchSheet";

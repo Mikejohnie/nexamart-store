@@ -1,6 +1,6 @@
 import MarketPlaceNavbar from "@/components/layout/MarketPlaceNavbar";
 import { redirect } from "next/navigation";
-import { DashboardSidebar } from "./_components/SideNavbar";
+import { DashboardSidebar } from "../../components/layout/SideNavbar";
 import { CurrentUser } from "@/lib/currentUser";
 import CurrencyRateBootstrap from "@/components/currency/CurrencyRateBootstrap";
 
