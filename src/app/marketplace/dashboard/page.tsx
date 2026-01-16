@@ -1,4 +1,3 @@
-// app/marketplace/dashboard/page.tsx
 import { CurrentUser } from "@/lib/currentUser";
 import { redirect } from "next/navigation";
 

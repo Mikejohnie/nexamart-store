@@ -1,5 +1,11 @@
 import z from "zod";
 
+//for images and files
+export const fileSchema = z.object({
+  url: z.string().url(),
+  key: z.string(),
+});
+
 //register a user
 export const registerSchema = z
   .object({
@@ -42,50 +48,41 @@ export const loggedInUserSchema = z.object({
 export type loggedInUserSchemaType = z.infer<typeof loggedInUserSchema>;
 
 //update user schema
-export const updateUserSchema = z
-  .object({
-    name: z
-      .string({ message: "name must be a string." })
-      .min(2, { message: "name must be at least 2 characters." })
-      .optional(),
+export const updateUserSchema = z.object({
+  name: z
+    .string({ message: "name must be a string." })
+    .min(2, { message: "name must be at least 2 characters." })
+    .optional(),
 
-    profileImage: z.string().optional(),
+  profileAvatar: fileSchema.nullable().optional(),
 
-    username: z
-      .string({ message: "Username must be a string." })
-      .min(2, { message: "Username must be at least 2 characters." })
-      .optional(),
+  username: z
+    .string({ message: "Username must be a string." })
+    .min(2, { message: "Username must be at least 2 characters." })
+    .optional(),
 
-    userAddress: z.string({ message: "address must be valid." }).optional(),
+  userAddress: z.string({ message: "address must be valid." }).optional(),
 
-    email: z
-      .string({ message: "Email must be valid." })
-      .email({ message: "Invalid email address." })
-      .optional(),
-
-    password: z
-      .string()
-      .min(4, { message: "Password must be at least 4 characters." })
-      .or(z.literal("")) // ← allow empty string
-      .optional(),
-
-    confirmPassword: z.string().or(z.literal("")).optional(),
-  })
-  .refine(
-    (data) => {
-      // If no password typed → skip validation
-      if (!data.password || data.password.trim() === "") return true;
-
-      // Password typed → confirmPassword must match
-      return data.password === data.confirmPassword;
-    },
-    {
-      message: "Passwords do not match.",
-      path: ["confirmPassword"],
-    }
-  );
+  email: z
+    .string({ message: "Email must be valid." })
+    .email({ message: "Invalid email address." })
+    .optional(),
+});
 
 export type updateUserSchemaType = z.infer<typeof updateUserSchema>;
+
+export const changePasswordSchema = z
+  .object({
+    currentPassword: z.string().min(6),
+    newPassword: z.string().min(6),
+    confirmPassword: z.string(),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "Passwords do not match",
+  });
+
+export type ChangePasswordSchemaType = z.infer<typeof changePasswordSchema>;
 
 // Product Variant Schema
 export const productVariantSchema = z.object({
