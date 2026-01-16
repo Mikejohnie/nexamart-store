@@ -16,21 +16,24 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { deleteProfileAvatarAction, updateUserProfile } from "@/actions/user";
 import { updateUserSchema, updateUserSchemaType } from "@/lib/zodValidation";
 import { UploadButton } from "@/utils/uploadthing";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useGetCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
 import { UserDTO } from "@/lib/types";
 import { useQueryClient } from "@tanstack/react-query";
+import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import {
+  deleteProfileAvatarAction,
+  updateUserProfile,
+} from "@/actions/auth/user";
 
 type Props = {
   userData: UserDTO;
 };
 
 export default function ProfileForm({ userData }: Props) {
-  const { data: user } = useGetCurrentUserQuery(userData);
+  const { data: user } = useCurrentUserQuery(userData);
   if (!user) return null;
   const [isPending, startTransition] = useTransition();
 
