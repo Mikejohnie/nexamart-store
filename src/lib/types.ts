@@ -101,10 +101,17 @@ export type TechnicalDetail = {
   value: string;
 };
 
+export type ProfileImage = {
+  url: string;
+  key: string;
+};
+
 export type UserDTO = {
   id: string;
   email: string;
   role: UserRole;
+
+  profileAvatar?: ProfileImage | null;
 
   name: string;
   username: string;

@@ -20,27 +20,9 @@ export async function deleteUserAccount(userId: string) {
       keysToDelete.push(user.profileAvatar.key);
     }
 
-    // About images
-    const about = await prisma.about.findUnique({
-      where: { createdById: user.id },
-    });
-
-    // if (about?.profileImage?.key) keysToDelete.push(about.profileImage.key);
-    // if (about?.heroImage?.key) keysToDelete.push(about.heroImage.key);
-    // if (about?.resume?.key) keysToDelete.push(about.resume.key);
-
-    // Project images
-    const projectImages = await prisma.projectImage.findMany({
-      where: {
-        project: {
-          createdById: user.id,
-        },
-      },
-      select: { key: true },
-    });
-
-    projectImages.forEach((img) => {
-      if (img.key) keysToDelete.push(img.key);
+    // store/product images
+    const about = await prisma.store.findUnique({
+      where: { id: user.id },
     });
 
     if (keysToDelete.length > 0) {

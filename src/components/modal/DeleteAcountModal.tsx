@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Loader2 } from "lucide-react";
-import { deleteUserAccount } from "@/actions/deleteAccountActions";
+import { deleteUserAccount } from "@/actions/auth/deleteAccountActions";
 
 type Props = {
   userId: string;
