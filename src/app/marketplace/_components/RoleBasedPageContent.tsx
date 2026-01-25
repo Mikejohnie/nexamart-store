@@ -2,7 +2,7 @@
 
 import RiderPage from "./RiderPage";
 import { UserDTO } from "@/lib/types";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import {
   BuyerSettingsPage,
   SellerSettingsPage,

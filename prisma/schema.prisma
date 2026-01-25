@@ -106,6 +106,12 @@ model VerificationToken {
   @@id([identifier, token])
 }
 
+/**
+ * ===========================
+ * PASSWORD RESET SYSTEM
+ * ===========================
+ */
+
 model PasswordResetToken {
   id        String   @id @default(cuid())
   email     String

@@ -9,11 +9,9 @@ import {
   ShieldAlert,
 } from "lucide-react";
 import { motion } from "framer-motion";
-import { useState } from "react";
-import { useCurrentUser } from "@/hooks/getCurrentUser";
 import { useCartStore } from "@/stores/useCartstore";
 import { useWishlistStore } from "@/stores/useWishlistStore";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 
 const AnimatedBadge = ({ count }: { count: number }) => {
   const display = count > 99 ? "99+" : count;
@@ -43,7 +41,7 @@ const NotificationBadge = ({ count = 0 }: { count?: number }) => {
 
 const CartBadge = () => {
   const count = useCartStore((s) =>
-    s.items.reduce((total, i) => total + i.quantity, 0)
+    s.items.reduce((total, i) => total + i.quantity, 0),
   );
 
   return (

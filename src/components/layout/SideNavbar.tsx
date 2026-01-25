@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
 import { cn } from "@/lib/utils";
 import { DashboardMenu } from "@/constants/dashboard-menu";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { UserDTO } from "@/lib/types";
 import { useLogout } from "@/hooks/useLogout";
 import { VerifiedBadge } from "@/components/market-place/BadgeCounts";
@@ -46,7 +46,7 @@ function SidebarContent({
     <div
       className={cn(
         "flex flex-col h-full w-full relative",
-        isMobile && "px-5 dark:bg-neutral-950"
+        isMobile && "px-5 dark:bg-neutral-950",
       )}
     >
       <h2 className="text-[13px] font-semibold text-gray-500 px-4 pt-5 pb-4 uppercase">
@@ -72,7 +72,7 @@ function SidebarContent({
             <div
               className={cn(
                 "ml-1 mt-1 space-y-1 overflow-hidden transition-all",
-                openSections[section.title] ? "max-h-96" : "max-h-0"
+                openSections[section.title] ? "max-h-96" : "max-h-0",
               )}
             >
               {section.links.map((link) => {
@@ -85,7 +85,7 @@ function SidebarContent({
                       "flex items-center gap-3 px-5 py-2 rounded-md text-sm transition",
                       isActive(link.href)
                         ? "bg-[var(--brand-blue-light)] text-[var(--brand-blue)] border-l-4 border-[var(--brand-blue)] font-semibold"
-                        : "text-gray-600 hover:bg-gray-100 hover:text-black"
+                        : "text-gray-600 hover:bg-gray-100 hover:text-black",
                     )}
                     onClick={() => {
                       onNavigate?.();

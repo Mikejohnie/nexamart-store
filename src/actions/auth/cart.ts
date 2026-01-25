@@ -14,10 +14,19 @@ async function getCartItems(userId: string) {
   return cart?.items ?? [];
 }
 
+export async function getCart(userId: string) {
+  return prisma.cart.findUnique({
+    where: { userId },
+    include: {
+      items: true,
+    },
+  });
+}
+
 export const addToCartAction = async (
   productId: string,
   variantId?: string | null,
-  quantity: number = 1
+  quantity: number = 1,
 ) => {
   const userId = await CurrentUserId();
   if (!userId) return { error: "Unauthorized" };
@@ -60,7 +69,7 @@ export const addToCartAction = async (
 
 export const removeFromCartAction = async (
   productId: string,
-  variantId?: string | null
+  variantId?: string | null,
 ) => {
   const userId = await CurrentUserId();
   if (!userId) return;
@@ -81,7 +90,7 @@ export const removeFromCartAction = async (
 export const updateQuantityAction = async (
   productId: string,
   variantId: string | null,
-  change: number
+  change: number,
 ) => {
   const userId = await CurrentUserId();
   if (!userId) return;

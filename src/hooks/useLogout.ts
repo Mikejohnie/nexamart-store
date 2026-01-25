@@ -10,7 +10,7 @@ export const useLogout = () => {
     localStorage.removeItem("cart-store");
     localStorage.removeItem("wishlist-store");
 
-    useCartStore.getState().clear();
+    useCartStore.getState().clearCart();
     useWishlistStore.getState().clear();
 
     queryClient.clear();

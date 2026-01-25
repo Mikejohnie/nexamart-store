@@ -16,7 +16,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { useLogout } from "@/hooks/useLogout";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 
 const accountLinks = [
   { name: "Orders", href: "/customer/order/history", icon: ShoppingBag },

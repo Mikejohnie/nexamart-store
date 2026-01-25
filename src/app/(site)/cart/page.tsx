@@ -6,11 +6,7 @@ export default async function page() {
   const userId = await CurrentUserId();
 
   if (!userId) {
-    return (
-      <div className="p-6 min-h-screen text-center">
-        <p>You are not logged in</p>
-      </div>
-    );
+    return null;
   }
 
   const cart = await prisma.cart.findUnique({

@@ -14,12 +14,15 @@ import {
 import { FullCart } from "@/lib/types";
 import { useCartStore } from "@/stores/useCartstore";
 import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
+import { useCurrencyStore } from "@/stores/useCurrencyStore";
 
 interface Props {
   cart: FullCart;
 }
 
 const CartPage = ({ cart }: Props) => {
+  const { currency } = useCurrencyStore();
+
   const formatMoneyFromUSD = useFormatMoneyFromUSD();
 
   const router = useRouter();
@@ -33,6 +36,8 @@ const CartPage = ({ cart }: Props) => {
     return sum + priceUSD * item.quantity;
   }, 0);
 
+  const approxUSD = currency !== "USD" ? subtotalUSD : null;
+
   const increase = (productId: string, variantId: string | null) => {
     change(productId, variantId, +1);
     startTransition(async () => {
@@ -43,7 +48,7 @@ const CartPage = ({ cart }: Props) => {
   const decrease = (
     productId: string,
     variantId: string | null,
-    qty: number
+    qty: number,
   ) => {
     if (qty <= 1) {
       remove(productId, variantId);
@@ -167,7 +172,7 @@ const CartPage = ({ cart }: Props) => {
                             decrease(
                               item.productId,
                               item.variantId,
-                              item.quantity
+                              item.quantity,
                             )
                           }
                         >
@@ -218,7 +223,17 @@ const CartPage = ({ cart }: Props) => {
 
               <div className="flex justify-between text-lg font-bold text-black">
                 <span>Total</span>
-                <span>{formatMoneyFromUSD(subtotalUSD)}</span>
+                <div className="space-y-1">
+                  <span className="text-sm font-semibold">
+                    {formatMoneyFromUSD(subtotalUSD)}
+                  </span>
+
+                  {approxUSD && (
+                    <p className="text-xs text-muted-foreground italics">
+                      ≈ ${approxUSD.toFixed(2)} USD
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
 

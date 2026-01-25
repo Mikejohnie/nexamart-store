@@ -29,7 +29,7 @@ import { DialogHeader } from "../ui/dialog";
 import { useLogout } from "@/hooks/useLogout";
 import { Separator } from "../ui/separator";
 import { CartBadge } from "../market-place/BadgeCounts";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import CurrencySelector from "../currency/CurrencySelector";
 import { UserDTO } from "@/lib/types";
 import { ModeToggle } from "./ModeToggle";
@@ -114,7 +114,7 @@ export default function SiteNavbar({
                         size="lg"
                         className="w-full mb-4"
                         onClick={() => {
-                          router.push("/auth/login"), setOpen(false);
+                          (router.push("/auth/login"), setOpen(false));
                         }}
                       >
                         Sign in / Create Account

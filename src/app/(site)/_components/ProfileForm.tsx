@@ -22,7 +22,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { UserDTO } from "@/lib/types";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import {
   deleteProfileAvatarAction,
   updateUserProfile,
@@ -142,7 +142,7 @@ export default function ProfileForm({ userData }: Props) {
                         { url: file.url, key: file.key },
                         {
                           shouldDirty: true,
-                        }
+                        },
                       );
 
                       await updateUserProfile({
@@ -175,7 +175,7 @@ export default function ProfileForm({ userData }: Props) {
                       type="button"
                       variant="ghost"
                       disabled={deletingKeys.has(
-                        form.watch("profileAvatar")?.key ?? ""
+                        form.watch("profileAvatar")?.key ?? "",
                       )}
                       onClick={deleteProfileImage}
                       className="text-red-600 text-sm"

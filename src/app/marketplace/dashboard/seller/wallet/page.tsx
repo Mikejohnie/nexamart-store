@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useSellerWallet } from "@/hooks/useWallet";
 import Link from "next/link";
 import { WalletSkeleton } from "@/components/skeletons/WalletSkeleton";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { SellerWalletBalanceConverter } from "@/components/currency/WalletBalanceConverter";
 
 export default function SellerWalletPage() {
@@ -143,10 +143,10 @@ export default function SellerWalletPage() {
                         w.status === "COMPLETED"
                           ? "text-green-600"
                           : w.status === "PENDING"
-                          ? "text-yellow-600"
-                          : w.status === "REJECTED"
-                          ? "text-red-600"
-                          : "text-blue-600"
+                            ? "text-yellow-600"
+                            : w.status === "REJECTED"
+                              ? "text-red-600"
+                              : "text-blue-600"
                       }`}
                     >
                       {w.status

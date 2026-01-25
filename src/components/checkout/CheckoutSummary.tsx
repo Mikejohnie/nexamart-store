@@ -17,8 +17,9 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Loader2 } from "lucide-react";
 import ky from "ky";
 import { useCartStore } from "@/stores/useCartstore";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
+import { useCurrencyStore } from "@/stores/useCurrencyStore";
 
 const deliveryMethod = [
   {
@@ -79,6 +80,7 @@ type Props = {
 };
 
 export default function CheckoutSummary({ cart, address }: Props) {
+  const { currency } = useCurrencyStore();
   const formatMoneyFromUSD = useFormatMoneyFromUSD();
 
   const router = useRouter();
@@ -101,7 +103,7 @@ export default function CheckoutSummary({ cart, address }: Props) {
 
         return sum + item.quantity * priceUSD;
       }, 0),
-    [cart.items]
+    [cart.items],
   );
 
   const shippingUSD = useMemo(() => {
@@ -121,7 +123,7 @@ export default function CheckoutSummary({ cart, address }: Props) {
   const totalUSD = subtotalUSD + (shippingUSD ?? 0);
 
   const handlePlaceOrder = (
-    paymentMethod: "PAY_ON_DELIVERY" | "PAY_WITH_WALLET"
+    paymentMethod: "PAY_ON_DELIVERY" | "PAY_WITH_WALLET",
   ) => {
     if (!address && deliveryType !== "STORE_PICKUP") {
       toast.error("Add a delivery address first");
@@ -140,7 +142,7 @@ export default function CheckoutSummary({ cart, address }: Props) {
           toast.error(res.error);
           return;
         }
-        useCartStore.getState().clear();
+        useCartStore.getState().clearCart();
         toast.success("Order placed successfully!");
         router.push(`/customer/order/success/${res.orderId}`);
       })();

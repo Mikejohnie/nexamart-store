@@ -6,7 +6,7 @@ import { useBuyerWallet } from "@/hooks/useWallet";
 import { cn } from "@/lib/utils";
 import { ArrowDownCircle, ArrowUpCircle } from "lucide-react";
 import { WalletTransactionType } from "@/lib/types";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { WalletBalanceConverter } from "@/components/currency/WalletBalanceConverter";
 import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
@@ -36,11 +36,11 @@ export default function CustomerWalletPage() {
   }
 
   const creditCount = wallet.transactions.filter((t) =>
-    CREDIT_TYPES.includes(t.type)
+    CREDIT_TYPES.includes(t.type),
   ).length;
 
   const debitCount = wallet.transactions.filter((t) =>
-    DEBIT_TYPES.includes(t.type)
+    DEBIT_TYPES.includes(t.type),
   ).length;
 
   return (
@@ -140,7 +140,7 @@ export default function CustomerWalletPage() {
                       <td
                         className={cn(
                           "px-4 py-2 text-right font-semibold",
-                          isCredit ? "text-emerald-600" : "text-red-500"
+                          isCredit ? "text-emerald-600" : "text-red-500",
                         )}
                       >
                         {isCredit ? "+" : "-"}
@@ -155,7 +155,7 @@ export default function CustomerWalletPage() {
                               "bg-emerald-50 text-emerald-600",
                             tx.status === "PENDING" &&
                               "bg-amber-50 text-amber-600",
-                            tx.status === "FAILED" && "bg-red-50 text-red-500"
+                            tx.status === "FAILED" && "bg-red-50 text-red-500",
                           )}
                         >
                           {tx.status.toLowerCase()}

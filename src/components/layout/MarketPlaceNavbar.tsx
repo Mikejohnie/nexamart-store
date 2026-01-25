@@ -28,7 +28,7 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Separator } from "../ui/separator";
 import { useLogout } from "@/hooks/useLogout";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { VerifiedBadge } from "../market-place/BadgeCounts";
 import { useDashboardEvents } from "@/hooks/useDashboardEvents";
 import { UserDTO } from "@/lib/types";
@@ -68,12 +68,12 @@ export default function MarketPlaceNavbar({
     role === "SELLER"
       ? "Seller Center"
       : role === "RIDER"
-      ? "Rider Hub"
-      : role === "ADMIN"
-      ? "Admin Console"
-      : role === "MODERATOR"
-      ? "Moderator Panel"
-      : null;
+        ? "Rider Hub"
+        : role === "ADMIN"
+          ? "Admin Console"
+          : role === "MODERATOR"
+            ? "Moderator Panel"
+            : null;
 
   if (!role || role === "USER") {
     return null;
@@ -381,7 +381,7 @@ export default function MarketPlaceNavbar({
             if (!pathname.startsWith("/market-place/dashboard")) return null;
 
             const readable = dynamicParts.map((seg) =>
-              seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())
+              seg.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
             );
 
             const crumbs = [dashboardTitle, ...readable];

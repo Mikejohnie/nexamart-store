@@ -6,7 +6,7 @@ import Image from "next/image";
 import { useMemo } from "react";
 import { Edit, ShoppingCart } from "lucide-react";
 import { FullProduct } from "@/lib/types";
-import { useCurrentUserQuery } from "@/stores/useGetCurrentUserQuery";
+import { useCurrentUserQuery } from "@/stores/useCurrentUserQuery";
 import { useFormatMoneyFromUSD } from "@/hooks/useFormatMoneyFromUSD";
 
 type ProductCardProps = {

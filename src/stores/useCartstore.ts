@@ -21,7 +21,7 @@ type CartState = {
 
   sync: (items: CartItem[]) => void;
 
-  clear: () => void;
+  clearCart: () => void;
 };
 
 export const useCartStore = create<CartState>()(
@@ -32,7 +32,7 @@ export const useCartStore = create<CartState>()(
       add: (productId, variantId) =>
         set((state) => {
           const existing = state.items.find(
-            (i) => i.productId === productId && i.variantId === variantId
+            (i) => i.productId === productId && i.variantId === variantId,
           );
 
           if (existing) {
@@ -42,7 +42,7 @@ export const useCartStore = create<CartState>()(
               items: state.items.map((i) =>
                 i.productId === productId && i.variantId === variantId
                   ? { ...i, quantity: i.quantity + 1 }
-                  : i
+                  : i,
               ),
             };
           }
@@ -60,7 +60,7 @@ export const useCartStore = create<CartState>()(
             .map((i) =>
               i.productId === productId && i.variantId === variantId
                 ? { ...i, quantity: i.quantity + delta }
-                : i
+                : i,
             )
             .filter((i) => i.quantity > 0);
 
@@ -72,17 +72,17 @@ export const useCartStore = create<CartState>()(
       remove: (productId, variantId) =>
         set((state) => ({
           items: state.items.filter(
-            (i) => !(i.productId === productId && i.variantId === variantId)
+            (i) => !(i.productId === productId && i.variantId === variantId),
           ),
         })),
 
       sync: (items) => set({ items }),
 
-      clear: () => set({ items: [] }),
+      clearCart: () => set({ items: [] }),
     }),
     {
       name: "cart-store",
       storage: createJSONStorage(() => localStorage),
-    }
-  )
+    },
+  ),
 );

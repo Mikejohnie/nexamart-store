@@ -18,8 +18,10 @@ import { createUser } from "@/actions/auth/user";
 import Link from "next/link";
 import SocialLogin from "@/components/auth/SocialLogin";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function RegisterForm() {
+  const router = useRouter();
   const [error, setError] = useState<string | undefined>("");
   const [success, setSuccess] = useState<string | undefined>("");
 
@@ -50,6 +52,7 @@ export default function RegisterForm() {
           setSuccess(res.success);
           setError("");
           form.reset();
+          router.push("/auth/login");
         }
       });
     });
