@@ -16,7 +16,7 @@ export default function SettingsSidebar({
   onChange: (key: string) => void;
 }) {
   return (
-    <aside className="w-64 shrink-0 border-r bg-white hidden md:block">
+    <aside className="hidden md:block w-64 shrink-0 border-r bg-white hidden md:block">
       <ul className="p-4 space-y-1">
         {settingsNav.map((item) => (
           <li key={item.key}>
