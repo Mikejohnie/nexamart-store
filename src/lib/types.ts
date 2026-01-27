@@ -40,6 +40,40 @@ export type Category = {
   color?: string | null;
 };
 
+export type OrderTrackItemDTO = {
+  id: string;
+  quantity: number;
+
+  product: {
+    name: string;
+    images: {
+      imageUrl: string;
+    }[];
+  };
+};
+
+export type OrderTrackDeliveryDTO = {
+  status: string;
+  rider?: {
+    name: string | null;
+    email: string;
+  } | null;
+};
+
+export type OrderTrackDTO = {
+  id: string;
+  status: string;
+  deliveryType: string;
+  deliveryAddress?: string | null;
+  paymentMethod?: string | null;
+  shippingFee: number;
+  totalAmount: number;
+  createdAt: string;
+
+  items: OrderTrackItemDTO[];
+  delivery?: OrderTrackDeliveryDTO | null;
+};
+
 export type OrderItemDTO = {
   id: string;
   quantity: number;
