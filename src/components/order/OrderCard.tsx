@@ -49,11 +49,21 @@ const OrderCard = ({ order }: Props) => {
           </h2>
 
           <div className="text-sm text-gray-700 space-y-1">
-            <p>{order.deliveryAddress}</p>
             <p>
-              <span className="font-semibold">Payment Method: </span>
-              {order.paymentMethod?.replaceAll("_", " ") ?? "-"}
+              <span className="font-semibold">Delivery Address: </span>
+              {order.deliveryAddress}
             </p>
+
+            {order.paymentMethod && (
+              <p>
+                <span className="font-semibold ">Payment Method:</span>{" "}
+                {order.paymentMethod === "CARD"
+                  ? "Card Payment"
+                  : order.paymentMethod === "WALLET"
+                    ? "Wallet"
+                    : order.paymentMethod}
+              </p>
+            )}
             <p>
               <span className="font-semibold">Delivery Type: </span>
               {order.deliveryType.replaceAll("_", " ")}

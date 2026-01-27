@@ -162,8 +162,12 @@ const OrderTrackCard = ({ order }: Props) => {
           <div className="flex items-center gap-2 font-semibold text-sm">
             <MapPin className="w-4 h-4 text-[#3c9ee0]" /> Delivery Address
           </div>
-          <p className="text-sm text-gray-700">
-            {order.deliveryAddress ?? "—"}
+
+          <p>
+            Delivery Address: {""}
+            <span className="font-semibold text-[#3c9ee0]">
+              {order.deliveryAddress ?? "—"}
+            </span>
           </p>
 
           <div className="text-xs text-gray-700 space-y-1 pt-2">
