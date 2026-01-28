@@ -5,7 +5,15 @@ import { Switch } from "@/components/ui/switch";
 import { useCurrencyStore } from "@/stores/useCurrencyStore";
 import { Globe, Mail, Moon } from "lucide-react";
 
-const currencies = ["USD", "NGN", "GBP", "EUR", "KES", "ZAR", "CAD"];
+const currencies = [
+  { value: "USD", label: "USD – US Dollar" },
+  { value: "NGN", label: "NGN – Nigerian Naira" },
+  { value: "GBP", label: "GBP – Pounds Sterling" },
+  { value: "EUR", label: "EUR – Euro" },
+  { value: "KES", label: "KES – Kenyan Shilling" },
+  { value: "ZAR", label: "ZAR – South African Rand" },
+  { value: "CAD", label: "CAD – Canadian Dollar" },
+];
 
 export default function PreferencesSection() {
   const { currency, setCurrency } = useCurrencyStore();
@@ -25,15 +33,13 @@ export default function PreferencesSection() {
             <select
               value={currency}
               onChange={(e) => setCurrency(e.target.value)}
-              className="mt-2 border rounded-md px-3 py-2 text-sm"
+              className="mt-2 w-full max-w-xs border rounded-md px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-[#3c9ee0]"
             >
-              <option value="USD">USD – US Dollar</option>
-              <option value="NGN">NGN – Nigerian Naira</option>
-              <option value="EUR">GBP – Pounds Sterling</option>
-              <option value="EUR">EUR – Euro</option>
-              <option value="EUR">CAD – Canadian Dollar</option>
-              <option value="EUR">KES – Kenyan Shilling</option>
-              <option value="EUR">ZAR – South African Rand</option>
+              {currencies.map((c) => (
+                <option key={c.value} value={c.value}>
+                  {c.label}
+                </option>
+              ))}
             </select>
           </div>
         </div>

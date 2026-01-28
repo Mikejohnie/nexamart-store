@@ -12,16 +12,16 @@ export default async function ProfilePage() {
   const avatar = user?.profileAvatar?.url ?? user?.image ?? null;
 
   return (
-    <div className="max-w-xl mx-auto space-y-10">
+    <div className="max-w-xl mx-auto space-y-10 py-8">
       <header className="space-y-2">
-        <h1 className="text-2xl font-semibold">My Profile</h1>
-        <p className="text-sm text-muted-foreground">
+        <h1 className="text-2xl font-semibold text-black">My Profile</h1>
+        <p className="text-sm text-gray-500">
           Manage your personal account information and security.
         </p>
       </header>
 
       {/* PROFILE CARD */}
-      <Card>
+      <Card className="border-gray-200">
         <CardContent className="pt-6 flex flex-col md:flex-row gap-6 items-start">
           <div className="relative w-32 h-32">
             {avatar ? (
@@ -30,11 +30,11 @@ export default async function ProfilePage() {
                 alt={user?.name ?? "Profile image"}
                 width={120}
                 height={120}
-                className="rounded-full object-cover border"
+                className="rounded-full object-cover border-2 border-[var(--brand-blue)]"
               />
             ) : (
-              <div className="w-full h-full rounded-full border flex items-center justify-center text-sm text-muted-foreground">
-                <div className="uppercase text-xl font-semibold">
+              <div className="w-full h-full rounded-full border-2 border-dashed border-[var(--brand-blue)] flex items-center justify-center">
+                <div className="uppercase text-xl font-semibold text-[var(--brand-blue)]">
                   {user?.name?.[0] ?? user?.email[0]}
                 </div>
               </div>
@@ -61,14 +61,16 @@ export default async function ProfilePage() {
       {/* ACTIONS */}
       <Card>
         <CardContent className="pt-6 space-y-4">
-          <h3 className="font-medium">Actions</h3>
+          <h3 className="font-medium text-black">Actions</h3>
 
-          <div className="flex justify-between">
-            <Button asChild>
-              <Link href="/dashboard/profile/update">
-                Update Profile & Password
-              </Link>
+          <div className="flex flex-col sm:flex-row gap-3 sm:justify-between">
+            <Button
+              asChild
+              className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] text-white"
+            >
+              <Link href="/profile/update">Update Profile & Password</Link>
             </Button>
+
             <DeleteAcountModal userId={user.id} />
           </div>
         </CardContent>

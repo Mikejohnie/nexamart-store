@@ -109,7 +109,11 @@ export default function PasswordForm() {
               )}
             />
 
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] text-white"
+            >
               {isPending ? "Updating…" : "Change Password"}
             </Button>
           </form>

@@ -1,5 +1,4 @@
 import { CurrentUser } from "@/lib/currentUser";
-import PasswordForm from "../../_components/PasswordForm";
 import ProfileForm from "../../_components/ProfileForm";
 
 export default async function Page() {
@@ -7,7 +6,7 @@ export default async function Page() {
   if (!user) return null;
 
   return (
-    <div className="max-w-4xl mx-auto space-y-10">
+    <div className="max-w-4xl mx-auto space-y-10 px-4 md:px-8 py-8">
       <header className="space-y-2">
         <h1 className="text-2xl font-semibold">Update Profile</h1>
         <p className="text-sm text-muted-foreground">
@@ -16,7 +15,6 @@ export default async function Page() {
       </header>
 
       <ProfileForm userData={user} />
-      <PasswordForm />
     </div>
   );
 }

@@ -219,7 +219,11 @@ export default function ProfileForm({ userData }: Props) {
               Email: <span className="font-medium">{user.email}</span>
             </div>
 
-            <Button type="submit" disabled={isPending}>
+            <Button
+              type="submit"
+              disabled={isPending}
+              className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue-hover)] text-white"
+            >
               {isPending ? "Saving…" : "Save Changes"}
             </Button>
           </form>
